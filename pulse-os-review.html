@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PULSE OS Review - Farmstead Hospitality MVP</title>
+    <style>
+      :root {
+        --bg: #020912;
+        --panel: #08111f;
+        --panel-2: #0c1728;
+        --border: rgba(255, 255, 255, 0.08);
+        --text: #e6edf5;
+        --muted: #9ba7b8;
+        --dim: #617089;
+        --gold: #c6a66b;
+        --teal: #2bb8a5;
+        --warning: #d68b5c;
+        --critical: #d45d5d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background:
+          radial-gradient(circle at 15% 0%, rgba(198, 166, 107, 0.12), transparent 30rem),
+          linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+          var(--bg);
+        background-size: auto, 48px 48px, 48px 48px;
+        color: var(--text);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        line-height: 1.5;
+      }
+
+      a {
+        color: inherit;
+      }
+
+      .shell {
+        display: grid;
+        grid-template-columns: 280px minmax(0, 1fr);
+        min-height: 100vh;
+      }
+
+      aside {
+        position: sticky;
+        top: 0;
+        height: 100vh;
+        border-right: 1px solid var(--border);
+        background: rgba(2, 9, 18, 0.96);
+        padding: 24px 18px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 28px;
+      }
+
+      .mark {
+        width: 30px;
+        height: 30px;
+        border-radius: 7px;
+        background: var(--gold);
+        display: grid;
+        place-items: center;
+      }
+
+      .mark::after {
+        content: "";
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        background: var(--bg);
+      }
+
+      .brand strong {
+        display: block;
+        font-size: 13px;
+        letter-spacing: 0.18em;
+      }
+
+      .brand span {
+        display: block;
+        color: var(--muted);
+        font-size: 10px;
+        letter-spacing: 0.16em;
+      }
+
+      nav {
+        display: grid;
+        gap: 8px;
+      }
+
+      nav a {
+        display: block;
+        padding: 9px 10px;
+        border-radius: 7px;
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 13px;
+      }
+
+      nav a:hover {
+        background: var(--panel);
+        color: var(--text);
+      }
+
+      .aside-note {
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        bottom: 18px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: var(--panel);
+        padding: 12px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      main {
+        padding: 34px;
+      }
+
+      .hero {
+        min-height: 390px;
+        display: grid;
+        align-content: end;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 34px;
+        margin-bottom: 28px;
+      }
+
+      .eyebrow {
+        color: var(--gold);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 980px;
+        margin: 12px 0 14px;
+        font-size: clamp(42px, 7vw, 86px);
+        line-height: 0.95;
+        letter-spacing: 0;
+      }
+
+      .lede {
+        max-width: 920px;
+        color: var(--muted);
+        font-size: 18px;
+      }
+
+      section {
+        margin: 28px 0;
+      }
+
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 14px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 18px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .section-head p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      .grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .grid.cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .grid.cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .grid.cols-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(8, 17, 31, 0.92);
+        padding: 16px;
+      }
+
+      .metric {
+        color: var(--text);
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        font-size: 28px;
+        line-height: 1.1;
+      }
+
+      .label {
+        color: var(--dim);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .muted {
+        color: var(--muted);
+      }
+
+      .pill-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin-top: 12px;
+      }
+
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        padding: 4px 8px;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.03);
+        font-size: 11px;
+      }
+
+      .pill.live {
+        color: var(--teal);
+        border-color: rgba(43, 184, 165, 0.35);
+        background: rgba(43, 184, 165, 0.08);
+      }
+
+      .pill.locked {
+        color: var(--gold);
+        border-color: rgba(198, 166, 107, 0.35);
+        background: rgba(198, 166, 107, 0.08);
+      }
+
+      .pill.warning {
+        color: var(--warning);
+        border-color: rgba(214, 139, 92, 0.35);
+        background: rgba(214, 139, 92, 0.08);
+      }
+
+      .table {
+        overflow: hidden;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(8, 17, 31, 0.92);
+      }
+
+      .row {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr 1.4fr;
+        gap: 14px;
+        border-top: 1px solid var(--border);
+        padding: 13px 16px;
+        align-items: center;
+      }
+
+      .row:first-child {
+        border-top: 0;
+      }
+
+      .row.header {
+        color: var(--dim);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+
+      .roadmap {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .phase {
+        min-height: 190px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        background: rgba(8, 17, 31, 0.9);
+        padding: 14px;
+      }
+
+      .phase strong {
+        display: block;
+        margin: 10px 0 8px;
+        font-size: 14px;
+      }
+
+      .phase p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 12px;
+      }
+
+      .split {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 14px;
+      }
+
+      ul {
+        margin: 12px 0 0;
+        padding-left: 18px;
+        color: var(--muted);
+      }
+
+      li + li {
+        margin-top: 6px;
+      }
+
+      code {
+        color: var(--gold);
+      }
+
+      footer {
+        margin-top: 42px;
+        border-top: 1px solid var(--border);
+        padding: 18px 0 4px;
+        color: var(--dim);
+        font-size: 11px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 1050px) {
+        .shell {
+          grid-template-columns: 1fr;
+        }
+
+        aside {
+          position: static;
+          height: auto;
+        }
+
+        .aside-note {
+          position: static;
+          margin-top: 18px;
+        }
+
+        main {
+          padding: 22px;
+        }
+
+        .grid.cols-2,
+        .grid.cols-3,
+        .grid.cols-4,
+        .split,
+        .roadmap {
+          grid-template-columns: 1fr;
+        }
+
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <aside>
+        <div class="brand">
+          <div class="mark"></div>
+          <div>
+            <strong>PULSE OS</strong>
+            <span>FARMSTEAD MVP</span>
+          </div>
+        </div>
+
+        <nav>
+          <a href="#vision">Vision</a>
+          <a href="#mvp">Production MVP</a>
+          <a href="#modules">Live Modules</a>
+          <a href="#architecture">Architecture</a>
+          <a href="#database">Database</a>
+          <a href="#ai">AI Governance</a>
+          <a href="#roadmap">Phase 2-7 Roadmap</a>
+          <a href="#review">Review Checklist</a>
+        </nav>
+
+        <div class="aside-note">
+          AI assists. Humans govern. Evidence decides. Farmstead is live scope;
+          future opportunity intelligence stays locked.
+        </div>
+      </aside>
+
+      <main>
+        <header class="hero" id="vision">
+          <div class="eyebrow">Chief Product Architecture Review</div>
+          <h1>PULSE Hospitality OS for Farmstead</h1>
+          <p class="lede">
+            A production MVP for daily hospitality operations on one farmstead,
+            designed as the first proof point for a larger Opportunity
+            Participation Intelligence Infrastructure.
+          </p>
+          <div class="pill-row">
+            <span class="pill live">Phase 1 production MVP</span>
+            <span class="pill">Next.js 15</span>
+            <span class="pill">Supabase / Postgres</span>
+            <span class="pill">RLS tenant isolation</span>
+            <span class="pill warning">AI draft-first</span>
+          </div>
+        </header>
+
+        <section id="mvp">
+          <div class="section-head">
+            <h2>Production MVP</h2>
+            <p>One business. Four operating units. Real daily utility.</p>
+          </div>
+
+          <div class="grid cols-4">
+            <div class="card">
+              <div class="label">Properties</div>
+              <div class="metric">4</div>
+              <p class="muted">Farmstead Hospitality units live in Phase 1.</p>
+            </div>
+            <div class="card">
+              <div class="label">Live Scope</div>
+              <div class="metric">17</div>
+              <p class="muted">Operational modules for bookings, tasks, reviews, brain and AI brief.</p>
+            </div>
+            <div class="card">
+              <div class="label">Roadmap</div>
+              <div class="metric">6</div>
+              <p class="muted">Strategic expansion phases visible but locked.</p>
+            </div>
+            <div class="card">
+              <div class="label">Governance</div>
+              <div class="metric">100%</div>
+              <p class="muted">Public AI output requires approval.</p>
+            </div>
+          </div>
+
+          <div class="table" style="margin-top: 14px">
+            <div class="row header">
+              <div>Property</div>
+              <div>Type</div>
+              <div>Channels</div>
+              <div>Operational Focus</div>
+            </div>
+            <div class="row">
+              <div>Woody's Self Catering Cottage</div>
+              <div class="muted">Self-catering cottage</div>
+              <div><span class="pill">Google</span></div>
+              <div class="muted">Booking tracking, cleaning, maintenance, WiFi improvement.</div>
+            </div>
+            <div class="row">
+              <div>Swallows Nest Self Catering Studio</div>
+              <div class="muted">Self-catering studio</div>
+              <div>
+                <span class="pill">Airbnb</span>
+                <span class="pill">Booking.com</span>
+                <span class="pill">LekkeSlaap</span>
+              </div>
+              <div class="muted">Hot water follow-up, review response, guest readiness.</div>
+            </div>
+            <div class="row">
+              <div>Meadows Cottage</div>
+              <div class="muted">Self-catering cottage</div>
+              <div><span class="pill">Google</span></div>
+              <div class="muted">Booking gaps, housekeeping readiness, revenue opportunities.</div>
+            </div>
+            <div class="row">
+              <div>Jackals Rest</div>
+              <div class="muted">Cottage / lodge-style stay</div>
+              <div>
+                <span class="pill">Airbnb iCal</span>
+                <span class="pill">Booking.com iCal</span>
+                <span class="pill">LekkeSlaap iCal</span>
+              </div>
+              <div class="muted">iCal sync, guest communication, notes, review management, repeat guests.</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="modules">
+          <div class="section-head">
+            <h2>Live Phase 1 Modules</h2>
+            <p>Built for daily operating discipline, not demo theatre.</p>
+          </div>
+
+          <div class="grid cols-3">
+            <div class="card">
+              <div class="label">Command</div>
+              <ul>
+                <li>Farmstead command dashboard</li>
+                <li>Portfolio dashboard</li>
+                <li>AI daily brief</li>
+                <li>AI recommendation panel</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="label">Operations</div>
+              <ul>
+                <li>Properties and property detail</li>
+                <li>Bookings calendar</li>
+                <li>iCal sync registry</li>
+                <li>Tasks, housekeeping, maintenance and works register</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="label">Guest Experience</div>
+              <ul>
+                <li>Guest CRM</li>
+                <li>Guest communications history</li>
+                <li>Guest notes and preferences</li>
+                <li>Reviews and review requests</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="label">Knowledge</div>
+              <ul>
+                <li>Brain / knowledge base</li>
+                <li>House manuals and SOPs</li>
+                <li>WiFi and appliance notes</li>
+                <li>Guest guide content</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="label">Data Movement</div>
+              <ul>
+                <li>Offline HTML bridge import/export</li>
+                <li>JSON validation batches</li>
+                <li>Integration sync logs</li>
+                <li>Evidence-first records</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="label">Settings</div>
+              <ul>
+                <li>Tenant defaults</li>
+                <li>AI governance mode</li>
+                <li>Production scope lock</li>
+                <li>RLS-ready access model</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="architecture">
+          <div class="section-head">
+            <h2>Architecture</h2>
+            <p>Relational foundation for operations now and participation intelligence later.</p>
+          </div>
+
+          <div class="split">
+            <div class="card">
+              <div class="label">Production Stack</div>
+              <ul>
+                <li>Next.js 15 App Router</li>
+                <li>TypeScript</li>
+                <li>Tailwind and shadcn-style components</li>
+                <li>Supabase Auth, Postgres, Storage and Edge Functions</li>
+                <li>Row Level Security</li>
+                <li>Vercel deployment</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="label">Two-Track Delivery</div>
+              <p class="muted">
+                Track A is the offline HTML bridge for immediate use and JSON export.
+                Track B is the production Supabase platform for authenticated,
+                governed, multi-property operations.
+              </p>
+              <div class="pill-row">
+                <span class="pill live">Track A bridge</span>
+                <span class="pill live">Track B platform</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="database">
+          <div class="section-head">
+            <h2>Database Foundation</h2>
+            <p>Farmstead MVP tables plus graph-ready primitives.</p>
+          </div>
+
+          <div class="grid cols-3">
+            <div class="card">
+              <div class="label">Core</div>
+              <p class="muted">
+                organizations, members, properties, guests, bookings, tasks,
+                reviews, integrations, event logs and AI logs.
+              </p>
+            </div>
+            <div class="card">
+              <div class="label">Farmstead Extensions</div>
+              <p class="muted">
+                ical_feeds, work_items, brain_entries, property_assets,
+                guest_communications, guest_notes, review_requests and property_guides.
+              </p>
+            </div>
+            <div class="card">
+              <div class="label">Future Graph</div>
+              <p class="muted">
+                opportunities, business profiles, viability analyses and
+                participation records remain ready for later activation.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="ai">
+          <div class="section-head">
+            <h2>AI Governance</h2>
+            <p>AI assists. Humans approve. Every action is logged.</p>
+          </div>
+
+          <div class="grid cols-2">
+            <div class="card">
+              <div class="label">AI May</div>
+              <ul>
+                <li>Draft social posts</li>
+                <li>Draft review responses</li>
+                <li>Summarize reviews</li>
+                <li>Suggest tasks</li>
+                <li>Generate daily briefs</li>
+                <li>Identify booking gaps</li>
+                <li>Recommend maintenance follow-up</li>
+                <li>Generate guest message drafts</li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="label">AI May Not</div>
+              <ul>
+                <li>Publish publicly without approval</li>
+                <li>Reply to reviews automatically</li>
+                <li>Send guest messages automatically</li>
+                <li>Change pricing automatically</li>
+                <li>Cancel bookings</li>
+                <li>Make legal commitments</li>
+                <li>Make financial commitments</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="roadmap">
+          <div class="section-head">
+            <h2>Locked Strategic Roadmap</h2>
+            <p>Visible for sales credibility. Not operationally active yet.</p>
+          </div>
+
+          <div class="roadmap">
+            <div class="phase">
+              <span class="pill locked">Phase 2</span>
+              <strong>Visibility Intelligence</strong>
+              <p>Google Reviews, profile health, sentiment, review response intelligence and social visibility.</p>
+            </div>
+            <div class="phase">
+              <span class="pill locked">Phase 3</span>
+              <strong>Growth Intelligence</strong>
+              <p>Revenue intelligence, occupancy forecasting, packages, repeat guests and direct booking uplift.</p>
+            </div>
+            <div class="phase">
+              <span class="pill locked">Phase 4</span>
+              <strong>Local Ecosystem</strong>
+              <p>Restaurants, cafes, tour operators, attractions, activity providers and verified profiles.</p>
+            </div>
+            <div class="phase">
+              <span class="pill locked">Phase 5</span>
+              <strong>Destination Intelligence</strong>
+              <p>District dashboards, tourism activation, visitor movement and campaign performance.</p>
+            </div>
+            <div class="phase">
+              <span class="pill locked">Phase 6</span>
+              <strong>Opportunity Participation</strong>
+              <p>Opportunity builder, verification, viability engine, recommendations and outcome tracking.</p>
+            </div>
+            <div class="phase">
+              <span class="pill locked">Phase 7</span>
+              <strong>Economic Intelligence</strong>
+              <p>SME participation, sector intelligence, tourism recovery and government impact reporting.</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="review">
+          <div class="section-head">
+            <h2>Review Checklist</h2>
+            <p>Use this to approve the next build sprint.</p>
+          </div>
+
+          <div class="grid cols-2">
+            <div class="card">
+              <div class="label">Already Created</div>
+              <ul>
+                <li><code>docs/PROJECT_BRIEF.md</code></li>
+                <li><code>docs/ARCHITECTURE.md</code></li>
+                <li><code>docs/DATABASE_PLAN.md</code></li>
+                <li><code>docs/AI_PROMPTS.md</code></li>
+                <li><code>docs/CLAUDE_CODE_TASK_SEQUENCE.md</code></li>
+                <li><code>supabase/migrations/0003_farmstead_mvp.sql</code></li>
+              </ul>
+            </div>
+            <div class="card">
+              <div class="label">Verified</div>
+              <ul>
+                <li>TypeScript check passed</li>
+                <li>Next.js production build passed</li>
+                <li>Farmstead routes added</li>
+                <li>Locked Phase 2-7 pages added</li>
+                <li>Edge Function boundaries added</li>
+                <li>AI governance documented</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <footer>
+          PULSE OS · Farmstead Hospitality Phase 1 · Review Artifact
+        </footer>
+      </main>
+    </div>
+  </body>
+</html>

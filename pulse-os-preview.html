@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE OS — Farmstead Hospitality</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0b0d; --surface: #111318; --elevated: #161b22;
+    --border: #1e2028; --border2: #2d3142;
+    --blue: #3b82f6; --green: #22c55e; --amber: #f59e0b; --red: #ef4444;
+    --text: #f1f5f9; --muted: #64748b; --faint: #374151;
+  }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 13px; display: flex; height: 100vh; overflow: hidden; -webkit-font-smoothing: antialiased; }
+  .mono { font-family: 'JetBrains Mono', monospace; }
+
+  /* ── SIDEBAR ── */
+  .sidebar { width: 220px; min-height: 100vh; background: #0d0f14; border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; }
+  .sidebar-logo { height: 56px; display: flex; align-items: center; padding: 0 16px; border-bottom: 1px solid var(--border); gap: 10px; }
+  .logo-dot { width: 24px; height: 24px; background: var(--blue); border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-dot::after { content: ''; width: 8px; height: 8px; background: white; border-radius: 50%; display: block; }
+  .logo-text { line-height: 1; }
+  .logo-text .name { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; color: var(--text); }
+  .logo-text .sub { font-size: 8px; letter-spacing: 0.2em; color: var(--muted); margin-top: 2px; }
+  .org-badge { margin: 8px; padding: 8px 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; display: flex; align-items: center; gap: 8px; }
+  .org-badge svg { color: var(--blue); flex-shrink: 0; }
+  .org-badge .org-name { font-size: 11px; font-weight: 500; color: var(--text); }
+  .org-badge .org-sub { font-size: 9px; color: var(--muted); margin-top: 1px; }
+  nav { flex: 1; padding: 8px; overflow-y: auto; }
+  .nav-section { margin-bottom: 16px; }
+  .nav-label { font-size: 9px; font-weight: 600; letter-spacing: 0.2em; color: var(--faint); padding: 0 8px; margin-bottom: 4px; }
+  .nav-item { display: flex; align-items: center; gap: 10px; padding: 7px 8px; border-radius: 6px; font-size: 12px; font-weight: 500; color: var(--muted); cursor: pointer; margin-bottom: 1px; transition: all 0.1s; text-decoration: none; border: 1px solid transparent; }
+  .nav-item:hover { color: var(--text); background: var(--surface); }
+  .nav-item.active { color: var(--blue); background: rgba(59,130,246,0.08); border-color: rgba(59,130,246,0.2); }
+  .nav-item svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .sidebar-footer { padding: 12px; border-top: 1px solid var(--border); text-align: center; font-size: 9px; letter-spacing: 0.15em; color: var(--faint); }
+
+  /* ── MAIN ── */
+  .main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+  .topbar { height: 56px; background: #0d0f14; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 24px; gap: 12px; flex-shrink: 0; }
+  .topbar-title { flex: 1; }
+  .topbar-title h1 { font-size: 13px; font-weight: 600; letter-spacing: 0.05em; }
+  .topbar-title p { font-size: 9px; letter-spacing: 0.15em; color: var(--muted); margin-top: 1px; }
+  .topbar-search { display: flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 6px 12px; color: var(--faint); font-size: 11px; cursor: text; }
+  .topbar-bell { position: relative; padding: 6px; border-radius: 6px; cursor: pointer; }
+  .topbar-bell::after { content: ''; position: absolute; top: 5px; right: 5px; width: 6px; height: 6px; background: var(--blue); border-radius: 50%; border: 2px solid #0d0f14; }
+  .avatar { width: 28px; height: 28px; background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--blue); cursor: pointer; }
+  .content { flex: 1; overflow-y: auto; padding: 24px; }
+
+  /* ── ALERT BANNER ── */
+  .alert-banner { display: flex; align-items: center; gap: 10px; background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.2); border-radius: 8px; padding: 10px 14px; margin-bottom: 20px; }
+  .alert-banner svg { color: var(--red); flex-shrink: 0; }
+  .alert-banner span { font-size: 12px; color: #fca5a5; flex: 1; }
+  .alert-link { font-size: 11px; color: var(--red); display: flex; align-items: center; gap: 4px; cursor: pointer; white-space: nowrap; }
+
+  /* ── KPI GRID ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+  .kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .kpi.crit { background: rgba(239,68,68,0.04); border-color: rgba(239,68,68,0.25); }
+  .kpi.warn { border-color: rgba(245,158,11,0.3); }
+  .kpi.good { border-color: rgba(34,197,94,0.2); }
+  .kpi-label { font-size: 9px; font-weight: 600; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+  .kpi-value { font-size: 22px; font-weight: 600; color: var(--text); line-height: 1; }
+  .kpi.crit .kpi-value { color: var(--red); }
+  .kpi-value .unit { font-size: 12px; color: var(--muted); font-weight: 400; margin-left: 2px; }
+  .kpi-sub { margin-top: 6px; display: flex; align-items: center; gap: 6px; font-size: 10px; }
+  .trend-up { color: var(--green); display: flex; align-items: center; gap: 2px; font-weight: 500; }
+  .trend-down { color: var(--red); display: flex; align-items: center; gap: 2px; font-weight: 500; }
+  .kpi-note { color: var(--muted); }
+
+  /* ── MIDDLE ROW ── */
+  .mid-row { display: grid; grid-template-columns: 1fr 320px; gap: 16px; margin-bottom: 20px; }
+  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+  .panel-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+  .panel-title { display: flex; align-items: center; gap: 7px; font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text); }
+  .panel-title svg { color: var(--blue); }
+  .panel-count { font-size: 10px; color: var(--muted); }
+  .prop-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
+  .prop-row:last-child { border-bottom: none; }
+  .prop-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .prop-dot.occupied { background: var(--green); box-shadow: 0 0 6px rgba(34,197,94,0.5); }
+  .prop-dot.vacant { background: var(--faint); }
+  .prop-info { flex: 1; min-width: 0; }
+  .prop-name { font-size: 12px; font-weight: 500; color: var(--text); }
+  .prop-detail { font-size: 10px; color: var(--muted); margin-top: 2px; }
+  .prop-badges { display: flex; align-items: center; gap: 6px; }
+
+  /* ── BADGES ── */
+  .badge { display: inline-flex; align-items: center; padding: 2px 7px; border-radius: 4px; font-size: 9px; font-weight: 600; letter-spacing: 0.05em; border: 1px solid; white-space: nowrap; }
+  .badge-blue { background: rgba(59,130,246,0.1); color: #93c5fd; border-color: rgba(59,130,246,0.25); }
+  .badge-green { background: rgba(34,197,94,0.1); color: #86efac; border-color: rgba(34,197,94,0.25); }
+  .badge-amber { background: rgba(245,158,11,0.1); color: #fcd34d; border-color: rgba(245,158,11,0.25); }
+  .badge-red { background: rgba(239,68,68,0.1); color: #fca5a5; border-color: rgba(239,68,68,0.25); }
+  .badge-gray { background: rgba(100,116,139,0.1); color: #94a3b8; border-color: rgba(100,116,139,0.2); }
+  .badge-pink { background: rgba(236,72,153,0.1); color: #f9a8d4; border-color: rgba(236,72,153,0.25); }
+  .badge-orange { background: rgba(249,115,22,0.1); color: #fdba74; border-color: rgba(249,115,22,0.25); }
+
+  /* ── AI PANEL ── */
+  .ai-rec { padding: 12px; border-bottom: 1px solid var(--border); }
+  .ai-rec:last-of-type { border-bottom: none; }
+  .ai-rec-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+  .ai-rec-conf { font-size: 9px; color: var(--muted); margin-left: auto; }
+  .ai-rec-text { font-size: 11px; color: #94a3b8; line-height: 1.5; }
+  .ai-actions { display: flex; gap: 6px; margin-top: 8px; }
+  .ai-btn { flex: 1; font-size: 9px; font-weight: 600; padding: 5px 8px; border-radius: 5px; cursor: pointer; letter-spacing: 0.05em; text-transform: uppercase; }
+  .ai-btn-apply { background: rgba(59,130,246,0.1); color: var(--blue); border: 1px solid rgba(59,130,246,0.25); }
+  .ai-btn-apply:hover { background: rgba(59,130,246,0.2); }
+  .ai-btn-dismiss { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .ai-btn-dismiss:hover { border-color: var(--border2); }
+  .ai-doctrine { padding: 10px; border-top: 1px solid var(--border); text-align: center; font-size: 8px; letter-spacing: 0.15em; color: var(--faint); text-transform: uppercase; }
+
+  /* ── BOTTOM ROW ── */
+  .bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .sched-row { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+  .sched-row:last-child { border-bottom: none; }
+  .mov-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; padding: 3px 6px; border-radius: 4px; }
+  .mov-arrival { background: rgba(34,197,94,0.1); color: var(--green); }
+  .mov-departure { background: rgba(245,158,11,0.1); color: var(--amber); }
+  .sched-info { flex: 1; min-width: 0; }
+  .sched-name { font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sched-prop { font-size: 10px; color: var(--muted); margin-top: 1px; }
+  .task-row { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+  .task-row:last-child { border-bottom: none; }
+  .task-bar { width: 4px; min-height: 32px; border-radius: 2px; flex-shrink: 0; align-self: stretch; }
+  .task-bar.overdue { background: var(--red); }
+  .task-bar.high { background: var(--amber); }
+  .task-bar.normal { background: var(--faint); }
+  .task-info { flex: 1; min-width: 0; }
+  .task-title { font-size: 11px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .task-prop { font-size: 10px; color: var(--muted); margin-top: 2px; }
+
+  /* ── TABS ── */
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+  .tab { padding: 10px 16px; font-size: 12px; font-weight: 500; cursor: pointer; border-bottom: 2px solid transparent; color: var(--muted); margin-bottom: -1px; }
+  .tab.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+
+  /* ── PAGE SWITCHER ── */
+  .page { display: none; }
+  .page.active { display: block; }
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ── -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-dot"></div>
+    <div class="logo-text">
+      <div class="name">PULSE</div>
+      <div class="sub">HOSPITALITY OS</div>
+    </div>
+  </div>
+
+  <div class="org-badge">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 22V12h6v10M3 9h18"/></svg>
+    <div>
+      <div class="org-name">Farmstead Hospitality</div>
+      <div class="org-sub">4 properties · Professional</div>
+    </div>
+  </div>
+
+  <nav>
+    <div class="nav-section">
+      <div class="nav-label">Command</div>
+      <a class="nav-item active" onclick="showPage('dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-item" onclick="showPage('operations')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Operations
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Hospitality</div>
+      <a class="nav-item" onclick="showPage('bookings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Bookings
+      </a>
+      <a class="nav-item" onclick="showPage('tasks')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+        Tasks
+      </a>
+      <a class="nav-item" onclick="showPage('guests')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Guests
+      </a>
+      <a class="nav-item" onclick="showPage('reviews')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Reviews
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Intelligence</div>
+      <a class="nav-item" style="opacity:0.4; pointer-events:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Reports
+      </a>
+      <a class="nav-item" style="opacity:0.4; pointer-events:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="4.93" y1="4.93" x2="9.17" y2="9.17"/><line x1="14.83" y1="14.83" x2="19.07" y2="19.07"/><line x1="14.83" y1="9.17" x2="19.07" y2="4.93"/><line x1="14.83" y1="9.17" x2="18.36" y2="5.64"/><line x1="4.93" y1="19.07" x2="9.17" y2="14.83"/></svg>
+        Local Map
+        <span style="font-size:8px;margin-left:auto;background:rgba(59,130,246,0.15);color:var(--blue);padding:1px 5px;border-radius:3px;">PH.2</span>
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Phase 4–7</div>
+      <a class="nav-item" style="opacity:0.3; pointer-events:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        Opportunities
+        <span style="font-size:8px;margin-left:auto;background:rgba(100,116,139,0.15);color:var(--muted);padding:1px 5px;border-radius:3px;">PH.6</span>
+      </a>
+    </div>
+  </nav>
+  <div class="sidebar-footer">AI ASSISTS · HUMANS GOVERN</div>
+</div>
+
+<!-- ── MAIN ── -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">
+      <h1 id="page-title">Command Dashboard</h1>
+      <p id="page-sub">Fri 30 May 2026 · FARMSTEAD HOSPITALITY</p>
+    </div>
+    <div class="topbar-search">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Search platform...
+    </div>
+    <div class="topbar-bell">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    </div>
+    <div class="avatar">KW</div>
+  </div>
+
+  <div class="content">
+
+    <!-- ═══════════════════════════════════════════ DASHBOARD ═══ -->
+    <div class="page active" id="page-dashboard">
+
+      <!-- Alert -->
+      <div class="alert-banner">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <span>2 overdue tasks require immediate attention — Woody's Cottage inspection + Swallows Nest pre-arrival clean</span>
+        <a class="alert-link" onclick="showPage('tasks')">
+          View Tasks
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-label">Occupancy</div>
+          <div class="kpi-value mono">73<span class="unit">%</span></div>
+          <div class="kpi-sub"><span class="trend-up">↑ 8%</span><span class="kpi-note">vs last month</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">ADR</div>
+          <div class="kpi-value mono">R1,850</div>
+          <div class="kpi-sub"><span class="kpi-note">avg daily rate</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">RevPAR</div>
+          <div class="kpi-value mono">R1,351</div>
+          <div class="kpi-sub"><span class="kpi-note">revenue per available room</span></div>
+        </div>
+        <div class="kpi good">
+          <div class="kpi-label">Avg Rating</div>
+          <div class="kpi-value mono">4.8<span class="unit">/ 5</span></div>
+          <div class="kpi-sub"><span class="kpi-note">across all platforms</span></div>
+        </div>
+        <div class="kpi warn">
+          <div class="kpi-label">Open Tasks</div>
+          <div class="kpi-value mono">7</div>
+          <div class="kpi-sub"><span class="kpi-note">across 4 properties</span></div>
+        </div>
+        <div class="kpi crit">
+          <div class="kpi-label">Overdue Tasks</div>
+          <div class="kpi-value mono">2</div>
+          <div class="kpi-sub"><span class="kpi-note">immediate attention</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Arrivals Today</div>
+          <div class="kpi-value mono">1</div>
+          <div class="kpi-sub"><span class="kpi-note">Swallows Nest</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Rev This Month</div>
+          <div class="kpi-value mono">R42.8k</div>
+          <div class="kpi-sub"><span class="trend-up">↑ 12%</span><span class="kpi-note">vs last month</span></div>
+        </div>
+      </div>
+
+      <!-- Mid row -->
+      <div class="mid-row">
+
+        <!-- Property Status -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 22V12h6v10M3 9h18"/></svg>
+              Property Status
+            </div>
+            <span class="panel-count">4 active</span>
+          </div>
+
+          <div class="prop-row">
+            <div class="prop-dot occupied"></div>
+            <div class="prop-info">
+              <div class="prop-name">Jackals Rest</div>
+              <div class="prop-detail">Sarah &amp; Mark Thompson · check-out 2 Jun</div>
+            </div>
+            <div class="prop-badges">
+              <span class="badge badge-green">Checked In</span>
+              <span class="badge badge-pink">Airbnb</span>
+            </div>
+          </div>
+
+          <div class="prop-row">
+            <div class="prop-dot vacant"></div>
+            <div class="prop-info">
+              <div class="prop-name">Swallows Nest Studio</div>
+              <div class="prop-detail">Priya Govender arriving today</div>
+            </div>
+            <div class="prop-badges">
+              <span class="badge badge-red">Overdue Task</span>
+              <span class="badge badge-blue">Confirmed</span>
+            </div>
+          </div>
+
+          <div class="prop-row">
+            <div class="prop-dot vacant"></div>
+            <div class="prop-info">
+              <div class="prop-name">Woody's Cottage</div>
+              <div class="prop-detail">Next: James Nkosi · 1 Jun</div>
+            </div>
+            <div class="prop-badges">
+              <span class="badge badge-red">Overdue Task</span>
+              <span class="badge badge-blue">Confirmed</span>
+            </div>
+          </div>
+
+          <div class="prop-row">
+            <div class="prop-dot vacant"></div>
+            <div class="prop-info">
+              <div class="prop-name">Meadows Cottage</div>
+              <div class="prop-detail">Next: Kobus &amp; Anel van der Berg · 6 Jun</div>
+            </div>
+            <div class="prop-badges">
+              <span class="badge badge-green">Ready</span>
+              <span class="badge badge-orange">LekkeSlaap</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- AI Recommendations -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              AI Recommendations
+            </div>
+          </div>
+
+          <div class="ai-rec">
+            <div class="ai-rec-meta">
+              <span class="badge badge-amber">Medium Risk</span>
+              <span class="ai-rec-conf">82% confidence</span>
+            </div>
+            <div class="ai-rec-text">Respond to 3★ Booking.com review on Swallows Nest — guest mentions hot water issue. Draft ready for approval.</div>
+            <div class="ai-actions">
+              <button class="ai-btn ai-btn-apply">Review Draft</button>
+              <button class="ai-btn ai-btn-dismiss">Dismiss</button>
+            </div>
+          </div>
+
+          <div class="ai-rec">
+            <div class="ai-rec-meta">
+              <span class="badge badge-green">Low Risk</span>
+              <span class="ai-rec-conf">74% confidence</span>
+            </div>
+            <div class="ai-rec-text">Meadows Cottage has 3 gap nights next week. Consider LekkeSlaap last-minute promotion to fill.</div>
+            <div class="ai-actions">
+              <button class="ai-btn ai-btn-apply">Apply</button>
+              <button class="ai-btn ai-btn-dismiss">Dismiss</button>
+            </div>
+          </div>
+
+          <div class="ai-rec">
+            <div class="ai-rec-meta">
+              <span class="badge badge-green">Low Risk</span>
+              <span class="ai-rec-conf">91% confidence</span>
+            </div>
+            <div class="ai-rec-text">Jackals Rest checkout today — ideal moment to send post-stay review request via WhatsApp.</div>
+            <div class="ai-actions">
+              <button class="ai-btn ai-btn-apply">Apply</button>
+              <button class="ai-btn ai-btn-dismiss">Dismiss</button>
+            </div>
+          </div>
+
+          <div class="ai-doctrine">AI Assists · Humans Govern · Evidence Decides</div>
+        </div>
+      </div>
+
+      <!-- Bottom row -->
+      <div class="bottom-row">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Today's Movements
+            </div>
+          </div>
+          <div class="sched-row">
+            <span class="mov-tag mov-arrival">ARRIVAL</span>
+            <div class="sched-info">
+              <div class="sched-name">Priya Govender</div>
+              <div class="sched-prop">Swallows Nest Studio</div>
+            </div>
+            <span class="badge badge-gray">Direct</span>
+          </div>
+          <div class="sched-row">
+            <span class="mov-tag mov-departure">DEPART</span>
+            <div class="sched-info">
+              <div class="sched-name">Sarah &amp; Mark Thompson</div>
+              <div class="sched-prop">Jackals Rest</div>
+            </div>
+            <span class="badge badge-pink">Airbnb</span>
+          </div>
+          <div class="sched-row" style="padding: 20px 16px; text-align:center; justify-content:center;">
+            <span style="font-size:11px; color:var(--muted);">No further movements today</span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              Priority Tasks
+            </div>
+          </div>
+          <div class="task-row">
+            <div class="task-bar overdue"></div>
+            <div class="task-info">
+              <div class="task-title">Post-checkout inspection — Woody's Cottage</div>
+              <div class="task-prop">Woody's Cottage · Overdue 29 May</div>
+            </div>
+            <span class="badge badge-red">Overdue</span>
+          </div>
+          <div class="task-row">
+            <div class="task-bar overdue"></div>
+            <div class="task-info">
+              <div class="task-title">Pre-arrival clean — Swallows Nest Studio</div>
+              <div class="task-prop">Swallows Nest · Due today</div>
+            </div>
+            <span class="badge badge-red">Overdue</span>
+          </div>
+          <div class="task-row">
+            <div class="task-bar high"></div>
+            <div class="task-info">
+              <div class="task-title">Prepare welcome pack — Jackals Rest arrival</div>
+              <div class="task-prop">Jackals Rest · Guest services</div>
+            </div>
+            <span class="badge badge-amber">High</span>
+          </div>
+          <div class="task-row">
+            <div class="task-bar normal"></div>
+            <div class="task-info">
+              <div class="task-title">Replace cabinet hinge — main bedroom</div>
+              <div class="task-prop">Jackals Rest · Maintenance</div>
+            </div>
+            <span class="badge badge-blue">In Progress</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ BOOKINGS ═══ -->
+    <div class="page" id="page-bookings">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+        <div style="display:flex; gap:8px; align-items:center;">
+          <select style="background:var(--surface); border:1px solid var(--border); color:var(--text); padding:6px 10px; border-radius:6px; font-size:11px; font-family:inherit;">
+            <option>All Properties</option>
+            <option>Jackals Rest</option>
+            <option>Woody's Cottage</option>
+            <option>Swallows Nest Studio</option>
+            <option>Meadows Cottage</option>
+          </select>
+          <select style="background:var(--surface); border:1px solid var(--border); color:var(--text); padding:6px 10px; border-radius:6px; font-size:11px; font-family:inherit;">
+            <option>All Statuses</option>
+            <option>Confirmed</option>
+            <option>Checked In</option>
+            <option>Checked Out</option>
+          </select>
+        </div>
+        <button style="background:var(--blue); color:white; border:none; padding:7px 14px; border-radius:6px; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Booking
+        </button>
+      </div>
+
+      <!-- iCal Sync Status -->
+      <div class="panel" style="margin-bottom:16px;">
+        <div class="panel-header">
+          <div class="panel-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+            iCal Sync — Jackals Rest
+          </div>
+          <button style="background:rgba(59,130,246,0.1); color:var(--blue); border:1px solid rgba(59,130,246,0.2); padding:4px 10px; border-radius:5px; font-size:10px; font-weight:600; cursor:pointer;">Sync Now</button>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--border);">
+          <div style="background:var(--surface); padding:12px 16px;">
+            <div style="font-size:9px; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:6px;">Booking.com</div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <div style="width:6px; height:6px; background:var(--green); border-radius:50%;"></div>
+              <span style="font-size:11px; color:var(--text);">Last synced 14 min ago</span>
+            </div>
+            <div style="font-size:10px; color:var(--muted); margin-top:4px;">3 bookings imported</div>
+          </div>
+          <div style="background:var(--surface); padding:12px 16px;">
+            <div style="font-size:9px; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:6px;">Airbnb</div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <div style="width:6px; height:6px; background:var(--green); border-radius:50%;"></div>
+              <span style="font-size:11px; color:var(--text);">Last synced 14 min ago</span>
+            </div>
+            <div style="font-size:10px; color:var(--muted); margin-top:4px;">2 bookings imported</div>
+          </div>
+          <div style="background:var(--surface); padding:12px 16px;">
+            <div style="font-size:9px; color:var(--muted); letter-spacing:0.15em; text-transform:uppercase; margin-bottom:6px;">LekkeSlaap</div>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <div style="width:6px; height:6px; background:var(--amber); border-radius:50%;"></div>
+              <span style="font-size:11px; color:var(--text);">Pending sync</span>
+            </div>
+            <div style="font-size:10px; color:var(--muted); margin-top:4px;">Awaiting first sync</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bookings Table -->
+      <div class="panel">
+        <div class="panel-header"><div class="panel-title">Active Reservations</div><span class="panel-count">4 bookings</span></div>
+        <table style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border);">
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Guest</th>
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Property</th>
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Check-in</th>
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Check-out</th>
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Source</th>
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Value</th>
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border); cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background=''">
+              <td style="padding:12px 16px; font-size:12px; font-weight:500; color:var(--text);">Sarah &amp; Mark Thompson</td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">Jackals Rest</td>
+              <td style="padding:12px 16px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text);">29 May</td>
+              <td style="padding:12px 16px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text);">2 Jun</td>
+              <td style="padding:12px 16px;"><span class="badge badge-pink">Airbnb</span></td>
+              <td style="padding:12px 16px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text);">R7,400</td>
+              <td style="padding:12px 16px;"><span class="badge badge-green">Checked In</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border); cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background=''">
+              <td style="padding:12px 16px; font-size:12px; font-weight:500; color:var(--text);">Priya Govender</td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">Swallows Nest Studio</td>
+              <td style="padding:12px 16px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text);">30 May</td>
+              <td style="padding:12px 16px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text);">3 Jun</td>
+              <td style="padding:12px 16px;"><span class="badge badge-gray">Direct</span></td>
+              <td style="padding:12px 16px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text);">R5,600</td>
+              <td style="padding:12px 16px;"><span class="badge badge-blue">Confirmed</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border); cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background=''">
+              <td style="padding:12px 16px; font-size:12px; font-weight:500; color:var(--text);">James Nkosi</td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">Woody's Cottage</td>
+              <td style="padding:12px 16px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text);">1 Jun</td>
+              <td style="padding:12px 16px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text);">4 Jun</td>
+              <td style="padding:12px 16px;"><span class="badge badge-blue">Booking.com</span></td>
+              <td style="padding:12px 16px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text);">R4,200</td>
+              <td style="padding:12px 16px;"><span class="badge badge-blue">Confirmed</span></td>
+            </tr>
+            <tr style="cursor:pointer;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background=''">
+              <td style="padding:12px 16px; font-size:12px; font-weight:500; color:var(--text);">Kobus &amp; Anel van der Berg</td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">Meadows Cottage</td>
+              <td style="padding:12px 16px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text);">6 Jun</td>
+              <td style="padding:12px 16px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text);">9 Jun</td>
+              <td style="padding:12px 16px;"><span class="badge badge-orange">LekkeSlaap</span></td>
+              <td style="padding:12px 16px; font-size:11px; font-family:'JetBrains Mono',monospace; color:var(--text);">R6,300</td>
+              <td style="padding:12px 16px;"><span class="badge badge-blue">Confirmed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ TASKS ═══ -->
+    <div class="page" id="page-tasks">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px;">
+        <div style="display:flex; gap:8px;">
+          <select style="background:var(--surface); border:1px solid var(--border); color:var(--text); padding:6px 10px; border-radius:6px; font-size:11px; font-family:inherit;"><option>All Properties</option></select>
+          <select style="background:var(--surface); border:1px solid var(--border); color:var(--text); padding:6px 10px; border-radius:6px; font-size:11px; font-family:inherit;"><option>All Categories</option><option>Housekeeping</option><option>Maintenance</option><option>Guest Services</option></select>
+        </div>
+        <button style="background:var(--blue); color:white; border:none; padding:7px 14px; border-radius:6px; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          New Task
+        </button>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:12px; align-items:start;">
+
+        <!-- OVERDUE -->
+        <div>
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px; padding:0 4px;">
+            <div style="width:8px; height:8px; background:var(--red); border-radius:50%;"></div>
+            <span style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--red);">Overdue</span>
+            <span style="margin-left:auto; background:rgba(239,68,68,0.1); color:var(--red); border:1px solid rgba(239,68,68,0.2); padding:1px 6px; border-radius:10px; font-size:9px;">2</span>
+          </div>
+          <div style="background:var(--surface); border:1px solid rgba(239,68,68,0.25); border-radius:8px; padding:12px; margin-bottom:8px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:500; color:var(--text); line-height:1.4;">Post-checkout inspection — Woody's Cottage</span>
+              <span style="font-size:16px; flex-shrink:0;">🔍</span>
+            </div>
+            <div style="font-size:10px; color:var(--muted); margin-bottom:8px;">Woody's Cottage</div>
+            <div style="display:flex; gap:4px; flex-wrap:wrap;">
+              <span class="badge badge-red">Overdue</span>
+              <span class="badge badge-amber">High</span>
+            </div>
+            <div style="margin-top:8px; font-size:10px; color:var(--red);">Due: 29 May 2026</div>
+          </div>
+          <div style="background:var(--surface); border:1px solid rgba(239,68,68,0.25); border-radius:8px; padding:12px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:500; color:var(--text); line-height:1.4;">Pre-arrival clean — Swallows Nest Studio</span>
+              <span style="font-size:16px; flex-shrink:0;">🧹</span>
+            </div>
+            <div style="font-size:10px; color:var(--muted); margin-bottom:8px;">Swallows Nest Studio</div>
+            <div style="display:flex; gap:4px;"><span class="badge badge-red">Overdue</span><span class="badge badge-red">Urgent</span></div>
+            <div style="margin-top:8px; font-size:10px; color:var(--red);">Due: 30 May 2026 08:00</div>
+          </div>
+        </div>
+
+        <!-- OPEN -->
+        <div>
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px; padding:0 4px;">
+            <div style="width:8px; height:8px; background:var(--blue); border-radius:50%;"></div>
+            <span style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted);">Open</span>
+            <span style="margin-left:auto; background:var(--elevated); border:1px solid var(--border2); color:var(--muted); padding:1px 6px; border-radius:10px; font-size:9px;">3</span>
+          </div>
+          <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; margin-bottom:8px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:500; color:var(--text); line-height:1.4;">Prepare welcome pack — Jackals Rest</span>
+              <span style="font-size:16px; flex-shrink:0;">🌟</span>
+            </div>
+            <div style="font-size:10px; color:var(--muted); margin-bottom:8px;">Jackals Rest</div>
+            <div style="display:flex; gap:4px;"><span class="badge badge-blue">Open</span><span class="badge badge-amber">High</span></div>
+          </div>
+          <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; margin-bottom:8px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:500; color:var(--text); line-height:1.4;">Weekly linen restock — Meadows Cottage</span>
+              <span style="font-size:16px; flex-shrink:0;">🧹</span>
+            </div>
+            <div style="font-size:10px; color:var(--muted); margin-bottom:8px;">Meadows Cottage</div>
+            <div style="display:flex; gap:4px;"><span class="badge badge-blue">Open</span><span class="badge badge-gray">Low</span></div>
+          </div>
+          <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:500; color:var(--text); line-height:1.4;">Respond to guest review — Booking.com</span>
+              <span style="font-size:16px; flex-shrink:0;">✅</span>
+            </div>
+            <div style="font-size:10px; color:var(--muted); margin-bottom:8px;">Swallows Nest Studio</div>
+            <div style="display:flex; gap:4px;"><span class="badge badge-blue">Open</span><span class="badge badge-amber">Medium</span></div>
+          </div>
+        </div>
+
+        <!-- IN PROGRESS -->
+        <div>
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px; padding:0 4px;">
+            <div style="width:8px; height:8px; background:var(--amber); border-radius:50%;"></div>
+            <span style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted);">In Progress</span>
+            <span style="margin-left:auto; background:var(--elevated); border:1px solid var(--border2); color:var(--muted); padding:1px 6px; border-radius:10px; font-size:9px;">1</span>
+          </div>
+          <div style="background:var(--surface); border:1px solid rgba(245,158,11,0.2); border-radius:8px; padding:12px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:8px; margin-bottom:8px;">
+              <span style="font-size:12px; font-weight:500; color:var(--text); line-height:1.4;">Replace cabinet hinge — main bedroom</span>
+              <span style="font-size:16px; flex-shrink:0;">🔧</span>
+            </div>
+            <div style="font-size:10px; color:var(--muted); margin-bottom:8px;">Jackals Rest</div>
+            <div style="display:flex; gap:4px;"><span class="badge badge-amber">In Progress</span><span class="badge badge-amber">Medium</span></div>
+          </div>
+        </div>
+
+        <!-- COMPLETED -->
+        <div>
+          <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px; padding:0 4px;">
+            <div style="width:8px; height:8px; background:var(--green); border-radius:50%;"></div>
+            <span style="font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted);">Completed Today</span>
+            <span style="margin-left:auto; background:var(--elevated); border:1px solid var(--border2); color:var(--muted); padding:1px 6px; border-radius:10px; font-size:9px;">2</span>
+          </div>
+          <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; margin-bottom:8px; opacity:0.6;">
+            <div style="font-size:12px; font-weight:500; color:var(--text); margin-bottom:6px; text-decoration:line-through;">Jackals Rest checkout clean</div>
+            <div style="font-size:10px; color:var(--muted); margin-bottom:8px;">Jackals Rest · 09:30</div>
+            <span class="badge badge-green">Completed</span>
+          </div>
+          <div style="background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:12px; opacity:0.6;">
+            <div style="font-size:12px; font-weight:500; color:var(--text); margin-bottom:6px; text-decoration:line-through;">Guest welcome message sent</div>
+            <div style="font-size:10px; color:var(--muted); margin-bottom:8px;">Meadows Cottage · 08:15</div>
+            <span class="badge badge-green">Completed</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ REVIEWS ═══ -->
+    <div class="page" id="page-reviews">
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:20px;">
+        <div class="kpi good"><div class="kpi-label">Avg Rating</div><div class="kpi-value mono">4.8<span class="unit">/ 5</span></div><div class="kpi-sub"><span class="kpi-note">all platforms</span></div></div>
+        <div class="kpi"><div class="kpi-label">Total Reviews</div><div class="kpi-value mono">47</div><div class="kpi-sub"><span class="kpi-note">last 12 months</span></div></div>
+        <div class="kpi warn"><div class="kpi-label">Pending Response</div><div class="kpi-value mono">3</div><div class="kpi-sub"><span class="kpi-note">2 drafts ready</span></div></div>
+        <div class="kpi good"><div class="kpi-label">Response Rate</div><div class="kpi-value mono">89<span class="unit">%</span></div><div class="kpi-sub"><span class="trend-up">↑ 4%</span></div></div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:12px;">
+
+        <div class="panel">
+          <div style="padding:16px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:10px;">
+              <div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                  <span style="font-size:16px; color:#f59e0b; letter-spacing:-1px;">★★★★★</span>
+                  <span class="badge badge-pink">Airbnb</span>
+                  <span class="badge badge-green">Positive</span>
+                  <span style="font-size:10px; color:var(--muted);">27 May 2026 · Jackals Rest</span>
+                </div>
+                <div style="font-size:13px; font-weight:600; color:var(--text); margin-bottom:4px)">Absolutely magical farm stay</div>
+              </div>
+              <span class="badge badge-amber">Pending Response</span>
+            </div>
+            <p style="font-size:12px; color:#94a3b8; line-height:1.6;">"The most peaceful place we have stayed. The fireplace was perfect on cold nights and the host was incredibly responsive. Will definitely be returning."</p>
+            <div style="margin-top:12px; padding:12px; background:rgba(59,130,246,0.05); border:1px solid rgba(59,130,246,0.15); border-radius:6px;">
+              <div style="font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--blue); margin-bottom:6px;">AI Draft Response</div>
+              <p style="font-size:11px; color:#94a3b8; line-height:1.6;">Thank you so much — your review made our day! We're so glad the fireplace and peaceful setting gave you exactly the escape you were looking for. The farm comes alive in those quiet evenings by the fire. We'd love to welcome you back again soon!</p>
+              <div style="display:flex; gap:6px; margin-top:10px;">
+                <button class="ai-btn ai-btn-apply" style="flex:0; white-space:nowrap;">Approve &amp; Publish</button>
+                <button class="ai-btn ai-btn-dismiss">Edit Draft</button>
+                <button class="ai-btn ai-btn-dismiss">Dismiss</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div style="padding:16px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:10px;">
+              <div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                  <span style="font-size:16px; color:#f59e0b; letter-spacing:-1px;">★★★</span><span style="font-size:11px; color:var(--muted);">☆☆</span>
+                  <span class="badge badge-blue">Booking.com</span>
+                  <span class="badge badge-red">Negative</span>
+                  <span style="font-size:10px; color:var(--muted);">28 May 2026 · Swallows Nest</span>
+                </div>
+                <div style="font-size:13px; font-weight:600; color:var(--text); margin-bottom:4px;">Good but hot water issue</div>
+              </div>
+              <span class="badge badge-red">Needs Attention</span>
+            </div>
+            <p style="font-size:12px; color:#94a3b8; line-height:1.6;">"Nice property but we had hot water problems on day 2. Took a few hours to sort out. Property itself is lovely but this was frustrating."</p>
+            <div style="margin-top:10px; padding:8px 12px; background:rgba(239,68,68,0.05); border:1px solid rgba(239,68,68,0.2); border-radius:6px; font-size:11px; color:#fca5a5;">
+              ⚡ AI flagged: maintenance follow-up task created · manager escalation triggered
+            </div>
+            <div style="display:flex; gap:6px; margin-top:10px;">
+              <button class="ai-btn ai-btn-apply">Generate Response Draft</button>
+              <button class="ai-btn ai-btn-dismiss">View Related Task</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div style="padding:16px;">
+            <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:10px;">
+              <div>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                  <span style="font-size:16px; color:#f59e0b; letter-spacing:-1px;">★★★★</span><span style="font-size:11px; color:var(--muted);">☆</span>
+                  <span style="background:rgba(66,133,244,0.1); color:#93c5fd; border:1px solid rgba(66,133,244,0.2); padding:2px 7px; border-radius:4px; font-size:9px; font-weight:600;">Google</span>
+                  <span class="badge badge-green">Positive</span>
+                  <span style="font-size:10px; color:var(--muted);">23 May 2026 · Woody's Cottage</span>
+                </div>
+              </div>
+              <span class="badge badge-green">Draft Ready</span>
+            </div>
+            <p style="font-size:12px; color:#94a3b8; line-height:1.6;">"Beautiful setting, cottage was clean and well-equipped. WiFi could be stronger in the bedroom area."</p>
+            <div style="margin-top:12px; padding:12px; background:rgba(59,130,246,0.05); border:1px solid rgba(59,130,246,0.15); border-radius:6px;">
+              <div style="font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--blue); margin-bottom:6px;">AI Draft Response · Medium Risk · Requires Approval</div>
+              <p style="font-size:11px; color:#94a3b8; line-height:1.6;">Thank you for staying with us at Woody's Cottage! We're so glad you enjoyed the setting and found everything well-equipped. We hear you on the WiFi — a signal booster for the bedroom is on our improvement list for next month. Hope to welcome you back soon!</p>
+              <div style="display:flex; gap:6px; margin-top:10px;">
+                <button class="ai-btn ai-btn-apply">Approve &amp; Publish</button>
+                <button class="ai-btn ai-btn-dismiss">Edit Draft</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ GUESTS ═══ -->
+    <div class="page" id="page-guests">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+        <div style="display:flex; gap:8px;">
+          <div style="display:flex; align-items:center; gap:6px; background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:6px 12px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input placeholder="Search guests..." style="background:transparent; border:none; color:var(--text); font-size:11px; font-family:inherit; outline:none; width:180px;">
+          </div>
+        </div>
+        <button style="background:var(--blue); color:white; border:none; padding:7px 14px; border-radius:6px; font-size:11px; font-weight:600; cursor:pointer;">Add Guest</button>
+      </div>
+
+      <div class="panel">
+        <table style="width:100%; border-collapse:collapse;">
+          <thead>
+            <tr style="border-bottom:1px solid var(--border);">
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Guest</th>
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Contact</th>
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Stays</th>
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Last Stay</th>
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Preferred Property</th>
+              <th style="text-align:left; padding:10px 16px; font-size:9px; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted);">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border);" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background=''">
+              <td style="padding:12px 16px;">
+                <div style="font-size:12px; font-weight:500; color:var(--text);">Sarah Thompson</div>
+                <div style="font-size:10px; color:var(--muted); margin-top:2px;">South Africa</div>
+              </td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">sarah@gmail.com</td>
+              <td style="padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text);">3</td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">29 May 2026</td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">Jackals Rest</td>
+              <td style="padding:12px 16px;"><span class="badge badge-green">Checked In</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background=''">
+              <td style="padding:12px 16px;">
+                <div style="font-size:12px; font-weight:500; color:var(--text);">Priya Govender</div>
+                <div style="font-size:10px; color:var(--muted); margin-top:2px;">South Africa</div>
+              </td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">priya.g@icloud.com</td>
+              <td style="padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text);">1</td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">30 May 2026</td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">Swallows Nest</td>
+              <td style="padding:12px 16px;"><span class="badge badge-blue">Arriving Today</span></td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border);" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background=''">
+              <td style="padding:12px 16px;">
+                <div style="font-size:12px; font-weight:500; color:var(--text);">James Nkosi</div>
+                <div style="font-size:10px; color:var(--muted); margin-top:2px;">South Africa</div>
+              </td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">james.nkosi@work.co.za</td>
+              <td style="padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text);">2</td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">15 Apr 2026</td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">Woody's Cottage</td>
+              <td style="padding:12px 16px;"><span class="badge badge-blue">Upcoming</span></td>
+            </tr>
+            <tr onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background=''">
+              <td style="padding:12px 16px;">
+                <div style="font-size:12px; font-weight:500; color:var(--text);">Kobus van der Berg</div>
+                <div style="font-size:10px; color:var(--muted); margin-top:2px;">South Africa</div>
+              </td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">kobus@vdb.co.za</td>
+              <td style="padding:12px 16px; font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text);">5</td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">12 Mar 2026</td>
+              <td style="padding:12px 16px; font-size:11px; color:var(--muted);">Meadows Cottage</td>
+              <td style="padding:12px 16px;"><span class="badge badge-green">Repeat Guest</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ OPERATIONS ═══ -->
+    <div class="page" id="page-operations">
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:20px;">
+        <div class="kpi warn"><div class="kpi-label">Housekeeping</div><div class="kpi-value mono">2</div><div class="kpi-sub"><span class="kpi-note">tasks open</span></div></div>
+        <div class="kpi crit"><div class="kpi-label">Maintenance</div><div class="kpi-value mono">1</div><div class="kpi-sub"><span class="kpi-note">in progress</span></div></div>
+        <div class="kpi"><div class="kpi-label">Guest Services</div><div class="kpi-value mono">1</div><div class="kpi-sub"><span class="kpi-note">tasks open</span></div></div>
+        <div class="kpi good"><div class="kpi-label">Properties Ready</div><div class="kpi-value mono">2<span class="unit"> / 4</span></div><div class="kpi-sub"><span class="kpi-note">Jackals, Meadows</span></div></div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">🧹 Housekeeping</div></div>
+          <div class="task-row">
+            <div class="task-bar overdue"></div>
+            <div class="task-info">
+              <div class="task-title">Pre-arrival clean — Swallows Nest Studio</div>
+              <div class="task-prop">Due: today 08:00 · OVERDUE</div>
+            </div>
+            <span class="badge badge-red">Overdue</span>
+          </div>
+          <div class="task-row">
+            <div class="task-bar normal"></div>
+            <div class="task-info">
+              <div class="task-title">Weekly linen restock — Meadows Cottage</div>
+              <div class="task-prop">No due date assigned</div>
+            </div>
+            <span class="badge badge-gray">Low</span>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">🔧 Maintenance</div></div>
+          <div class="task-row">
+            <div class="task-bar high"></div>
+            <div class="task-info">
+              <div class="task-title">Replace cabinet hinge — main bedroom</div>
+              <div class="task-prop">Jackals Rest · In Progress</div>
+            </div>
+            <span class="badge badge-amber">In Progress</span>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">🌟 Guest Services</div></div>
+          <div class="task-row">
+            <div class="task-bar high"></div>
+            <div class="task-info">
+              <div class="task-title">Prepare welcome pack — Jackals Rest arrival</div>
+              <div class="task-prop">Jackals Rest · Today</div>
+            </div>
+            <span class="badge badge-amber">High</span>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">🔍 Inspections</div></div>
+          <div class="task-row">
+            <div class="task-bar overdue"></div>
+            <div class="task-info">
+              <div class="task-title">Post-checkout inspection — Woody's Cottage</div>
+              <div class="task-prop">Due: 29 May · OVERDUE</div>
+            </div>
+            <span class="badge badge-red">Overdue</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+  const pageTitles = {
+    dashboard: 'Command Dashboard',
+    bookings: 'Reservations',
+    tasks: 'Task Engine',
+    reviews: 'Review Intelligence',
+    guests: 'Guest CRM',
+    operations: 'Operations',
+  };
+
+  function showPage(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    const page = document.getElementById('page-' + name);
+    if (page) page.classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => {
+      if (n.getAttribute('onclick') === `showPage('${name}')`) n.classList.add('active');
+    });
+    document.getElementById('page-title').textContent = pageTitles[name] || 'PULSE OS';
+
+    // Update URL hash for UX
+    window.location.hash = name;
+  }
+
+  // Route from hash on load
+  const hash = window.location.hash.replace('#', '');
+  if (hash && document.getElementById('page-' + hash)) showPage(hash);
+</script>
+</body>
+</html>

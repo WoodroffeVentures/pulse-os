@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE OS — The Opportunity Intelligence Network</title>
+<meta name="description" content="One network, four ways in: PULSE Opportunities, Travel & Discovery, Host, and Farmstead Live (Tenant #001). Most platforms manage transactions. PULSE manages participation.">
+<meta name="theme-color" content="#07090E">
+<meta property="og:title" content="PULSE OS — The Opportunity Intelligence Network">
+<meta property="og:description" content="One network. Four ways in.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#07090E;--navy:#0B1220;--navy2:#0E1626;--line:rgba(255,255,255,0.09);--line2:rgba(255,255,255,0.14);
+  --brass:#B08D57;--gold:#E8D9A8;--gold2:#C6A66B;--teal:#2BB8A5;--purple:#9B6DFF;
+  --warm:#F4EFE6;--muted:#9AA4B2;--dim:#5C6677;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;--ease:cubic-bezier(0.22,1,0.36,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--black);color:var(--warm);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+::selection{background:rgba(232,217,168,.25);}
+.grain{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+/* ambient glow */
+.bg{position:fixed;inset:0;z-index:0;pointer-events:none;background:
+  radial-gradient(40% 44% at 22% 18%,rgba(43,184,165,.12),transparent 60%),
+  radial-gradient(44% 48% at 80% 22%,rgba(232,217,168,.12),transparent 60%),
+  radial-gradient(46% 50% at 30% 86%,rgba(155,109,255,.12),transparent 62%),
+  radial-gradient(40% 44% at 78% 84%,rgba(43,184,165,.08),transparent 60%);}
+
+.shell{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:clamp(28px,5vw,52px) clamp(20px,5vw,56px) 60px;display:flex;flex-direction:column;min-height:100vh;}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;}
+.brand{display:flex;align-items:center;gap:11px;}
+.brand-mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,var(--gold),var(--brass));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 30px rgba(232,217,168,.25);}
+.brand-mark span{width:11px;height:11px;border-radius:50%;background:var(--black);}
+.brand-name{font-weight:700;letter-spacing:.22em;font-size:16px;}
+.brand-name b{color:var(--gold);font-weight:700;}
+.top-cta{font-size:12.5px;font-weight:600;letter-spacing:.05em;color:var(--black);background:linear-gradient(135deg,var(--gold),var(--brass));border-radius:40px;padding:10px 20px;transition:transform .2s,box-shadow .2s;}
+.top-cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(232,217,168,.3);}
+
+/* hero */
+.hero{text-align:center;padding:clamp(40px,8vh,90px) 0 clamp(30px,5vh,54px);}
+.eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--brass);font-weight:600;opacity:0;animation:fu .9s var(--ease) .1s forwards;}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(40px,7.5vw,82px);line-height:1.02;letter-spacing:-.02em;margin:20px 0 0;opacity:0;animation:fu 1s var(--ease) .25s forwards;}
+.hero h1 em{font-style:italic;color:var(--gold);}
+.hero .strap{max-width:640px;margin:26px auto 0;font-size:clamp(15px,1.9vw,19px);color:var(--muted);font-weight:300;line-height:1.7;opacity:0;animation:fu 1s var(--ease) .45s forwards;}
+.hero .doctrine{margin-top:22px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);opacity:0;animation:fu 1s var(--ease) .6s forwards;}
+.hero .doctrine b{color:var(--warm);font-weight:600;}
+@keyframes fu{to{opacity:1;transform:none;}}
+.eyebrow,.hero h1,.hero .strap,.hero .doctrine{transform:translateY(14px);}
+
+/* pillar grid */
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,1.6vw,20px);margin-top:8px;}
+@media(max-width:760px){.pillars{grid-template-columns:1fr;}}
+.pillar{position:relative;display:block;border:1px solid var(--line);border-radius:20px;background:linear-gradient(165deg,rgba(14,22,38,.7),rgba(11,18,32,.55));overflow:hidden;padding:clamp(26px,3vw,38px);min-height:230px;
+  opacity:0;transform:translateY(22px);animation:fu .9s var(--ease) forwards;transition:transform .45s var(--ease),border-color .45s var(--ease),box-shadow .45s var(--ease),background .45s var(--ease);}
+.pillar:nth-child(1){animation-delay:.6s;}.pillar:nth-child(2){animation-delay:.72s;}.pillar:nth-child(3){animation-delay:.84s;}.pillar:nth-child(4){animation-delay:.96s;}
+.pillar:hover{transform:translateY(-6px);border-color:var(--accent-line);box-shadow:0 30px 80px rgba(0,0,0,.5);background:linear-gradient(165deg,rgba(16,26,44,.85),rgba(11,18,32,.7));}
+.pillar .glow{position:absolute;top:-30%;right:-20%;width:60%;height:90%;background:radial-gradient(circle,var(--accent-glow),transparent 70%);pointer-events:none;opacity:.7;transition:opacity .45s var(--ease);}
+.pillar:hover .glow{opacity:1;}
+.pillar .num{font-family:var(--mono);font-size:12px;color:var(--dim);letter-spacing:.18em;}
+.pillar .ic{position:absolute;top:clamp(26px,3vw,38px);right:clamp(26px,3vw,38px);width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid var(--accent-line);background:var(--accent-bg);color:var(--accent);}
+.pillar .ic svg{width:22px;height:22px;}
+.pillar .name{font-family:var(--serif);font-size:clamp(26px,3.2vw,38px);font-weight:400;line-height:1.05;margin-top:18px;}
+.pillar .name .sub{display:block;font-size:.5em;letter-spacing:.04em;color:var(--accent);font-family:var(--sans);font-weight:600;text-transform:uppercase;margin-top:8px;}
+.pillar .desc{font-size:14px;color:var(--muted);line-height:1.6;margin-top:14px;max-width:90%;}
+.pillar .enter{display:inline-flex;align-items:center;gap:8px;margin-top:22px;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--accent);}
+.pillar .enter .arr{transition:transform .3s var(--ease);}
+.pillar:hover .enter .arr{transform:translateX(5px);}
+.pillar .tag{position:absolute;bottom:clamp(26px,3vw,38px);right:clamp(26px,3vw,38px);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);}
+.pillar .live{display:inline-flex;align-items:center;gap:7px;}
+.pillar .live .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal);animation:lp 2s ease-in-out infinite;}
+@keyframes lp{0%,100%{opacity:1;}50%{opacity:.35;}}
+
+/* accents per pillar */
+.p-opp{--accent:#9B6DFF;--accent-line:rgba(155,109,255,.4);--accent-bg:rgba(155,109,255,.1);--accent-glow:rgba(155,109,255,.14);}
+.p-travel{--accent:#2BB8A5;--accent-line:rgba(43,184,165,.4);--accent-bg:rgba(43,184,165,.1);--accent-glow:rgba(43,184,165,.14);}
+.p-host{--accent:#E8D9A8;--accent-line:rgba(232,217,168,.4);--accent-bg:rgba(232,217,168,.1);--accent-glow:rgba(232,217,168,.14);}
+.p-farm{--accent:#2BB8A5;--accent-line:rgba(43,184,165,.4);--accent-bg:rgba(43,184,165,.1);--accent-glow:rgba(43,184,165,.12);}
+
+/* footer row */
+.foot{margin-top:auto;padding-top:46px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.foot-links{display:flex;gap:22px;flex-wrap:wrap;}
+.foot-links a{font-size:13px;color:var(--muted);transition:color .2s;}
+.foot-links a:hover{color:var(--gold);}
+.foot-note{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);}
+@media (prefers-reduced-motion: reduce){*{animation:none !important;opacity:1 !important;transform:none !important;}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="bg"></div>
+
+<div class="shell">
+  <!-- top -->
+  <div class="top">
+    <div class="brand"><span class="brand-mark"><span></span></span><span class="brand-name">PULSE <b>OS</b></span></div>
+    <a class="top-cta" href="pulse-os-v2.html#page-trial">Request Access</a>
+  </div>
+
+  <!-- hero -->
+  <div class="hero">
+    <div class="eyebrow">A Global Opportunity Intelligence Network</div>
+    <h1>One network.<br><em>Four ways in.</em></h1>
+    <p class="strap">PULSE connects guests, properties, businesses and destinations into one verified participation graph — across Opportunities, Travel &amp; Discovery, and Host.</p>
+    <div class="doctrine">Most platforms manage transactions. <b>PULSE manages participation.</b></div>
+  </div>
+
+  <!-- pillars -->
+  <div class="pillars">
+
+    <!-- 1 OPPORTUNITIES -->
+    <a class="pillar p-opp" href="pulse-opportunities.html">
+      <div class="glow"></div>
+      <div class="num">01</div>
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg></div>
+      <div class="name">PULSE Opportunities<span class="sub">Activate Value</span></div>
+      <div class="desc">Discover, validate, activate and measure opportunity across an entire destination — every one scored on viability before it is activated.</div>
+      <div class="enter">Enter the Opportunity Graph <span class="arr">→</span></div>
+      <div class="tag">Viability Engine · JV Network</div>
+    </a>
+
+    <!-- 2 TRAVEL & DISCOVERY -->
+    <a class="pillar p-travel" href="pulse-travel-discovery.html">
+      <div class="glow"></div>
+      <div class="num">02</div>
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18M3 12h18"/></svg></div>
+      <div class="name">Travel &amp; Discovery<span class="sub">Guide the Guest</span></div>
+      <div class="desc">Turn every destination into a living, verified discovery network — the right experience, at the right time, for the right reason. Not more listings.</div>
+      <div class="enter">Enter Travel &amp; Discovery <span class="arr">→</span></div>
+      <div class="tag">Verified Discovery · AI Getaway</div>
+    </a>
+
+    <!-- 3 HOST GLOBAL -->
+    <a class="pillar p-host" href="pulse-host.html">
+      <div class="glow"></div>
+      <div class="num">03</div>
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 21V9l9-6 9 6v12M9 21v-7h6v7"/></svg></div>
+      <div class="name">PULSE Host<span class="sub">Global Overview</span></div>
+      <div class="desc">Hospitality intelligence at global scale — from a single boutique property to a portfolio of 200 hotels, one intelligence layer that learns, connects and grows.</div>
+      <div class="enter">See Host at global scale <span class="arr">→</span></div>
+      <div class="tag">8 Modules · Gulf Investor Lens</div>
+    </a>
+
+    <!-- 4 FARMSTEAD LIVE -->
+    <a class="pillar p-farm" href="pulse-os-v2.html#page-morning">
+      <div class="glow"></div>
+      <div class="num">04</div>
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 21V8l7-5 7 5v13M9 21v-6h6v6M3 8h18"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg></div>
+      <div class="name">Farmstead Live<span class="sub">Tenant #001 · Proof</span></div>
+      <div class="desc">The first live production environment — running operations, reviews, discovery, trust and revenue intelligence today. Not a demo. PULSE, running live.</div>
+      <div class="enter">Enter Farmstead Live <span class="arr">→</span></div>
+      <div class="tag"><span class="live"><span class="dot"></span>Live · JoyWood Farm</span></div>
+    </a>
+
+  </div>
+
+  <!-- footer -->
+  <div class="foot">
+    <div class="foot-links">
+      <a href="pulse-destination.html">Destination Intelligence</a>
+      <a href="pulse-experience.html">The Full Story</a>
+      <a href="pulse-os-v2.html#page-trial">Request Access</a>
+    </div>
+    <div class="foot-note">AI Assists · Humans Govern · Evidence Decides</div>
+  </div>
+</div>
+</body>
+</html>

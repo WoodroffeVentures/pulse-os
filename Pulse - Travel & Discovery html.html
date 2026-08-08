@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE — Every Destination Has Hidden Opportunity</title>
+<meta name="description" content="PULSE is the intelligence layer connecting hospitality, guests, local businesses and destinations. Most businesses only see bookings. PULSE reveals the hidden relationships that create growth, trust, experiences and opportunity.">
+<meta name="theme-color" content="#07090E">
+<link rel="canonical" href="https://pulseos.africa/">
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="PULSE — Every Destination Has Hidden Opportunity">
+<meta property="og:description" content="A new operating layer for destinations, experiences and opportunity. The future of hospitality is connected.">
+<meta property="og:site_name" content="PULSE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="PULSE — Every Destination Has Hidden Opportunity">
+<meta name="twitter:description" content="The intelligence layer connecting hospitality, guests, local businesses and destinations.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Organization",
+  "name":"PULSE",
+  "description":"The intelligence layer connecting hospitality, guests, local businesses and destinations.",
+  "url":"https://pulseos.africa",
+  "areaServed":"Global",
+  "slogan":"Every Destination Has Hidden Opportunity"
+}
+</script>
+
+<style>
+/* ══════════════════════════ DESIGN SYSTEM ══════════════════════════ */
+:root{
+  --black:#07090E;
+  --navy:#0B1220;
+  --navy-2:#0E1626;
+  --navy-3:#121C30;
+  --brass:#B08D57;
+  --gold:#E8D9A8;
+  --gold-deep:#C6A66B;
+  --teal:#2BB8A5;
+  --warm:#F4EFE6;
+  --muted:#9AA4B2;
+  --dim:#5C6677;
+  --glass:rgba(255,255,255,0.04);
+  --glass-line:rgba(255,255,255,0.10);
+  --d-fast:.4s; --d-base:.7s; --d-slow:1.1s;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Inter',-apple-system,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{ -webkit-text-size-adjust:100%; }
+body{
+  background:var(--black);color:var(--warm);font-family:var(--sans);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body.lenis-stopped{overflow:hidden;}
+img{display:block;max-width:100%;}
+::selection{background:rgba(232,217,168,.25);color:var(--warm);}
+::-webkit-scrollbar{width:0;background:transparent;}
+
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;line-height:1.04;}
+.serif{font-family:var(--serif);}
+.mono{font-family:var(--mono);}
+.eyebrow{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.34em;text-transform:uppercase;color:var(--brass);}
+.lede{font-size:clamp(16px,2vw,20px);line-height:1.7;color:var(--muted);font-weight:300;}
+em{font-style:italic;color:var(--gold);}
+
+/* ── grain + vignette overlays ── */
+.grain{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+/* ══════════════════════════ PROGRESS + NAV ══════════════════════════ */
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:8000;
+  background:linear-gradient(90deg,var(--brass),var(--gold));box-shadow:0 0 12px rgba(232,217,168,.5);}
+.nav{position:fixed;top:0;left:0;right:0;z-index:7000;display:flex;align-items:center;justify-content:space-between;
+  padding:22px clamp(20px,5vw,64px);transition:background var(--d-base) var(--ease),padding var(--d-base) var(--ease),border-color var(--d-base) var(--ease);
+  border-bottom:1px solid transparent;}
+.nav.scrolled{background:rgba(7,9,14,.7);backdrop-filter:blur(16px);border-bottom:1px solid var(--glass-line);padding-top:14px;padding-bottom:14px;}
+.brand{display:flex;align-items:center;gap:11px;cursor:pointer;}
+.brand-mark{width:24px;height:24px;border-radius:5px;background:linear-gradient(135deg,var(--gold),var(--brass));display:flex;align-items:center;justify-content:center;}
+.brand-mark span{width:9px;height:9px;border-radius:50%;background:var(--black);}
+.brand-name{font-family:var(--sans);font-weight:600;letter-spacing:.22em;font-size:14px;}
+.nav-links{display:flex;gap:34px;}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:13px;letter-spacing:.04em;position:relative;transition:color var(--d-fast) var(--ease);}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:-5px;height:1px;width:0;background:var(--gold);transition:width var(--d-fast) var(--ease);}
+.nav-links a:hover{color:var(--warm);} .nav-links a:hover::after{width:100%;}
+.nav-cta{font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:.06em;color:var(--black);
+  background:linear-gradient(135deg,var(--gold),var(--brass));border:none;border-radius:40px;padding:11px 22px;cursor:pointer;
+  transition:transform var(--d-fast) var(--ease),box-shadow var(--d-fast) var(--ease);}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(232,217,168,.3);}
+@media(max-width:880px){.nav-links{display:none;}}
+
+/* ══════════════════════════ BUTTONS ══════════════════════════ */
+.btn{font-family:var(--sans);cursor:pointer;border-radius:46px;letter-spacing:.05em;font-weight:600;
+  transition:transform var(--d-fast) var(--ease),box-shadow var(--d-fast) var(--ease),background var(--d-fast) var(--ease),color var(--d-fast) var(--ease);
+  display:inline-flex;align-items:center;gap:10px;text-decoration:none;}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--brass));color:var(--black);border:none;padding:16px 34px;font-size:15px;}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 16px 44px rgba(232,217,168,.32);}
+.btn-line{background:transparent;color:var(--warm);border:1px solid var(--glass-line);padding:16px 30px;font-size:15px;}
+.btn-line:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
+.btn .arr{transition:transform var(--d-fast) var(--ease);}
+.btn:hover .arr{transform:translateX(4px);}
+
+/* ══════════════════════════ SECTION SCAFFOLD ══════════════════════════ */
+section{position:relative;}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,5vw,64px);}
+.chapter{position:relative;padding:clamp(110px,16vh,200px) 0;}
+.chapter-num{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.2em;margin-bottom:26px;opacity:.8;}
+
+/* ══════════════════════════ HERO ══════════════════════════ */
+.hero{position:relative;height:100vh;min-height:680px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+.hero-media{position:absolute;inset:0;z-index:0;}
+.hero-media .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.08);
+  transition:opacity 2.4s ease,transform 8s ease;}
+.hero-media .slide.on{opacity:1;transform:scale(1);}
+.hero-grade{position:absolute;inset:0;z-index:1;background:
+  radial-gradient(120% 90% at 50% 10%, rgba(7,9,14,.3), transparent 40%),
+  linear-gradient(180deg, rgba(7,9,14,.55) 0%, rgba(7,9,14,.35) 35%, rgba(11,18,32,.78) 80%, var(--black) 100%);}
+.hero-grade-2{position:absolute;inset:0;z-index:1;background:radial-gradient(60% 60% at 50% 55%, transparent, rgba(7,9,14,.5));}
+.hero-inner{position:relative;z-index:3;max-width:1000px;padding:0 24px;}
+.hero-eyebrow{margin-bottom:34px;opacity:0;}
+.hero h1{font-size:clamp(44px,8.2vw,108px);font-weight:300;letter-spacing:-.02em;}
+.hero h1 .l{display:block;overflow:hidden;}
+.hero h1 .l > span{display:block;}
+.hero h1 .accent{font-style:italic;color:var(--gold);}
+.hero-sub{max-width:620px;margin:38px auto 46px;opacity:0;}
+.hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;}
+.hero-scroll{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:12px;opacity:.8;}
+.hero-scroll .t{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);}
+.hero-scroll .ln{width:1px;height:42px;background:linear-gradient(var(--gold),transparent);animation:scrollPulse 2.4s ease-in-out infinite;transform-origin:top;}
+@keyframes scrollPulse{0%,100%{transform:scaleY(.3);opacity:.4;}50%{transform:scaleY(1);opacity:1;}}
+
+/* ══════════════════════════ CH1 — HOSPITALITY IS NOT ACCOMMODATION ══════════════════════════ */
+.ch-words{text-align:center;}
+.ch-words .big{font-size:clamp(36px,6.5vw,84px);font-weight:300;line-height:1.12;}
+.ch-words .big .w{display:inline-block;color:var(--dim);transition:color .5s var(--ease);}
+.ch-words .big .w.lit{color:var(--warm);}
+.ch-words .big .w em{color:var(--gold);}
+.ch-photo-band{position:relative;height:clamp(360px,60vh,640px);overflow:hidden;margin:0;}
+.ch-photo-band .bg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.15);will-change:transform;}
+.ch-photo-band .ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,9,14,.5),rgba(11,18,32,.35) 50%,rgba(7,9,14,.7));}
+.ch-photo-band .cap{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:2;}
+.ch-photo-band .cap h2{font-size:clamp(30px,5.5vw,68px);font-weight:300;max-width:900px;}
+
+/* ══════════════════════════ CH2 — THE JOURNEY ══════════════════════════ */
+.journey{text-align:center;}
+.journey-feelings{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 18px;margin-top:54px;max-width:820px;margin-left:auto;margin-right:auto;}
+.feeling{font-family:var(--serif);font-style:italic;font-size:clamp(22px,3.4vw,40px);color:var(--dim);transition:color .6s var(--ease),transform .6s var(--ease);}
+.feeling.on{color:var(--gold);}
+.journey-note{margin-top:48px;}
+
+/* ══════════════════════════ CH3 — INVISIBLE ECONOMY ══════════════════════════ */
+.econ{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.econ-copy h2{font-size:clamp(30px,4.6vw,58px);font-weight:300;margin-bottom:24px;}
+.econ-stat{margin-top:34px;display:flex;gap:40px;flex-wrap:wrap;}
+.econ-stat .s .v{font-family:var(--mono);font-size:clamp(28px,3.5vw,42px);color:var(--gold);}
+.econ-stat .s .k{font-size:12px;color:var(--muted);letter-spacing:.08em;margin-top:6px;}
+.econ-flow{position:relative;display:flex;flex-direction:column;gap:12px;}
+.flow-node{display:flex;align-items:center;gap:16px;padding:16px 20px;border:1px solid var(--glass-line);border-radius:14px;
+  background:var(--glass);backdrop-filter:blur(6px);}
+.flow-node .ic{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;
+  background:rgba(176,141,87,.14);flex-shrink:0;}
+.flow-node .tx .n{font-size:14.5px;font-weight:500;color:var(--warm);}
+.flow-node .tx .d{font-size:12px;color:var(--muted);margin-top:2px;}
+.flow-source{align-self:center;text-align:center;padding:18px 26px;border-radius:16px;margin-bottom:6px;
+  background:linear-gradient(135deg,rgba(232,217,168,.14),rgba(176,141,87,.08));border:1px solid rgba(232,217,168,.3);}
+.flow-source .n{font-family:var(--serif);font-size:22px;color:var(--gold);}
+.flow-source .d{font-size:11.5px;color:var(--muted);letter-spacing:.08em;}
+@media(max-width:880px){.econ{grid-template-columns:1fr;gap:40px;}}
+
+/* ══════════════════════════ CH4 — THE NETWORK ══════════════════════════ */
+.network-sec{height:100vh;min-height:680px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+#netCanvas{position:absolute;inset:0;z-index:0;width:100%;height:100%;display:block;}
+.network-grade{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(70% 70% at 50% 50%, transparent, rgba(7,9,14,.7));}
+.network-copy{position:relative;z-index:2;text-align:center;max-width:720px;padding:0 24px;pointer-events:none;}
+.network-copy::before{content:"";position:absolute;inset:-14% -18%;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 62% 60% at 50% 50%, rgba(7,9,14,.94) 0%, rgba(7,9,14,.82) 42%, rgba(7,9,14,.4) 62%, transparent 76%);
+  filter:blur(8px);}
+.network-copy h2{font-size:clamp(30px,5vw,66px);font-weight:300;position:relative;}
+.network-copy .lede{margin-top:24px;position:relative;}
+
+/* ══════════════════════════ CH5 — DISCOVERY ══════════════════════════ */
+.discovery{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:center;}
+.disc-prompt{background:var(--glass);border:1px solid var(--glass-line);border-radius:20px;padding:30px;backdrop-filter:blur(10px);}
+.disc-prompt .q{font-family:var(--serif);font-style:italic;font-size:clamp(22px,3vw,32px);line-height:1.4;color:var(--warm);}
+.disc-prompt .cursor{display:inline-block;width:2px;height:1em;background:var(--gold);vertical-align:-2px;margin-left:3px;animation:blink 1.1s step-end infinite;}
+@keyframes blink{50%{opacity:0;}}
+.disc-results{display:flex;flex-direction:column;gap:12px;}
+.disc-card{display:flex;align-items:center;gap:16px;padding:16px 18px;border:1px solid var(--glass-line);border-radius:14px;
+  background:var(--glass);opacity:0;transform:translateX(24px);}
+.disc-card .ic{font-size:20px;width:40px;height:40px;border-radius:11px;background:rgba(43,184,165,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.disc-card .tx .n{font-size:14.5px;font-weight:500;}
+.disc-card .tx .d{font-size:12px;color:var(--muted);margin-top:2px;}
+.disc-card .tag{margin-left:auto;font-size:10px;letter-spacing:.06em;color:var(--teal);border:1px solid rgba(43,184,165,.3);border-radius:12px;padding:3px 9px;white-space:nowrap;}
+@media(max-width:880px){.discovery{grid-template-columns:1fr;gap:36px;}}
+
+/* ══════════════════════════ CH6 — MEET PULSE ══════════════════════════ */
+.meet{text-align:center;}
+.panels{position:relative;margin-top:64px;height:clamp(420px,52vw,560px);display:flex;align-items:center;justify-content:center;perspective:1600px;}
+.panel{position:absolute;border:1px solid var(--glass-line);border-radius:18px;background:linear-gradient(160deg,rgba(14,22,38,.92),rgba(11,18,32,.92));
+  backdrop-filter:blur(12px);box-shadow:0 40px 90px rgba(0,0,0,.55);overflow:hidden;}
+.panel .ph{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--glass-line);}
+.panel .ph .t{font-size:12px;font-weight:600;letter-spacing:.1em;color:var(--warm);text-transform:uppercase;}
+.panel .ph .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);}
+.panel .pb{padding:18px;}
+.panel-main{position:relative;z-index:5;width:min(560px,76vw);}
+.panel-l{z-index:3;width:min(300px,42vw);left:2%;transform:translateX(-10%) rotateY(18deg) scale(.86);opacity:.62;}
+.panel-r{z-index:3;width:min(300px,42vw);right:2%;transform:translateX(10%) rotateY(-18deg) scale(.86);opacity:.62;}
+.kpi-row{display:flex;gap:12px;}
+.kpi{flex:1;background:rgba(2,9,18,.5);border:1px solid var(--glass-line);border-radius:10px;padding:12px;}
+.kpi .v{font-family:var(--mono);font-size:20px;color:var(--gold);}
+.kpi .k{font-size:9.5px;letter-spacing:.1em;color:var(--dim);text-transform:uppercase;margin-top:5px;}
+.bar{height:8px;border-radius:5px;background:rgba(255,255,255,.07);overflow:hidden;margin:14px 0 6px;}
+.bar > i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--teal),var(--gold));width:92%;}
+.panel-line{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:12.5px;color:var(--muted);}
+.panel-line:last-child{border-bottom:none;}
+.panel-line .pd{width:6px;height:6px;border-radius:50%;background:var(--brass);flex-shrink:0;}
+.capabilities{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:54px;max-width:900px;margin-left:auto;margin-right:auto;}
+.cap-chip{font-size:12.5px;color:var(--muted);border:1px solid var(--glass-line);border-radius:30px;padding:9px 18px;transition:color var(--d-fast),border-color var(--d-fast);}
+.cap-chip:hover{color:var(--gold);border-color:rgba(232,217,168,.4);}
+@media(max-width:880px){.panel-l,.panel-r{display:none;}.panel-main{width:90vw;}}
+
+/* ══════════════════════════ CH7 — SCALE ══════════════════════════ */
+.scale-sec{text-align:center;}
+.scale-track{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;margin-top:60px;}
+.scale-step{display:flex;align-items:center;}
+.scale-step .node{font-family:var(--serif);font-size:clamp(15px,1.8vw,21px);color:var(--muted);padding:12px 18px;border:1px solid var(--glass-line);
+  border-radius:40px;background:var(--glass);white-space:nowrap;transition:all .5s var(--ease);}
+.scale-step.on .node{color:var(--gold);border-color:rgba(232,217,168,.45);box-shadow:0 0 30px rgba(232,217,168,.12);transform:scale(1.04);}
+.scale-step .link{width:clamp(18px,3vw,46px);height:1px;background:var(--glass-line);transition:background .5s var(--ease);}
+.scale-step.on .link{background:linear-gradient(90deg,var(--brass),var(--gold));}
+.scale-final{margin-top:54px;}
+
+/* ══════════════════════════ CH8 — WHY ══════════════════════════ */
+.why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;margin-top:60px;}
+.why-card{padding:30px;border:1px solid var(--glass-line);border-radius:18px;background:var(--glass);transition:transform .4s var(--ease),border-color .4s var(--ease);}
+.why-card:hover{transform:translateY(-5px);border-color:rgba(232,217,168,.35);}
+.why-card .ic{font-size:24px;margin-bottom:18px;}
+.why-card h3{font-size:24px;font-weight:500;margin-bottom:10px;color:var(--warm);}
+.why-card p{font-size:13.5px;color:var(--muted);line-height:1.65;}
+
+/* ══════════════════════════ FINALE ══════════════════════════ */
+.finale{position:relative;height:100vh;min-height:680px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;}
+#globeCanvas{position:absolute;inset:0;z-index:0;width:100%;height:100%;}
+.finale-grade{position:absolute;inset:0;z-index:1;background:radial-gradient(60% 60% at 50% 60%, transparent, rgba(7,9,14,.55) 70%, var(--black));}
+.finale-inner{position:relative;z-index:3;max-width:880px;padding:0 24px;}
+.finale h2{font-size:clamp(36px,7vw,90px);font-weight:300;letter-spacing:-.02em;}
+.finale h2 em{display:block;}
+.finale-sub{max-width:560px;margin:32px auto 44px;}
+.finale-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+
+/* ══════════════════════════ FOOTER ══════════════════════════ */
+footer{border-top:1px solid var(--glass-line);padding:54px clamp(20px,5vw,64px) 40px;background:var(--black);}
+.foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:30px;max-width:1240px;margin:0 auto;}
+.foot-tag{font-family:var(--serif);font-size:clamp(20px,2.6vw,30px);font-weight:300;max-width:420px;line-height:1.2;}
+.foot-cols{display:flex;gap:60px;flex-wrap:wrap;}
+.foot-col h4{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass);margin-bottom:16px;}
+.foot-col a{display:block;color:var(--muted);text-decoration:none;font-size:13.5px;margin-bottom:11px;transition:color var(--d-fast);}
+.foot-col a:hover{color:var(--gold);}
+.foot-bottom{max-width:1240px;margin:48px auto 0;padding-top:24px;border-top:1px solid rgba(255,255,255,.05);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:11px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;}
+
+/* ══════════════════════════ MOTION FALLBACK ══════════════════════════ */
+@media (prefers-reduced-motion: reduce){
+  .hero-media .slide{transition:opacity .4s;}
+  .hero-eyebrow,.hero-sub,.hero-ctas{opacity:1 !important;}
+  .hero-scroll .ln{animation:none;}
+  *{scroll-behavior:auto !important;}
+}
+.reveal-init{opacity:0;}
+
+/* ════════════════ DEC-013 NEW CHAPTERS ════════════════ */
+/* ── Verified Discovery (Trust) ── */
+.trust-eq{display:flex;flex-wrap:wrap;align-items:stretch;justify-content:center;gap:14px;margin-top:56px;}
+.te-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:var(--glass);
+  border:1px solid var(--glass-line);border-radius:16px;padding:24px 20px;min-width:150px;flex:1;max-width:200px;}
+.te-card .ic{font-size:26px;}
+.te-card .l{font-size:13px;color:var(--muted);text-align:center;letter-spacing:.02em;}
+.te-op{display:flex;align-items:center;font-family:var(--serif);font-size:30px;color:var(--dim);}
+.te-result{background:linear-gradient(160deg,rgba(43,184,165,.12),rgba(232,217,168,.06));border-color:rgba(43,184,165,.4);
+  box-shadow:0 0 50px rgba(43,184,165,.14);min-width:180px;max-width:230px;}
+.te-result .l{color:var(--teal);font-weight:600;font-size:14px;}
+.te-result .ic{font-size:30px;}
+@media(max-width:760px){.trust-eq{flex-direction:column;align-items:stretch;}.te-card,.te-result{max-width:none;}.te-op{justify-content:center;}}
+
+/* ── Ask PULSE (intelligence interface) ── */
+.ask-sec{background:linear-gradient(180deg,var(--black),var(--navy) 50%,var(--black));}
+.ask-shell{margin-top:54px;display:grid;grid-template-columns:.85fr 1.15fr;gap:0;border:1px solid var(--glass-line);
+  border-radius:20px;overflow:hidden;background:rgba(7,9,14,.6);backdrop-filter:blur(12px);box-shadow:0 50px 120px rgba(0,0,0,.5);}
+.ask-left{border-right:1px solid var(--glass-line);padding:26px;background:rgba(11,18,32,.5);}
+.ask-left .h{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--brass);margin-bottom:20px;}
+.ask-q{display:flex;align-items:center;gap:11px;padding:14px 14px;border-radius:11px;cursor:pointer;margin-bottom:8px;
+  border:1px solid transparent;transition:background var(--d-fast) var(--ease),border-color var(--d-fast) var(--ease);font-size:13.5px;color:var(--muted);line-height:1.4;}
+.ask-q:hover{background:var(--glass);color:var(--warm);}
+.ask-q.on{background:rgba(232,217,168,.08);border-color:rgba(232,217,168,.3);color:var(--warm);}
+.ask-q .qd{width:6px;height:6px;border-radius:50%;background:var(--brass);flex-shrink:0;}
+.ask-right{padding:30px;min-height:420px;position:relative;}
+.ask-bar{display:flex;align-items:center;gap:10px;padding-bottom:18px;border-bottom:1px solid var(--glass-line);margin-bottom:22px;}
+.ask-bar .pulse-dot{width:9px;height:9px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal);}
+.ask-bar .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+.ask-bar .lbl b{color:var(--gold);font-weight:600;}
+.ask-out{transition:opacity .35s var(--ease),transform .35s var(--ease);}
+.ask-out.swap{opacity:0;transform:translateY(8px);}
+.ask-finding{font-family:var(--serif);font-size:clamp(20px,2.6vw,30px);line-height:1.3;color:var(--warm);margin-bottom:22px;}
+.ask-finding em{color:var(--gold);}
+.ask-metrics{display:flex;flex-direction:column;gap:13px;margin-bottom:22px;}
+.ask-metric{display:flex;align-items:center;gap:14px;}
+.ask-metric .mlabel{font-size:12.5px;color:var(--muted);width:150px;flex-shrink:0;}
+.ask-metric .mtrack{flex:1;height:8px;border-radius:5px;background:rgba(255,255,255,.06);overflow:hidden;}
+.ask-metric .mfill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--brass),var(--gold));width:0;transition:width .9s var(--ease);}
+.ask-metric .mval{font-family:var(--mono);font-size:13px;color:var(--gold);width:54px;text-align:right;flex-shrink:0;}
+.ask-opp{display:flex;gap:13px;align-items:flex-start;padding:16px 18px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(43,184,165,.1),rgba(232,217,168,.05));border:1px solid rgba(43,184,165,.28);}
+.ask-opp .oic{font-size:18px;}
+.ask-opp .ot{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:5px;}
+.ask-opp .od{font-size:13.5px;color:var(--warm);line-height:1.55;}
+@media(max-width:840px){.ask-shell{grid-template-columns:1fr;}.ask-left{border-right:none;border-bottom:1px solid var(--glass-line);}.ask-right{min-height:0;}}
+
+/* ── Farmstead Live (proof) ── */
+.farm-sec{background:linear-gradient(180deg,var(--black),var(--navy-2) 60%,var(--black));}
+.farm-badge{display:inline-flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--teal);border:1px solid rgba(43,184,165,.35);border-radius:30px;padding:8px 18px;margin-bottom:26px;}
+.farm-badge .lv{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 10px var(--teal);animation:livePulse 2s ease-in-out infinite;}
+@keyframes livePulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.farm-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:50px;}
+.farm-card{text-align:left;padding:22px;border:1px solid var(--glass-line);border-radius:16px;background:var(--glass);
+  cursor:pointer;text-decoration:none;display:block;transition:transform .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease);}
+.farm-card:hover{transform:translateY(-5px);border-color:rgba(232,217,168,.4);box-shadow:0 20px 50px rgba(0,0,0,.45);}
+.farm-card .fk{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:12px;}
+.farm-card .fv{font-family:var(--mono);font-size:30px;color:var(--gold);line-height:1;}
+.farm-card .fn{font-size:13px;color:var(--warm);margin-top:8px;font-weight:500;}
+.farm-card .fd{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.5;}
+.farm-card .fgo{font-size:11.5px;color:var(--teal);margin-top:14px;letter-spacing:.04em;}
+.farm-enter{margin-top:48px;}
+
+/* ── Hidden Opportunity flow ── */
+.opp-participants{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:48px auto 0;max-width:880px;}
+.opp-p{font-size:12.5px;color:var(--muted);border:1px solid var(--glass-line);border-radius:24px;padding:9px 16px;background:var(--glass);}
+.opp-flow{display:flex;flex-direction:column;align-items:center;gap:0;margin-top:44px;}
+.opp-stage{display:flex;flex-direction:column;align-items:center;}
+.opp-stage .sv{font-family:var(--serif);font-size:clamp(22px,3vw,34px);color:var(--gold);}
+.opp-stage .sd{font-size:12px;color:var(--muted);letter-spacing:.06em;margin-top:3px;}
+.opp-arrow{width:1px;height:34px;background:linear-gradient(var(--brass),transparent);margin:10px 0;}
+
+/* ── Destination Command ── */
+.cmd-sec{background:radial-gradient(120% 80% at 50% 0%, rgba(11,18,32,.9), var(--black));}
+.cmd-frame{margin-top:50px;border:1px solid var(--glass-line);border-radius:20px;overflow:hidden;background:rgba(7,9,14,.65);box-shadow:0 50px 120px rgba(0,0,0,.55);}
+.cmd-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:16px 22px;border-bottom:1px solid var(--glass-line);background:rgba(11,18,32,.5);}
+.cmd-top .ct{font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--warm);}
+.cmd-top .cstatus{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:flex;align-items:center;gap:8px;}
+.cmd-top .cstatus .d{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);}
+.cmd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--glass-line);}
+.cmd-panel{background:rgba(11,18,32,.55);padding:22px;}
+.cmd-panel .pk{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:12px;}
+.cmd-panel .pv{font-family:var(--mono);font-size:30px;color:var(--warm);line-height:1;}
+.cmd-panel .pv.gold{color:var(--gold);} .cmd-panel .pv.teal{color:var(--teal);}
+.cmd-panel .ps{font-size:11.5px;color:var(--muted);margin-top:8px;}
+.cmd-spark{display:flex;align-items:flex-end;gap:3px;height:34px;margin-top:14px;}
+.cmd-spark i{flex:1;background:linear-gradient(180deg,var(--brass),rgba(176,141,87,.2));border-radius:2px;opacity:.8;}
+.cmd-foot{padding:16px 22px;border-top:1px solid var(--glass-line);font-size:12px;color:var(--muted);background:rgba(11,18,32,.4);}
+.cmd-foot b{color:var(--gold);font-weight:600;}
+@media(max-width:760px){.cmd-grid{grid-template-columns:1fr 1fr;}}
+
+/* ── Why Now ── */
+.why-now-tension{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:50px;}
+.tension{padding:22px;border:1px solid var(--glass-line);border-radius:14px;background:var(--glass);}
+.tension .tt{font-size:15px;color:var(--warm);font-weight:500;margin-bottom:6px;}
+.tension .td{font-size:12.5px;color:var(--muted);line-height:1.55;}
+.why-now-resolve{margin-top:54px;text-align:center;}
+.why-now-resolve .big{font-family:var(--serif);font-size:clamp(32px,6vw,72px);font-weight:300;}
+.why-now-resolve .big em{color:var(--gold);}
+
+/* ── Roadmap journey ── */
+.road{margin-top:56px;position:relative;max-width:760px;margin-left:auto;margin-right:auto;}
+.road::before{content:"";position:absolute;left:23px;top:8px;bottom:8px;width:1px;background:linear-gradient(var(--brass),rgba(176,141,87,.15));}
+.road-step{display:flex;align-items:flex-start;gap:22px;padding:16px 0;position:relative;}
+.road-dot{width:48px;height:48px;border-radius:50%;border:1px solid var(--glass-line);background:var(--navy-2);display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:13px;color:var(--muted);flex-shrink:0;z-index:2;transition:all .5s var(--ease);}
+.road-step.on .road-dot{border-color:var(--gold);color:var(--gold);box-shadow:0 0 24px rgba(232,217,168,.2);}
+.road-step.active-now .road-dot{background:linear-gradient(135deg,var(--gold),var(--brass));color:var(--black);}
+.road-body .rt{font-family:var(--serif);font-size:clamp(20px,2.6vw,28px);color:var(--warm);}
+.road-body .rd{font-size:13px;color:var(--muted);margin-top:4px;line-height:1.55;max-width:520px;}
+.road-body .rstatus{display:inline-block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;margin-top:9px;padding:3px 10px;border-radius:12px;border:1px solid var(--glass-line);color:var(--dim);}
+.road-step.on .road-body .rstatus.live{color:var(--teal);border-color:rgba(43,184,165,.35);}
+
+/* ════════════════ DEC-014 — PLATFORM SCALE + OPPORTUNITY/JV ════════════════ */
+/* ── Built For (audiences) ── */
+.aud-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px;margin-top:54px;text-align:left;}
+.aud{padding:26px;border:1px solid var(--glass-line);border-radius:18px;background:var(--glass);transition:transform .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease);}
+.aud:hover{transform:translateY(-5px);border-color:rgba(232,217,168,.35);box-shadow:0 20px 50px rgba(0,0,0,.4);}
+.aud .ak{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);margin-bottom:6px;}
+.aud h3{font-size:24px;font-weight:500;color:var(--warm);margin-bottom:14px;}
+.aud ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;}
+.aud li{font-size:13px;color:var(--muted);line-height:1.45;display:flex;gap:9px;align-items:flex-start;}
+.aud li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--brass);margin-top:7px;flex-shrink:0;}
+
+/* ── Opportunity Exchange ── */
+.opx-sec{background:linear-gradient(180deg,var(--black),var(--navy) 55%,var(--black));}
+.opx-types{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:46px;max-width:900px;margin-left:auto;margin-right:auto;}
+.opx-type{font-size:12px;color:var(--muted);border:1px solid var(--glass-line);border-radius:22px;padding:8px 15px;background:var(--glass);transition:color .3s,border-color .3s;}
+.opx-type:hover{color:var(--gold);border-color:rgba(232,217,168,.35);}
+.opx-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px;margin-top:50px;text-align:left;}
+.opx-card{border:1px solid var(--glass-line);border-radius:18px;background:linear-gradient(160deg,rgba(14,22,38,.85),rgba(11,18,32,.85));overflow:hidden;
+  transition:transform .4s var(--ease),border-color .4s var(--ease),box-shadow .4s var(--ease);}
+.opx-card:hover{transform:translateY(-5px);border-color:rgba(232,217,168,.4);box-shadow:0 24px 60px rgba(0,0,0,.5);}
+.opx-card .oh{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 20px 14px;}
+.opx-card .otype{font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:8px;}
+.opx-card .otitle{font-family:var(--serif);font-size:20px;line-height:1.2;color:var(--warm);}
+.opx-card .oby{font-size:11.5px;color:var(--dim);margin-top:6px;}
+.opx-score{flex-shrink:0;text-align:center;border:1px solid var(--glass-line);border-radius:12px;padding:8px 10px;min-width:64px;}
+.opx-score .sv{font-family:var(--mono);font-size:18px;color:var(--gold);}
+.opx-score .sl{font-size:8px;letter-spacing:.1em;color:var(--dim);text-transform:uppercase;margin-top:2px;}
+.opx-meta{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--glass-line);border-top:1px solid var(--glass-line);}
+.opx-meta .m{background:rgba(7,9,14,.5);padding:11px 16px;}
+.opx-meta .mk{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);}
+.opx-meta .mv{font-size:13px;color:var(--warm);margin-top:3px;font-weight:500;}
+.opx-foot{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;border-top:1px solid var(--glass-line);}
+.opx-status{font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:12px;}
+.st-open{color:var(--teal);border:1px solid rgba(43,184,165,.35);background:rgba(43,184,165,.08);}
+.st-review{color:var(--gold);border:1px solid rgba(232,217,168,.3);background:rgba(232,217,168,.06);}
+.st-matched{color:#93c5fd;border:1px solid rgba(59,130,246,.3);background:rgba(59,130,246,.08);}
+.opx-next{font-size:11.5px;color:var(--brass);}
+.opx-verdict{display:inline-flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.06em;color:var(--teal);}
+.opx-verdict .vd{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);}
+/* JV workflow */
+.jv-flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:0;margin-top:54px;}
+.jv-step{display:flex;align-items:center;}
+.jv-step .jn{font-size:12px;color:var(--muted);border:1px solid var(--glass-line);border-radius:30px;padding:9px 15px;white-space:nowrap;background:var(--glass);transition:all .5s var(--ease);}
+.jv-step.on .jn{color:var(--gold);border-color:rgba(232,217,168,.4);box-shadow:0 0 24px rgba(232,217,168,.1);}
+.jv-step .jl{width:clamp(12px,2vw,30px);height:1px;background:var(--glass-line);transition:background .5s var(--ease);}
+.jv-step.on .jl{background:linear-gradient(90deg,var(--brass),var(--gold));}
+.opx-note{margin-top:40px;text-align:center;font-size:12.5px;color:var(--dim);max-width:600px;margin-left:auto;margin-right:auto;}
+
+/* ── Platform Network (future partners) ── */
+.pnet-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:50px;text-align:left;}
+.pnet-card{padding:22px;border:1px solid var(--glass-line);border-radius:16px;background:var(--glass);transition:transform .4s var(--ease),border-color .4s var(--ease);}
+.pnet-card:hover{transform:translateY(-4px);border-color:rgba(43,184,165,.32);}
+.pnet-card .ph{display:flex;align-items:center;gap:11px;margin-bottom:14px;}
+.pnet-card .pic{font-size:18px;width:36px;height:36px;border-radius:10px;background:rgba(176,141,87,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pnet-card .pname{font-size:15px;font-weight:600;color:var(--warm);}
+.pnet-card .prow{display:flex;gap:8px;font-size:12px;color:var(--muted);line-height:1.4;padding:6px 0;border-top:1px solid rgba(255,255,255,.05);}
+.pnet-card .prow:first-of-type{border-top:none;}
+.pnet-card .prow b{color:var(--brass);font-weight:600;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;width:64px;flex-shrink:0;padding-top:1px;}
+.pnet-effect{margin-top:44px;text-align:center;font-family:var(--serif);font-size:clamp(20px,3vw,32px);font-weight:300;color:var(--warm);max-width:760px;margin-left:auto;margin-right:auto;}
+.pnet-effect em{color:var(--gold);}
+
+/* Ask PULSE — participants + JV additions */
+.ask-extra{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;}
+.ask-block{background:rgba(7,9,14,.4);border:1px solid var(--glass-line);border-radius:11px;padding:13px 15px;}
+.ask-block .bk{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass);margin-bottom:7px;}
+.ask-block .bv{font-size:12.5px;color:var(--warm);line-height:1.5;}
+@media(max-width:760px){.ask-extra{grid-template-columns:1fr;}}
+</style>
+</head>
+
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<!-- ════════ NAV ════════ -->
+<nav class="nav" id="nav">
+  <div class="brand" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <div class="brand-mark"><span></span></div>
+    <span class="brand-name">PULSE</span>
+  </div>
+  <div class="nav-links">
+    <a href="#network">Network</a>
+    <a href="#ask">Intelligence</a>
+    <a href="#opportunity-exchange">Opportunities</a>
+    <a href="#command">Destinations</a>
+    <a href="#platform-network">Platform</a>
+    <a href="#farmstead">Farmstead Live</a>
+  </div>
+  <button class="nav-cta" onclick="location.href='pulse-os-v2.html#page-trial'">Start Free Trial</button>
+</nav>
+
+<!-- ════════ HERO ════════ -->
+<header class="hero" id="top">
+  <div class="hero-media" id="heroMedia" aria-hidden="true">
+    <div class="slide" style="background-color:#0B1220;background-image:url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2000&q=80')"></div>
+    <div class="slide" style="background-color:#0B1220;background-image:url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=2000&q=80')"></div>
+    <div class="slide" style="background-color:#0B1220;background-image:url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&w=2000&q=80')"></div>
+    <div class="slide" style="background-color:#0B1220;background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=2000&q=80')"></div>
+  </div>
+  <div class="hero-grade"></div>
+  <div class="hero-grade-2"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow eyebrow" id="heroEyebrow">Hospitality · Discovery · Trust · Opportunity</div>
+    <h1>
+      <span class="l"><span>Every Destination</span></span>
+      <span class="l"><span class="accent">Has Hidden Opportunity</span></span>
+    </h1>
+    <p class="hero-sub lede" id="heroSub">
+      Most businesses only see bookings. Most destinations only see visitors.
+      PULSE reveals the hidden relationships that create growth, trust, experiences and opportunity.
+    </p>
+    <div class="hero-ctas" id="heroCtas">
+      <a class="btn btn-gold" href="#network">Explore The Network <span class="arr">→</span></a>
+      <a class="btn btn-line" href="#platform">See The Future Of Hospitality</a>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <span class="t">Scroll</span>
+    <span class="ln"></span>
+  </div>
+</header>
+
+<!-- ════════ CH1 — HOSPITALITY IS NOT ACCOMMODATION ════════ -->
+<section class="chapter" id="ch1">
+  <div class="wrap ch-words">
+    <div class="chapter-num">01 — THE TRUTH</div>
+    <div class="big" id="ch1Words">
+      <span class="w">Hospitality</span> <span class="w">is</span> <span class="w"><em>not</em></span> <span class="w">accommodation.</span><br>
+      <span class="w">It</span> <span class="w">is</span> <span class="w">memory.</span>
+      <span class="w">It</span> <span class="w">is</span> <span class="w">discovery.</span>
+      <span class="w">It</span> <span class="w">is</span> <span class="w">belonging.</span><br>
+      <span class="w">It</span> <span class="w">is</span> <span class="w">connection</span> <span class="w">—</span> <span class="w">and</span> <span class="w"><em>economic participation.</em></span>
+    </div>
+  </div>
+</section>
+
+<div class="ch-photo-band" data-band>
+  <div class="bg" style="background-color:#0B1220;background-image:url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=2000&q=80')" data-band-bg></div>
+  <div class="ov"></div>
+  <div class="cap"><h2 class="reveal-init">A great stay is never just a room.<br>It is everything around it.</h2></div>
+</div>
+
+<!-- ════════ CH2 — THE JOURNEY ════════ -->
+<section class="chapter journey" id="ch2">
+  <div class="wrap">
+    <div class="chapter-num">02 — THE JOURNEY</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5vw,64px);font-weight:300;max-width:880px;margin:0 auto;">
+      A guest does not begin with a booking.<br>They begin with <em>a feeling.</em>
+    </h2>
+    <div class="journey-feelings" id="journeyFeelings">
+      <span class="feeling">Adventure</span><span class="feeling">Escape</span><span class="feeling">Connection</span>
+      <span class="feeling">Wellness</span><span class="feeling">Family</span><span class="feeling">Discovery</span>
+    </div>
+    <p class="journey-note lede reveal-init" style="max-width:600px;margin-left:auto;margin-right:auto;">
+      Every destination is built to answer a feeling. PULSE begins where the journey truly begins — long before the calendar.
+    </p>
+  </div>
+</section>
+
+<!-- ════════ CH3 — INVISIBLE ECONOMY ════════ -->
+<section class="chapter" id="ch3">
+  <div class="wrap econ">
+    <div class="econ-copy">
+      <div class="chapter-num">03 — THE INVISIBLE ECONOMY</div>
+      <h2 class="reveal-init">One booking is the beginning of an economy.</h2>
+      <p class="lede reveal-init">A single stay quietly supports an entire web of livelihoods — most of which never appear on a booking confirmation. PULSE makes that hidden value visible.</p>
+      <div class="econ-stat reveal-init">
+        <div class="s"><div class="v" data-count="9">0</div><div class="k">LIVELIHOODS PER STAY</div></div>
+        <div class="s"><div class="v" data-count="73" data-suffix="%">0</div><div class="k">SPEND BEYOND THE ROOM</div></div>
+      </div>
+    </div>
+    <div class="econ-flow" id="econFlow">
+      <div class="flow-source reveal-init"><div class="n">One Booking</div><div class="d">THE VISIBLE TRANSACTION</div></div>
+      <div class="flow-node reveal-init"><div class="ic">🍷</div><div class="tx"><div class="n">Restaurants &amp; Wine</div><div class="d">Tables filled, cellars turned over</div></div></div>
+      <div class="flow-node reveal-init"><div class="ic">🥾</div><div class="tx"><div class="n">Guides &amp; Activities</div><div class="d">Trails, tours, experiences booked</div></div></div>
+      <div class="flow-node reveal-init"><div class="ic">🚐</div><div class="tx"><div class="n">Transport</div><div class="d">Transfers, shuttles, local drivers</div></div></div>
+      <div class="flow-node reveal-init"><div class="ic">🧺</div><div class="tx"><div class="n">Artisans &amp; Farmers</div><div class="d">Produce, craft, supply chains</div></div></div>
+      <div class="flow-node reveal-init"><div class="ic">🏘️</div><div class="tx"><div class="n">Community</div><div class="d">Jobs, participation, belonging</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CH4 — THE NETWORK ════════ -->
+<section class="network-sec" id="network">
+  <canvas id="netCanvas" aria-hidden="true"></canvas>
+  <div class="network-grade"></div>
+  <div class="network-copy">
+    <div class="chapter-num" style="text-align:center;">04 — THE NETWORK</div>
+    <h2 class="reveal-init">Everything is connected.<br>Until now, no one could see it.</h2>
+    <p class="lede reveal-init">Guests, properties, experiences, restaurants, vendors, reviews, destinations and communities — a living network of relationships. PULSE reads it, validates it, and lets it grow.</p>
+  </div>
+</section>
+
+<!-- ════════ THE TRUST LAYER — VERIFIED DISCOVERY ════════ -->
+<section class="chapter" id="trust">
+  <div class="wrap" style="text-align:center;">
+    <div class="chapter-num" style="text-align:center;">THE TRUST LAYER</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5.5vw,68px);font-weight:300;max-width:880px;margin:0 auto;">Recommendations have to be <em>earned.</em></h2>
+    <p class="lede reveal-init" style="max-width:620px;margin:24px auto 0;">The internet is full of ghost listings, paid placements and invented reviews. PULSE recommends nothing it has not verified. Trust is computed from evidence — and it cannot be bought.</p>
+    <div class="trust-eq">
+      <div class="te-card reveal-init"><div class="ic">🔍</div><div class="l">Google Discovery</div></div>
+      <div class="te-op reveal-init">+</div>
+      <div class="te-card reveal-init"><div class="ic">🏷️</div><div class="l">Owner Validation</div></div>
+      <div class="te-op reveal-init">+</div>
+      <div class="te-card reveal-init"><div class="ic">💬</div><div class="l">Guest Feedback</div></div>
+      <div class="te-op reveal-init">+</div>
+      <div class="te-card reveal-init"><div class="ic">📊</div><div class="l">Trust Signals</div></div>
+      <div class="te-op te-eq reveal-init" style="color:var(--gold);">=</div>
+      <div class="te-card te-result reveal-init"><div class="ic">🛡️</div><div class="l">Verified Discovery</div></div>
+    </div>
+    <p class="lede reveal-init" style="max-width:560px;margin:44px auto 0;color:var(--dim);">No business can buy a higher score. Scores update every day, as new evidence arrives.</p>
+  </div>
+</section>
+
+<!-- ════════ CH5 — DISCOVERY REIMAGINED ════════ -->
+<section class="chapter" id="discovery">
+  <div class="wrap">
+    <div class="chapter-num">05 — DISCOVERY, REIMAGINED</div>
+    <div class="discovery">
+      <div class="disc-prompt">
+        <div class="q"><span id="discType"></span><span class="cursor"></span></div>
+      </div>
+      <div class="disc-results" id="discResults">
+        <div class="disc-card"><div class="ic">🏔️</div><div class="tx"><div class="n">A fireside mountain lodge</div><div class="d">Private, panoramic, four nights</div></div><span class="tag">PROPERTY</span></div>
+        <div class="disc-card"><div class="ic">🍽️</div><div class="tx"><div class="n">A chef's table in the valley</div><div class="d">Seasonal · trust verified</div></div><span class="tag">TABLE</span></div>
+        <div class="disc-card"><div class="ic">🥾</div><div class="tx"><div class="n">Guided summit at sunrise</div><div class="d">A local who knows the light</div></div><span class="tag">EXPERIENCE</span></div>
+        <div class="disc-card"><div class="ic">🚐</div><div class="tx"><div class="n">Seamless arrival</div><div class="d">Transfers arranged end to end</div></div><span class="tag">TRANSPORT</span></div>
+        <div class="disc-card"><div class="ic">📜</div><div class="tx"><div class="n">A four-day itinerary</div><div class="d">Composed, not searched</div></div><span class="tag">ITINERARY</span></div>
+      </div>
+    </div>
+    <p class="lede reveal-init" style="text-align:center;max-width:620px;margin:56px auto 0;">No filters. No endless lists. PULSE doesn't help people find a room — it helps them <em>discover a place.</em></p>
+    <div class="reveal-init" style="text-align:center;margin-top:30px;">
+      <a class="btn btn-gold" href="pulse-travel-discovery.html">Enter Travel &amp; Discovery <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ ASK PULSE — THE INTELLIGENCE INTERFACE ════════ -->
+<section class="chapter ask-sec" id="ask">
+  <div class="wrap" style="text-align:center;">
+    <div class="chapter-num" style="text-align:center;">ASK PULSE</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5.5vw,68px);font-weight:300;max-width:900px;margin:0 auto;">Ask the network<br>what no one else can see.</h2>
+    <p class="lede reveal-init" style="max-width:620px;margin:24px auto 0;">Not a chatbot. An intelligence interface — querying a living graph of guests, properties, vendors, reviews and destinations. Answers arrive as evidence, not opinion.</p>
+  </div>
+  <div class="wrap">
+    <div class="ask-shell reveal-init">
+      <div class="ask-left">
+        <div class="h">Try a question</div>
+        <div class="ask-q on" data-ask="0"><span class="qd"></span>What opportunities exist around Sani Pass?</div>
+        <div class="ask-q" data-ask="1"><span class="qd"></span>What experiences drive repeat bookings?</div>
+        <div class="ask-q" data-ask="2"><span class="qd"></span>Which businesses are most trusted?</div>
+        <div class="ask-q" data-ask="3"><span class="qd"></span>What tourism trends are emerging?</div>
+        <div class="ask-q" data-ask="4"><span class="qd"></span>Which destinations are growing fastest?</div>
+        <div class="ask-q" data-ask="5"><span class="qd"></span>What JV opportunities exist for underused land?</div>
+        <div class="ask-q" data-ask="6"><span class="qd"></span>What investor opportunities exist in this region?</div>
+      </div>
+      <div class="ask-right">
+        <div class="ask-bar"><span class="pulse-dot"></span><span class="lbl"><b>PULSE</b> Intelligence · live graph · evidence-led</span></div>
+        <div class="ask-out" id="askOut">
+          <div class="ask-finding" id="askFinding"></div>
+          <div class="ask-metrics" id="askMetrics"></div>
+          <div class="ask-extra">
+            <div class="ask-block"><div class="bk">Suggested Participants</div><div class="bv" id="askParts"></div></div>
+            <div class="ask-block"><div class="bk">Suggested JV / Model</div><div class="bv" id="askJV"></div></div>
+          </div>
+          <div class="ask-opp"><div class="oic">◇</div><div><div class="ot" id="askOppTag">PULSE Opportunity</div><div class="od" id="askOppText"></div></div></div>
+        </div>
+      </div>
+    </div>
+    <p class="lede reveal-init" style="text-align:center;max-width:600px;margin:44px auto 0;color:var(--dim);">Every answer is grounded in verified participation — the relationships PULSE has learned, not guessed.</p>
+  </div>
+</section>
+
+<!-- ════════ BUILT FOR — MULTI-AUDIENCE ════════ -->
+<section class="chapter" id="builtfor">
+  <div class="wrap" style="text-align:center;">
+    <div class="chapter-num" style="text-align:center;">BUILT FOR THE WHOLE ECOSYSTEM</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5vw,62px);font-weight:300;max-width:840px;margin:0 auto;">One intelligence layer.<br>Every participant in the economy.</h2>
+    <div class="aud-grid">
+      <div class="aud reveal-init">
+        <div class="ak">Tourism Boards · DMOs · Municipalities</div>
+        <h3>See the destination.</h3>
+        <ul><li>Visitor-flow &amp; local-spend visibility</li><li>Verified vendor &amp; SME activation</li><li>Opportunity mapping &amp; campaign performance</li><li>Regional growth &amp; economic participation</li></ul>
+      </div>
+      <div class="aud reveal-init">
+        <div class="ak">Property Owners · Lodge &amp; Hotel Groups</div>
+        <h3>Run the operation.</h3>
+        <ul><li>Readiness, tasks, housekeeping, maintenance</li><li>Review intelligence &amp; revenue-gap detection</li><li>Channel visibility &amp; direct-booking growth</li><li>Local discovery that elevates the guest stay</li></ul>
+      </div>
+      <div class="aud reveal-init">
+        <div class="ak">Local Businesses · Vendors · Guides</div>
+        <h3>Earn the trust.</h3>
+        <ul><li>Verified, trust-scored visibility</li><li>Referral &amp; partnership opportunities</li><li>Reputation uplift through real outcomes</li><li>Qualified guest traffic, not paid placement</li></ul>
+      </div>
+      <div class="aud reveal-init">
+        <div class="ak">Investors · Strategic Partners</div>
+        <h3>Own the network.</h3>
+        <ul><li>Category-defining platform &amp; data moat</li><li>Compounding network effects per participant</li><li>Repeatable, multi-region deployment model</li><li>An opportunity marketplace with real liquidity</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ OPPORTUNITY EXCHANGE / JV NETWORK ════════ -->
+<section class="chapter opx-sec" id="opportunity-exchange">
+  <div class="wrap" style="text-align:center;">
+    <div class="chapter-num" style="text-align:center;">THE OPPORTUNITY EXCHANGE</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5.5vw,68px);font-weight:300;max-width:900px;margin:0 auto;">Where opportunities are<br>pitched, validated and <em>matched.</em></h2>
+    <p class="lede reveal-init" style="max-width:660px;margin:24px auto 0;">Discovery shows what exists. The Opportunity Exchange creates what's next. Operators, vendors, investors, tourism boards and communities propose opportunities — PULSE scores them, validates trust and readiness, and matches the right participants into structured partnerships and joint ventures.</p>
+    <div class="opx-types">
+      <span class="opx-type">Vendor partnership</span><span class="opx-type">Tourism package</span><span class="opx-type">JV opportunity</span>
+      <span class="opx-type">Property activation</span><span class="opx-type">Destination campaign</span><span class="opx-type">Investor opportunity</span>
+      <span class="opx-type">Experience bundle</span><span class="opx-type">Event opportunity</span><span class="opx-type">Municipal initiative</span>
+      <span class="opx-type">Seasonal activation</span><span class="opx-type">Community participation</span><span class="opx-type">Direct-booking campaign</span>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="opx-cards">
+      <!-- Card 1 -->
+      <div class="opx-card reveal-init">
+        <div class="oh">
+          <div>
+            <div class="otype">JV · Property Activation</div>
+            <div class="otitle">Glamping on underused farm land</div>
+            <div class="oby">Proposed by a property owner · seeking experience partner + capital</div>
+          </div>
+          <div class="opx-score"><div class="sv">87</div><div class="sl">Score</div></div>
+        </div>
+        <div class="opx-meta">
+          <div class="m"><div class="mk">Required investment</div><div class="mv">R420k</div></div>
+          <div class="m"><div class="mk">Expected revenue</div><div class="mv">R780k / yr</div></div>
+          <div class="m"><div class="mk">Trust · Readiness</div><div class="mv">Verified · 71%</div></div>
+          <div class="m"><div class="mk">JV potential</div><div class="mv">High</div></div>
+        </div>
+        <div class="opx-foot"><span class="opx-status st-open">Open for Partners</span><span class="opx-next">Next: match operator →</span></div>
+      </div>
+      <!-- Card 2 -->
+      <div class="opx-card reveal-init">
+        <div class="oh">
+          <div>
+            <div class="otype">Tourism Package · JV</div>
+            <div class="otitle">Sani Pass winter escape bundle</div>
+            <div class="oby">Proposed by a verified tour operator · seeking 3 properties</div>
+          </div>
+          <div class="opx-score"><div class="sv">92</div><div class="sl">Score</div></div>
+        </div>
+        <div class="opx-meta">
+          <div class="m"><div class="mk">Required partners</div><div class="mv">3 properties</div></div>
+          <div class="m"><div class="mk">Expected revenue</div><div class="mv">+R6,400 / booking</div></div>
+          <div class="m"><div class="mk">Demand signal</div><div class="mv">+92% vs region</div></div>
+          <div class="m"><div class="mk">Verdict</div><div class="mv"><span class="opx-verdict"><span class="vd"></span>High Potential</span></div></div>
+        </div>
+        <div class="opx-foot"><span class="opx-status st-matched">Matched · Negotiating</span><span class="opx-next">Next: JV proposal →</span></div>
+      </div>
+      <!-- Card 3 -->
+      <div class="opx-card reveal-init">
+        <div class="oh">
+          <div>
+            <div class="otype">Destination Campaign</div>
+            <div class="otitle">Regional shoulder-season activation</div>
+            <div class="oby">Posted by a tourism board · open to SMEs &amp; properties</div>
+          </div>
+          <div class="opx-score"><div class="sv">78</div><div class="sl">Score</div></div>
+        </div>
+        <div class="opx-meta">
+          <div class="m"><div class="mk">Target participants</div><div class="mv">SMEs + 12 properties</div></div>
+          <div class="m"><div class="mk">Recoverable revenue</div><div class="mv">R22k+ gap nights</div></div>
+          <div class="m"><div class="mk">Local impact</div><div class="mv">High · jobs</div></div>
+          <div class="m"><div class="mk">Verdict</div><div class="mv">Needs Partners</div></div>
+        </div>
+        <div class="opx-foot"><span class="opx-status st-review">Under Review · Validate</span><span class="opx-next">Next: trust scan →</span></div>
+      </div>
+    </div>
+
+    <!-- JV / Partnership workflow -->
+    <h3 class="reveal-init" style="text-align:center;font-size:clamp(20px,2.6vw,30px);font-weight:300;margin-top:64px;color:var(--warm);">From idea to joint venture — one governed path</h3>
+    <div class="jv-flow" id="jvFlow">
+      <div class="jv-step"><div class="jn">Submitted</div><div class="jl"></div></div>
+      <div class="jv-step"><div class="jn">Trust Scan</div><div class="jl"></div></div>
+      <div class="jv-step"><div class="jn">Readiness</div><div class="jl"></div></div>
+      <div class="jv-step"><div class="jn">Strategic Fit</div><div class="jl"></div></div>
+      <div class="jv-step"><div class="jn">Matching</div><div class="jl"></div></div>
+      <div class="jv-step"><div class="jn">Commercial Model</div><div class="jl"></div></div>
+      <div class="jv-step"><div class="jn">JV Proposal</div><div class="jl"></div></div>
+      <div class="jv-step"><div class="jn">Agreement Draft</div><div class="jl"></div></div>
+      <div class="jv-step"><div class="jn">Pilot</div><div class="jl"></div></div>
+      <div class="jv-step"><div class="jn">Outcome</div></div>
+    </div>
+    <p class="opx-note reveal-init">PULSE structures opportunity briefs, partnership proposals, JV concept notes, due-diligence checklists and commercial assumptions — all draft-first, for human approval. Scored as High Potential · Validate First · Needs Partners · Too Early · Low Fit · Watchlist.</p>
+    <div class="reveal-init" style="text-align:center;margin-top:32px;">
+      <a class="btn btn-gold" href="pulse-opportunities.html">Enter the Opportunity Graph <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ PLATFORM NETWORK — FUTURE PARTNER LAYER ════════ -->
+<section class="chapter" id="platform-network">
+  <div class="wrap" style="text-align:center;">
+    <div class="chapter-num" style="text-align:center;">THE PLATFORM NETWORK</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5vw,62px);font-weight:300;max-width:860px;margin:0 auto;">Every participant<br>makes the network stronger.</h2>
+    <p class="lede reveal-init" style="max-width:620px;margin:24px auto 0;">PULSE compounds. Each new property, vendor, board or investor adds signals, trust and opportunity that benefit everyone already connected.</p>
+    <div class="pnet-grid">
+      <div class="pnet-card reveal-init"><div class="ph"><span class="pic">🏡</span><span class="pname">Property Owners</span></div>
+        <div class="prow"><b>Add</b>Bookings, reviews, operations</div><div class="prow"><b>Get</b>Readiness, revenue gaps, discovery</div><div class="prow"><b>Access</b>Packages, JVs, campaigns</div></div>
+      <div class="pnet-card reveal-init"><div class="ph"><span class="pic">🧭</span><span class="pname">Tourism Boards</span></div>
+        <div class="prow"><b>Add</b>Regional priorities &amp; campaigns</div><div class="prow"><b>Get</b>Destination intelligence</div><div class="prow"><b>Access</b>SME activation, opportunity map</div></div>
+      <div class="pnet-card reveal-init"><div class="ph"><span class="pic">🍷</span><span class="pname">Local Vendors</span></div>
+        <div class="prow"><b>Add</b>Profile, offers, validation</div><div class="prow"><b>Get</b>Trust score, qualified traffic</div><div class="prow"><b>Access</b>Referrals &amp; partnerships</div></div>
+      <div class="pnet-card reveal-init"><div class="ph"><span class="pic">🥾</span><span class="pname">Activity &amp; Guides</span></div>
+        <div class="prow"><b>Add</b>Experiences &amp; availability</div><div class="prow"><b>Get</b>Verified discovery placement</div><div class="prow"><b>Access</b>Experience bundles, JVs</div></div>
+      <div class="pnet-card reveal-init"><div class="ph"><span class="pic">📈</span><span class="pname">Investors</span></div>
+        <div class="prow"><b>Add</b>Capital &amp; mandates</div><div class="prow"><b>Get</b>Scored, evidenced pipeline</div><div class="prow"><b>Access</b>JV &amp; activation opportunities</div></div>
+      <div class="pnet-card reveal-init"><div class="ph"><span class="pic">🏛️</span><span class="pname">Municipalities</span></div>
+        <div class="prow"><b>Add</b>Infrastructure opportunities</div><div class="prow"><b>Get</b>Participation &amp; impact data</div><div class="prow"><b>Access</b>Public-private matching</div></div>
+      <div class="pnet-card reveal-init"><div class="ph"><span class="pic">🎟️</span><span class="pname">Event Organisers</span></div>
+        <div class="prow"><b>Add</b>Events &amp; occupancy needs</div><div class="prow"><b>Get</b>Midweek &amp; group matching</div><div class="prow"><b>Access</b>Property &amp; package partners</div></div>
+      <div class="pnet-card reveal-init"><div class="ph"><span class="pic">🚐</span><span class="pname">Transport &amp; Community</span></div>
+        <div class="prow"><b>Add</b>Routes, capacity, participation</div><div class="prow"><b>Get</b>Demand signals, inclusion</div><div class="prow"><b>Access</b>Transfer &amp; supply partnerships</div></div>
+    </div>
+    <div class="pnet-effect reveal-init">More participants → more signals → more trust → more opportunity. <em>The network is the moat.</em></div>
+  </div>
+</section>
+
+<!-- ════════ CH6 — MEET PULSE ════════ -->
+<section class="chapter meet" id="platform">
+  <div class="wrap">
+    <div class="chapter-num" style="text-align:center;">06 — MEET PULSE</div>
+    <h2 class="reveal-init" style="font-size:clamp(32px,5.5vw,72px);font-weight:300;max-width:880px;margin:0 auto;">The intelligence layer<br>behind the ecosystem.</h2>
+    <p class="lede reveal-init" style="max-width:600px;margin:24px auto 0;">Only now does the platform appear — because PULSE was never the point. The ecosystem is. PULSE is what makes it run.</p>
+    <div class="panels" id="panels">
+      <div class="panel panel-l reveal-init">
+        <div class="ph"><span class="t">Discovery</span><span class="dot"></span></div>
+        <div class="pb">
+          <div class="panel-line"><span class="pd"></span>Verified local vendor · 91 trust</div>
+          <div class="panel-line"><span class="pd"></span>Curated experience matched</div>
+          <div class="panel-line"><span class="pd"></span>Itinerary composed</div>
+          <div class="panel-line"><span class="pd"></span>Guest delighted</div>
+        </div>
+      </div>
+      <div class="panel panel-main reveal-init">
+        <div class="ph"><span class="t">Command · Morning Brief</span><span class="dot"></span></div>
+        <div class="pb">
+          <div class="kpi-row">
+            <div class="kpi"><div class="v" data-count="92" data-suffix="%">0</div><div class="k">Readiness</div></div>
+            <div class="kpi"><div class="v" data-count="4" data-suffix="★" data-dec="1">0</div><div class="k">Reputation</div></div>
+            <div class="kpi"><div class="v">R<span data-count="42" data-suffix="k">0</span></div><div class="k">Revenue MTD</div></div>
+          </div>
+          <div class="bar"><i></i></div>
+          <div class="panel-line"><span class="pd"></span>Property readiness scored across portfolio</div>
+          <div class="panel-line"><span class="pd"></span>3 arrivals prepared · welcome composed</div>
+          <div class="panel-line"><span class="pd"></span>Revenue gap found · R4,500 recoverable</div>
+          <div class="panel-line"><span class="pd"></span>PULSE Recommendation ready for approval</div>
+        </div>
+      </div>
+      <div class="panel panel-r reveal-init">
+        <div class="ph"><span class="t">Trust</span><span class="dot"></span></div>
+        <div class="pb">
+          <div class="panel-line"><span class="pd"></span>Google discovery scanned</div>
+          <div class="panel-line"><span class="pd"></span>Owner validated</div>
+          <div class="panel-line"><span class="pd"></span>Guest feedback weighted</div>
+          <div class="panel-line"><span class="pd"></span>Verified ✓ — surfaced to guests</div>
+        </div>
+      </div>
+    </div>
+    <div class="capabilities" id="caps">
+      <span class="cap-chip">Operations</span><span class="cap-chip">Guest Experience</span><span class="cap-chip">Reputation</span>
+      <span class="cap-chip">Discovery</span><span class="cap-chip">Reviews</span><span class="cap-chip">Revenue</span>
+      <span class="cap-chip">Tasks &amp; Automation</span><span class="cap-chip">Opportunity Intelligence</span>
+      <span class="cap-chip">Trust Intelligence</span><span class="cap-chip">Destination Intelligence</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FARMSTEAD LIVE — THE PROOF ════════ -->
+<section class="chapter farm-sec" id="farmstead">
+  <div class="wrap" style="text-align:center;">
+    <div class="farm-badge reveal-init"><span class="lv"></span>Proof · Tenant #001 · Live</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5.5vw,68px);font-weight:300;max-width:880px;margin:0 auto;">Vision creates belief.<br>This creates <em>trust.</em></h2>
+    <p class="lede reveal-init" style="max-width:640px;margin:24px auto 0;">Farmstead Hospitality runs on PULSE today — four properties on JoyWood Farm in the Southern Drakensberg. Not a concept. Not mockups. A live production environment you can open right now.</p>
+    <div class="farm-grid">
+      <a class="farm-card reveal-init" href="pulse-os-v2.html#page-properties">
+        <div class="fk">Property Readiness</div>
+        <div class="fv"><span data-count="92" data-suffix="%">0</span></div>
+        <div class="fn">Live readiness scoring</div>
+        <div class="fd">Every task, clean and inspection rolls into one score, per property.</div>
+        <div class="fgo">Open the portfolio →</div>
+      </a>
+      <a class="farm-card reveal-init" href="pulse-os-v2.html#page-reviews">
+        <div class="fk">Review Intelligence</div>
+        <div class="fv"><span data-count="4" data-dec="1" data-suffix="★">0</span></div>
+        <div class="fn">Across every platform</div>
+        <div class="fd">Reviews routed to operational actions. Drafts await approval, never auto-sent.</div>
+        <div class="fgo">Open reviews →</div>
+      </a>
+      <a class="farm-card reveal-init" href="pulse-os-v2.html#page-trust">
+        <div class="fk">Trust-Scored Vendors</div>
+        <div class="fv"><span data-count="91">0</span></div>
+        <div class="fn">Himeville Arms · verified</div>
+        <div class="fd">Local businesses scored on evidence before they reach a single guest.</div>
+        <div class="fgo">Open trust intelligence →</div>
+      </a>
+      <a class="farm-card reveal-init" href="pulse-os-v2.html#page-revenue">
+        <div class="fk">Revenue Gap Found</div>
+        <div class="fv">R<span data-count="4500">0</span></div>
+        <div class="fn">Before it was lost</div>
+        <div class="fd">Gap nights surfaced with a recommended campaign — approve and act.</div>
+        <div class="fgo">Open revenue intelligence →</div>
+      </a>
+    </div>
+    <div class="farm-enter reveal-init" style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;">
+      <a class="btn btn-gold" href="pulse-os-v2.html#page-morning">Enter Farmstead Live <span class="arr">→</span></a>
+      <a class="btn btn-line" href="pulse-host.html">PULSE Host · at global scale →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ EVERY DESTINATION HAS HIDDEN OPPORTUNITY ════════ -->
+<section class="chapter" id="opportunity">
+  <div class="wrap" style="text-align:center;">
+    <div class="chapter-num" style="text-align:center;">THE OPPORTUNITY</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5.5vw,68px);font-weight:300;max-width:920px;margin:0 auto;">Every interaction<br>becomes <em>opportunity.</em></h2>
+    <p class="lede reveal-init" style="max-width:620px;margin:24px auto 0;">Guests, properties, restaurants, vendors, guides, tour operators, municipalities, tourism boards and communities — all participate. PULSE turns their interactions into something none of them could see alone.</p>
+    <div class="opp-participants" id="oppParts">
+      <span class="opp-p">Guest</span><span class="opp-p">Property</span><span class="opp-p">Restaurant</span><span class="opp-p">Vendor</span>
+      <span class="opp-p">Activity</span><span class="opp-p">Guide</span><span class="opp-p">Tour Operator</span><span class="opp-p">Municipality</span>
+      <span class="opp-p">Tourism Board</span><span class="opp-p">Community</span>
+    </div>
+    <div class="opp-flow">
+      <div class="opp-stage reveal-init"><div class="sv">Signals</div><div class="sd">EVERY INTERACTION IS CAPTURED</div></div>
+      <div class="opp-arrow reveal-init"></div>
+      <div class="opp-stage reveal-init"><div class="sv">Trust</div><div class="sd">VALIDATED THROUGH EVIDENCE</div></div>
+      <div class="opp-arrow reveal-init"></div>
+      <div class="opp-stage reveal-init"><div class="sv">Intelligence</div><div class="sd">CONNECTED INTO A LIVING GRAPH</div></div>
+      <div class="opp-arrow reveal-init"></div>
+      <div class="opp-stage reveal-init"><div class="sv" style="color:var(--gold);">Opportunity</div><div class="sd">REVEALED TO THOSE READY FOR IT</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ DESTINATION COMMAND ════════ -->
+<section class="chapter cmd-sec" id="command">
+  <div class="wrap" style="text-align:center;">
+    <div class="chapter-num" style="text-align:center;">DESTINATION COMMAND</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5.5vw,68px);font-weight:300;max-width:900px;margin:0 auto;">What a tourism board<br>has never been able to see.</h2>
+    <p class="lede reveal-init" style="max-width:640px;margin:24px auto 0;">A city. A province. A nation. One command surface for the living economy of a destination — visitor flows, sentiment, trust, revenue movement, opportunity clusters and economic participation.</p>
+  </div>
+  <div class="wrap">
+    <div class="cmd-frame reveal-init">
+      <div class="cmd-top">
+        <span class="ct">Southern Drakensberg · Destination Intelligence</span>
+        <span class="cstatus"><span class="d"></span>Phase 5 Preview · illustrative</span>
+      </div>
+      <div class="cmd-grid">
+        <div class="cmd-panel"><div class="pk">Visitor Nights (30d)</div><div class="pv gold"><span data-count="2847">0</span></div><div class="ps">↑ 12% vs prior period</div>
+          <div class="cmd-spark"><i style="height:40%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:70%"></i><i style="height:62%"></i><i style="height:85%"></i><i style="height:100%"></i></div></div>
+        <div class="cmd-panel"><div class="pk">Avg Spend / Visitor</div><div class="pv">R<span data-count="1240">0</span></div><div class="ps">73% beyond the room</div>
+          <div class="cmd-spark"><i style="height:50%"></i><i style="height:58%"></i><i style="height:54%"></i><i style="height:66%"></i><i style="height:72%"></i><i style="height:78%"></i><i style="height:88%"></i></div></div>
+        <div class="cmd-panel"><div class="pk">Destination Sentiment</div><div class="pv teal">+<span data-count="47">0</span></div><div class="ps">NPS · strong promoter base</div>
+          <div class="cmd-spark"><i style="height:60%"></i><i style="height:52%"></i><i style="height:64%"></i><i style="height:58%"></i><i style="height:74%"></i><i style="height:80%"></i><i style="height:92%"></i></div></div>
+        <div class="cmd-panel"><div class="pk">Verified Trust Coverage</div><div class="pv"><span data-count="31">0</span>%</div><div class="ps">23 vendors pending validation</div>
+          <div class="cmd-spark"><i style="height:30%"></i><i style="height:34%"></i><i style="height:40%"></i><i style="height:44%"></i><i style="height:52%"></i><i style="height:58%"></i><i style="height:64%"></i></div></div>
+        <div class="cmd-panel"><div class="pk">Opportunity Clusters</div><div class="pv gold"><span data-count="6">0</span></div><div class="ps">Sani Pass · Winter · Trails</div>
+          <div class="cmd-spark"><i style="height:44%"></i><i style="height:60%"></i><i style="height:52%"></i><i style="height:72%"></i><i style="height:66%"></i><i style="height:84%"></i><i style="height:96%"></i></div></div>
+        <div class="cmd-panel"><div class="pk">Economic Participation</div><div class="pv teal"><span data-count="184">0</span></div><div class="ps">Livelihoods touched · 30d</div>
+          <div class="cmd-spark"><i style="height:40%"></i><i style="height:46%"></i><i style="height:58%"></i><i style="height:54%"></i><i style="height:70%"></i><i style="height:76%"></i><i style="height:90%"></i></div></div>
+      </div>
+      <div class="cmd-foot">PULSE Insight — <b>Shoulder-season activation</b> (Feb, Aug) and validating 23 pending vendors would lift verified coverage past 50% and unlock the Winter opportunity cluster.</div>
+    </div>
+    <p class="lede reveal-init" style="text-align:center;max-width:600px;margin:44px auto 0;color:var(--dim);">The same intelligence that runs one farm cottage runs an entire destination. Nothing is rebuilt to scale — it simply connects.</p>
+    <div class="reveal-init" style="text-align:center;margin-top:30px;">
+      <a class="btn btn-gold" href="pulse-destination.html">Enter Destination Intelligence <span class="arr">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CH7 — SCALE ════════ -->
+<section class="chapter scale-sec" id="ch7">
+  <div class="wrap">
+    <div class="chapter-num" style="text-align:center;">07 — INFINITE SCALE</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5vw,64px);font-weight:300;max-width:820px;margin:0 auto;">From one guest<br>to entire nations.</h2>
+    <div class="scale-track" id="scaleTrack">
+      <div class="scale-step"><div class="node">Property</div><div class="link"></div></div>
+      <div class="scale-step"><div class="node">Portfolio</div><div class="link"></div></div>
+      <div class="scale-step"><div class="node">Town</div><div class="link"></div></div>
+      <div class="scale-step"><div class="node">Region</div><div class="link"></div></div>
+      <div class="scale-step"><div class="node">Country</div><div class="link"></div></div>
+      <div class="scale-step"><div class="node">Tourism Economy</div><div class="link"></div></div>
+      <div class="scale-step"><div class="node">Global Network</div></div>
+    </div>
+    <p class="scale-final lede reveal-init" style="max-width:600px;margin-left:auto;margin-right:auto;">The same intelligence that runs a single farm cottage can run a province. PULSE was architected to scale without rebuilding.</p>
+  </div>
+</section>
+
+<!-- ════════ WHY NOW ════════ -->
+<section class="chapter" id="whynow">
+  <div class="wrap">
+    <div class="chapter-num">WHY NOW</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5vw,60px);font-weight:300;max-width:760px;">The old way of finding,<br>trusting and choosing is breaking.</h2>
+    <div class="why-now-tension">
+      <div class="tension reveal-init"><div class="tt">Fragmented systems</div><div class="td">Bookings, messages, reviews and operations live in a dozen disconnected tools.</div></div>
+      <div class="tension reveal-init"><div class="tt">Review overload</div><div class="td">More reviews than ever, less clarity than ever about what is actually true.</div></div>
+      <div class="tension reveal-init"><div class="tt">Search fatigue</div><div class="td">Endless lists and filters. Guests want a place, not a spreadsheet.</div></div>
+      <div class="tension reveal-init"><div class="tt">AI noise</div><div class="td">A flood of generated content with no provenance and no accountability.</div></div>
+      <div class="tension reveal-init"><div class="tt">Trust collapse</div><div class="td">Ghost listings, paid placement and fake reviews erode confidence in everything.</div></div>
+      <div class="tension reveal-init"><div class="tt">Missed opportunity</div><div class="td">The value a destination creates stays invisible — uncounted, uncaptured, unshared.</div></div>
+    </div>
+    <div class="why-now-resolve reveal-init">
+      <div class="big">PULSE connects <em>everything.</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ THE JOURNEY AHEAD — ROADMAP ════════ -->
+<section class="chapter" id="roadmap">
+  <div class="wrap" style="text-align:center;">
+    <div class="chapter-num" style="text-align:center;">THE JOURNEY AHEAD</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5vw,60px);font-weight:300;max-width:820px;margin:0 auto;">Seven layers of intelligence.<br>One ascending network.</h2>
+  </div>
+  <div class="wrap">
+    <div class="road" id="road">
+      <div class="road-step active-now"><div class="road-dot">01</div><div class="road-body"><div class="rt">Hospitality Operations</div><div class="rd">Run the property with precision — readiness, tasks, guests, reviews, staff.</div><span class="rstatus live">Live</span></div></div>
+      <div class="road-step"><div class="road-dot">02</div><div class="road-body"><div class="rt">Trust Intelligence</div><div class="rd">Score and validate every participant before they reach a guest.</div><span class="rstatus live">Active</span></div></div>
+      <div class="road-step"><div class="road-dot">03</div><div class="road-body"><div class="rt">Growth Intelligence</div><div class="rd">Close revenue gaps, convert direct, turn reviews into demand.</div><span class="rstatus">Planned</span></div></div>
+      <div class="road-step"><div class="road-dot">04</div><div class="road-body"><div class="rt">Local Ecosystem Intelligence</div><div class="rd">Restaurants, guides, vendors and experiences join the verified network.</div><span class="rstatus">Planned</span></div></div>
+      <div class="road-step"><div class="road-dot">05</div><div class="road-body"><div class="rt">Destination Intelligence</div><div class="rd">Tourism boards and municipalities see the living economy of a place.</div><span class="rstatus">Roadmap</span></div></div>
+      <div class="road-step"><div class="road-dot">06</div><div class="road-body"><div class="rt">Opportunity Intelligence</div><div class="rd">Match businesses to the opportunities they are genuinely ready for.</div><span class="rstatus">Roadmap</span></div></div>
+      <div class="road-step"><div class="road-dot">07</div><div class="road-body"><div class="rt">Sovereign Intelligence</div><div class="rd">Economic participation, measured — for regions and nations.</div><span class="rstatus">Vision</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CH8 — WHY IT MATTERS ════════ -->
+<section class="chapter" id="why">
+  <div class="wrap">
+    <div class="chapter-num">08 — WHY THIS MATTERS</div>
+    <h2 class="reveal-init" style="font-size:clamp(30px,5vw,60px);font-weight:300;max-width:760px;">Five needs. One connecting layer.</h2>
+    <div class="why-grid" id="whyGrid">
+      <div class="why-card reveal-init"><div class="ic">🧭</div><h3>Destinations</h3><p>need visibility — to see who participates, what converts, and where growth truly comes from.</p></div>
+      <div class="why-card reveal-init"><div class="ic">🛡️</div><h3>Guests</h3><p>need trust — recommendations earned through evidence, never bought through placement.</p></div>
+      <div class="why-card reveal-init"><div class="ic">📈</div><h3>Businesses</h3><p>need opportunity — the right participation at the right moment, matched to real readiness.</p></div>
+      <div class="why-card reveal-init"><div class="ic">🤝</div><h3>Communities</h3><p>need participation — a measurable place in the economy a destination creates.</p></div>
+      <div class="why-card reveal-init"><div class="ic">✨</div><h3>Tourism</h3><p>needs intelligence — evidence, not anecdote, behind every decision and every rand.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FINALE ════════ -->
+<section class="finale" id="finale">
+  <canvas id="globeCanvas" aria-hidden="true"></canvas>
+  <div class="finale-grade"></div>
+  <div class="finale-inner">
+    <h2 class="reveal-init">The Future Of Hospitality<br><em>Is Connected.</em></h2>
+    <p class="finale-sub lede reveal-init">Not another platform. A new operating layer for destinations, experiences and opportunity — beginning in the Southern Drakensberg, built for everywhere.</p>
+    <div class="finale-cta reveal-init">
+      <a class="btn btn-gold" href="pulse-os-v2.html#page-trial">Join The Movement <span class="arr">→</span></a>
+      <a class="btn btn-line" href="pulse-os-v2.html#page-getaway">Experience Discovery</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+<footer>
+  <div class="foot-top">
+    <div class="foot-tag">Every destination has hidden opportunity. <em>PULSE reveals it.</em></div>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <h4>Platform</h4>
+        <a href="pulse-os-v2.html#page-morning">Operations</a>
+        <a href="pulse-os-v2.html#page-discovery">Discovery</a>
+        <a href="pulse-os-v2.html#page-trust">Trust Intelligence</a>
+        <a href="pulse-os-v2.html#page-getaway">AI Getaway</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="#network">The Network</a>
+        <a href="#why">Why It Matters</a>
+        <a href="pulse-os-v2.html#page-trial">Start a Trial</a>
+        <a href="#top">Top</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>PULSE · Hospitality &amp; Destination Intelligence</span>
+    <span>AI Assists · Humans Govern · Evidence Decides · Trust Is Earned</span>
+  </div>
+</footer>
+
+<!-- ════════ LIBRARIES (CDN, graceful if blocked) ════════ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGSAP = typeof window.gsap !== 'undefined';
+  var hasST = hasGSAP && typeof window.ScrollTrigger !== 'undefined';
+
+  /* ---------- SMOOTH SCROLL (Lenis) ---------- */
+  var lenis=null;
+  if(!reduce && typeof window.Lenis !== 'undefined'){
+    lenis = new Lenis({ duration:1.15, easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t));}, smoothWheel:true });
+    function raf(t){ lenis.raf(t); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    if(hasST){ lenis.on('scroll', ScrollTrigger.update); }
+  }
+  function scrollY(){ return window.scrollY || document.documentElement.scrollTop || 0; }
+
+  /* ---------- SMOOTH ANCHOR LINKS ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var id=a.getAttribute('href'); if(id.length<2) return;
+      var el=document.querySelector(id); if(!el) return;
+      e.preventDefault();
+      if(lenis) lenis.scrollTo(el,{offset:-10}); else el.scrollIntoView({behavior:reduce?'auto':'smooth'});
+    });
+  });
+
+  /* ---------- NAV + PROGRESS ---------- */
+  var nav=document.getElementById('nav'), prog=document.getElementById('progress');
+  function onScroll(){
+    var y=scrollY();
+    nav.classList.toggle('scrolled', y>40);
+    var h=document.documentElement.scrollHeight-window.innerHeight;
+    prog.style.width=(h>0?(y/h*100):0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  /* ---------- HERO SLIDESHOW ---------- */
+  (function(){
+    var slides=document.querySelectorAll('#heroMedia .slide'); if(!slides.length) return;
+    var i=0; slides[0].classList.add('on');
+    if(reduce) return;
+    setInterval(function(){ slides[i].classList.remove('on'); i=(i+1)%slides.length; slides[i].classList.add('on'); }, 5200);
+  })();
+
+  /* ---------- HERO ENTRANCE ---------- */
+  (function(){
+    if(!hasGSAP){ document.querySelectorAll('.hero-eyebrow,.hero-sub,.hero-ctas').forEach(function(e){e.style.opacity=1;}); return; }
+    var tl=gsap.timeline({delay:.25});
+    tl.to('#heroEyebrow',{opacity:1,y:0,duration:.9,ease:'power2.out'},0)
+      .from('.hero h1 .l > span',{yPercent:115,duration:1.1,ease:'power4.out',stagger:.12},0.15)
+      .to('#heroSub',{opacity:1,duration:.9,ease:'power2.out'},0.9)
+      .to('#heroCtas',{opacity:1,duration:.9,ease:'power2.out'},1.1);
+  })();
+
+  /* ---------- GENERIC REVEALS ---------- */
+  function reveal(el,opts){
+    opts=opts||{};
+    if(!hasST){ el.style.opacity=1; el.style.transform='none'; return; }
+    gsap.set(el,{opacity:0,y:opts.y!=null?opts.y:34});
+    ScrollTrigger.create({trigger:opts.trigger||el,start:opts.start||'top 84%',once:true,
+      onEnter:function(){ gsap.to(el,{opacity:1,y:0,duration:.9,ease:'power3.out',delay:opts.delay||0}); }});
+  }
+  document.querySelectorAll('.reveal-init').forEach(function(el){ reveal(el); });
+
+  /* ---------- CH1 word illumination ---------- */
+  (function(){
+    var words=document.querySelectorAll('#ch1Words .w'); if(!words.length) return;
+    if(!hasST){ words.forEach(function(w){w.classList.add('lit');}); return; }
+    words.forEach(function(w,idx){
+      ScrollTrigger.create({trigger:w,start:'top 88%',once:true,
+        onEnter:function(){ setTimeout(function(){ w.classList.add('lit'); }, idx*45); }});
+    });
+  })();
+
+  /* ---------- PHOTO BAND PARALLAX ---------- */
+  document.querySelectorAll('[data-band]').forEach(function(band){
+    var bg=band.querySelector('[data-band-bg]'); if(!bg) return;
+    if(!hasST || reduce){ bg.style.transform='scale(1.05)'; return; }
+    gsap.fromTo(bg,{yPercent:-12},{yPercent:12,ease:'none',
+      scrollTrigger:{trigger:band,start:'top bottom',end:'bottom top',scrub:true}});
+  });
+
+  /* ---------- CH2 feelings stagger ---------- */
+  (function(){
+    var fs=document.querySelectorAll('#journeyFeelings .feeling'); if(!fs.length) return;
+    if(!hasST){ fs.forEach(function(f){f.classList.add('on');}); return; }
+    ScrollTrigger.create({trigger:'#journeyFeelings',start:'top 78%',once:true,onEnter:function(){
+      fs.forEach(function(f,i){ setTimeout(function(){ f.classList.add('on'); }, i*180); });
+    }});
+  })();
+
+  /* ---------- COUNTERS ---------- */
+  function runCount(el){
+    if(el.__done) return; el.__done=true;
+    var target=parseFloat(el.getAttribute('data-count'))||0;
+    var dec=parseInt(el.getAttribute('data-dec')||'0',10);
+    var suffix=el.getAttribute('data-suffix')||'';
+    var dur=1200, start=performance.now();
+    function step(now){
+      var p=Math.min((now-start)/dur,1), e=1-Math.pow(1-p,3), v=target*e;
+      el.textContent=(dec?v.toFixed(dec):Math.round(v))+suffix;
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  document.querySelectorAll('[data-count]').forEach(function(el){
+    if(!hasST){ runCount(el); return; }
+    ScrollTrigger.create({trigger:el,start:'top 90%',once:true,onEnter:function(){ runCount(el); }});
+  });
+
+  /* ---------- CH5 typing + result cascade ---------- */
+  (function(){
+    var typeEl=document.getElementById('discType'); var cards=document.querySelectorAll('#discResults .disc-card');
+    if(!typeEl) return;
+    var text='I want a luxury mountain escape for four nights.';
+    function typeIt(){
+      if(typeEl.__typed) return; typeEl.__typed=true;
+      var i=0;
+      (function tick(){
+        typeEl.textContent=text.slice(0,i++);
+        if(i<=text.length){ setTimeout(tick, 38); }
+        else { cards.forEach(function(c,idx){ setTimeout(function(){
+          if(hasGSAP) gsap.to(c,{opacity:1,x:0,duration:.6,ease:'power3.out'}); else {c.style.opacity=1;c.style.transform='none';}
+        }, 250+idx*180); }); }
+      })();
+    }
+    if(reduce){ typeEl.textContent=text; cards.forEach(function(c){c.style.opacity=1;c.style.transform='none';}); return; }
+    if(!hasST){ typeIt(); return; }
+    ScrollTrigger.create({trigger:'#discovery',start:'top 70%',once:true,onEnter:typeIt});
+  })();
+
+  /* ---------- CH6 panels reveal ---------- */
+  (function(){
+    if(!hasST) return;
+    ScrollTrigger.create({trigger:'#panels',start:'top 75%',once:true,onEnter:function(){
+      gsap.to('.panel-main',{opacity:1,y:0,duration:.9,ease:'power3.out'});
+      gsap.to('.panel-l',{opacity:.62,duration:1,delay:.2,ease:'power2.out'});
+      gsap.to('.panel-r',{opacity:.62,duration:1,delay:.32,ease:'power2.out'});
+      gsap.from('#caps .cap-chip',{opacity:0,y:16,duration:.5,stagger:.05,delay:.4,ease:'power2.out'});
+    }});
+  })();
+
+  /* ---------- CH7 scale cascade ---------- */
+  (function(){
+    var steps=document.querySelectorAll('#scaleTrack .scale-step'); if(!steps.length) return;
+    if(!hasST){ steps.forEach(function(s){s.classList.add('on');}); return; }
+    ScrollTrigger.create({trigger:'#scaleTrack',start:'top 76%',once:true,onEnter:function(){
+      steps.forEach(function(s,i){ setTimeout(function(){ s.classList.add('on'); }, i*240); });
+    }});
+  })();
+
+  /* ════════════════════════════════════════════════════════
+     CH4 — THE NETWORK (canvas masterpiece)
+     ════════════════════════════════════════════════════════ */
+  (function(){
+    var canvas=document.getElementById('netCanvas'); if(!canvas) return;
+    var ctx=canvas.getContext&&canvas.getContext('2d'); if(!ctx) return;
+    var sec=document.getElementById('network');
+    var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,2),active=false,raf=null,t0=performance.now();
+    var LABELS=['Guest','Property','Experience','Restaurant','Activity','Destination','Review','Social','Local Business','Tourism Board','Community','Supplier','Transport','Guide','Event'];
+    var nodes=[], edges=[], pulses=[], safe={x:0,y:0,rx:0,ry:0};
+    function inSafe(x,y){ var dx=(x-safe.x)/(safe.rx||1), dy=(y-safe.y)/(safe.ry||1); return (dx*dx+dy*dy)<1; }
+    function resize(){
+      var r=sec.getBoundingClientRect(); W=sec.clientWidth; H=sec.clientHeight;
+      canvas.width=W*DPR; canvas.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+      layout();
+    }
+    function layout(){
+      nodes=[]; var cx=W/2, cy=H/2;
+      // text-safe ellipse (central zone copy occupies) — labels never enter this
+      safe={ x:cx, y:cy, rx:Math.min(W*0.40,470), ry:Math.min(H*0.30,260) };
+      // elliptical distribution biased to the edges, away from the central copy band
+      var spreadX=W*(W<700?0.40:0.46), spreadY=H*0.42;
+      nodes.push({x:cx,y:cy,r:7,core:true,label:'',vx:0,vy:0,base:{x:cx,y:cy}});
+      for(var i=0;i<LABELS.length;i++){
+        var a=(i/LABELS.length)*Math.PI*2 - Math.PI/2;
+        var ring=0.78+ (i%3)*0.11;            // push outward toward edges
+        var x=cx+Math.cos(a)*spreadX*ring, y=cy+Math.sin(a)*spreadY*ring;
+        nodes.push({x:x,y:y,r:(W<700?2.6:3.6),core:false,label:LABELS[i],ph:Math.random()*6.28,base:{x:x,y:y}});
+      }
+      edges=[];
+      // connect each outer node to core + a couple of neighbours
+      for(var n=1;n<nodes.length;n++){
+        edges.push([0,n]);
+        edges.push([n, 1+((n)%(nodes.length-1))]);
+      }
+      pulses=[];
+      for(var p=0;p<10;p++){ pulses.push(spawnPulse()); }
+    }
+    function spawnPulse(){
+      var e=edges[(Math.random()*edges.length)|0];
+      return {e:e,t:Math.random(),sp:0.0016+Math.random()*0.0022};
+    }
+    function draw(now){
+      var dt=now-t0; t0=now;
+      ctx.clearRect(0,0,W,H);
+      // float nodes gently
+      for(var i=1;i<nodes.length;i++){
+        var nd=nodes[i]; nd.ph+=0.0006*dt;
+        nd.x=nd.base.x+Math.cos(nd.ph)*6; nd.y=nd.base.y+Math.sin(nd.ph*0.9)*6;
+      }
+      // edges
+      for(var k=0;k<edges.length;k++){
+        var A=nodes[edges[k][0]], B=nodes[edges[k][1]];
+        var grad=ctx.createLinearGradient(A.x,A.y,B.x,B.y);
+        grad.addColorStop(0,'rgba(176,141,87,0.16)'); grad.addColorStop(1,'rgba(232,217,168,0.05)');
+        ctx.strokeStyle=grad; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(A.x,A.y); ctx.lineTo(B.x,B.y); ctx.stroke();
+      }
+      // pulses
+      for(var p=0;p<pulses.length;p++){
+        var pu=pulses[p]; pu.t+=pu.sp*dt;
+        if(pu.t>=1){ pulses[p]=spawnPulse(); continue; }
+        var A2=nodes[pu.e[0]], B2=nodes[pu.e[1]];
+        var x=A2.x+(B2.x-A2.x)*pu.t, y=A2.y+(B2.y-A2.y)*pu.t;
+        ctx.beginPath(); ctx.arc(x,y,1.8,0,6.28);
+        ctx.fillStyle='rgba(43,184,165,0.9)'; ctx.shadowColor='rgba(43,184,165,0.9)'; ctx.shadowBlur=8; ctx.fill(); ctx.shadowBlur=0;
+      }
+      // nodes
+      for(var j=0;j<nodes.length;j++){
+        var no=nodes[j];
+        if(no.core){
+          var pr=7+Math.sin(now*0.002)*1.5;
+          ctx.beginPath(); ctx.arc(no.x,no.y,pr+10,0,6.28); ctx.fillStyle='rgba(232,217,168,0.06)'; ctx.fill();
+          ctx.beginPath(); ctx.arc(no.x,no.y,pr,0,6.28);
+          ctx.fillStyle='rgba(232,217,168,0.95)'; ctx.shadowColor='rgba(232,217,168,0.8)'; ctx.shadowBlur=22; ctx.fill(); ctx.shadowBlur=0;
+        } else {
+          var dimmed=inSafe(no.x,no.y);             // node drifted into the text-safe zone
+          ctx.beginPath(); ctx.arc(no.x,no.y,no.r,0,6.28);
+          ctx.fillStyle=dimmed?'rgba(244,239,230,0.28)':'rgba(244,239,230,0.85)';
+          ctx.shadowColor='rgba(176,141,87,0.7)'; ctx.shadowBlur=dimmed?0:10; ctx.fill(); ctx.shadowBlur=0;
+          // labels only on desktop AND only outside the central text-safe ellipse
+          if(W>820 && !dimmed){
+            var lx=no.x+(no.x<W/2?-12:12);
+            if(!inSafe(lx,no.y)){
+              ctx.font='11px Inter, sans-serif'; ctx.fillStyle='rgba(154,164,178,0.72)';
+              ctx.textAlign=no.x<W/2?'right':'left'; ctx.textBaseline='middle';
+              ctx.fillText(no.label, lx, no.y);
+            }
+          }
+        }
+      }
+      if(active) raf=requestAnimationFrame(draw);
+    }
+    function start(){ if(active) return; active=true; t0=performance.now(); raf=requestAnimationFrame(draw); }
+    function stop(){ active=false; if(raf) cancelAnimationFrame(raf); }
+    window.addEventListener('resize',resize); resize();
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting?start():stop(); }); },{threshold:0.05}).observe(sec);
+    } else { start(); }
+    // draw one static frame immediately
+    draw(performance.now());
+  })();
+
+  /* ════════════════════════════════════════════════════════
+     FINALE — GLOBAL NETWORK (canvas)
+     ════════════════════════════════════════════════════════ */
+  (function(){
+    var canvas=document.getElementById('globeCanvas'); if(!canvas) return;
+    var ctx=canvas.getContext&&canvas.getContext('2d'); if(!ctx) return; var sec=document.getElementById('finale');
+    var W=0,H=0,DPR=Math.min(window.devicePixelRatio||1,2),active=false,raf=null,t0=performance.now();
+    var pts=[], arcs=[];
+    function resize(){ W=sec.clientWidth; H=sec.clientHeight; canvas.width=W*DPR; canvas.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0); build(); }
+    function build(){
+      pts=[]; var n=W<700?26:46;
+      for(var i=0;i<n;i++){ pts.push({x:Math.random()*W,y:Math.random()*H*0.92+H*0.04,r:Math.random()*1.6+0.6,ph:Math.random()*6.28}); }
+      arcs=[];
+      for(var a=0;a<(W<700?7:14);a++){ arcs.push(spawnArc()); }
+    }
+    function spawnArc(){
+      var p1=pts[(Math.random()*pts.length)|0], p2=pts[(Math.random()*pts.length)|0];
+      return {a:p1,b:p2,t:Math.random(),sp:0.002+Math.random()*0.003};
+    }
+    function draw(now){
+      var dt=now-t0; t0=now; ctx.clearRect(0,0,W,H);
+      // faint connecting web
+      ctx.strokeStyle='rgba(176,141,87,0.06)'; ctx.lineWidth=1;
+      for(var i=0;i<pts.length;i++){ for(var j=i+1;j<pts.length;j++){
+        var dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.sqrt(dx*dx+dy*dy);
+        if(d<W*0.13){ ctx.globalAlpha=1-(d/(W*0.13)); ctx.beginPath(); ctx.moveTo(pts[i].x,pts[i].y); ctx.lineTo(pts[j].x,pts[j].y); ctx.stroke(); }
+      }}
+      ctx.globalAlpha=1;
+      // travelling arcs
+      for(var k=0;k<arcs.length;k++){ var ar=arcs[k]; ar.t+=ar.sp*dt; if(ar.t>=1){ arcs[k]=spawnArc(); continue; }
+        var mx=(ar.a.x+ar.b.x)/2, my=(ar.a.y+ar.b.y)/2 - Math.abs(ar.a.x-ar.b.x)*0.18;
+        var t=ar.t, x=(1-t)*(1-t)*ar.a.x+2*(1-t)*t*mx+t*t*ar.b.x, y=(1-t)*(1-t)*ar.a.y+2*(1-t)*t*my+t*t*ar.b.y;
+        ctx.beginPath(); ctx.arc(x,y,1.6,0,6.28); ctx.fillStyle='rgba(232,217,168,0.9)'; ctx.shadowColor='rgba(232,217,168,0.9)'; ctx.shadowBlur=8; ctx.fill(); ctx.shadowBlur=0;
+      }
+      // points
+      for(var p=0;p<pts.length;p++){ var pt=pts[p]; pt.ph+=0.002*dt; var tw=0.5+0.5*Math.sin(pt.ph);
+        ctx.beginPath(); ctx.arc(pt.x,pt.y,pt.r,0,6.28);
+        ctx.fillStyle='rgba(244,239,230,'+(0.4+tw*0.5)+')'; ctx.shadowColor='rgba(176,141,87,0.6)'; ctx.shadowBlur=6; ctx.fill(); ctx.shadowBlur=0;
+      }
+      if(active) raf=requestAnimationFrame(draw);
+    }
+    function start(){ if(active) return; active=true; t0=performance.now(); raf=requestAnimationFrame(draw); }
+    function stop(){ active=false; if(raf) cancelAnimationFrame(raf); }
+    window.addEventListener('resize',resize); resize();
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting?start():stop(); }); },{threshold:0.05}).observe(sec);
+    } else { start(); }
+    draw(performance.now());
+  })();
+
+})();
+</script>
+<script>
+/* ASK PULSE — intelligence interface (DEC-013). Pre-composed, evidence-styled. AI invisible. */
+(function(){
+  var DATA=[
+    { finding:'Sani Pass is <em>under-monetised</em> relative to its demand. Guided 4×4 paired with overnight winter stays converts far above the regional average.',
+      metrics:[['Search demand vs region',92,'+92%'],['Verified operators (supply)',38,'low'],['Repeat-booking lift',74,'+27%']],
+      parts:'3 verified 4×4 operators · 4 properties with winter gap nights', jv:'Revenue-share package · operator + properties · 70/30 split',
+      oppTag:'PULSE Opportunity', opp:'Bundle verified Sani Pass tours with two-night winter stays. Est. +R6,400 per booking — three trust-verified operators ready now.' },
+    { finding:'Fireside dinners and sunrise guided hikes are the strongest <em>repeat-stay predictors</em> across the destination.',
+      metrics:[['Fireside dining',88,'+41%'],['Sunrise hikes',76,'+34%'],['Fly fishing',52,'+22%']],
+      parts:'2 verified guides · 1 chef-table partner · welcome journey', jv:'Experience bundle · pre-packaged into the stay · referral fee',
+      oppTag:'PULSE Recommendation', opp:'Pre-package the two highest-lift experiences into the welcome journey. Repeat intent rises measurably within one season.' },
+    { finding:'Trust concentrates in a <em>small verified core</em>. Most listings remain unvalidated — a discovery risk, and the clearest opportunity.',
+      metrics:[['Verified · low risk',31,'31%'],['Needs validation',46,'46%'],['Flagged / ghost',23,'23%']],
+      parts:'12 high-quality vendors one step from verified', jv:'Validation drive · board-sponsored · widens trusted supply',
+      oppTag:'PULSE Insight', opp:'Twelve high-quality vendors are one validation step from verified. Onboarding them widens trusted supply faster than anything else.' },
+    { finding:'Winter is shifting from <em>low season to signature season</em> — fireplace, snow-dusting and slow-stay demand are climbing sharply.',
+      metrics:[['Winter searches YoY',86,'+36%'],['Slow-stay 4+ nights',72,'+29%'],['Shoulder-season gap',40,'−18%']],
+      parts:'Tourism board + 12 properties + SMEs', jv:'Destination campaign · co-funded activation · shared upside',
+      oppTag:'PULSE Opportunity', opp:'A coordinated “Winter Escape” destination campaign could recover R22,000+ in gap nights across participating properties.' },
+    { finding:'Secondary mountain destinations are <em>outgrowing the headline names</em>. Discovery is moving off the beaten track.',
+      metrics:[['Southern Drakensberg',82,'+31%'],['Midlands',64,'+24%'],['Coastal KZN',38,'+12%']],
+      parts:'Emerging destinations with trusted ecosystems', jv:'Regional rollout · repeatable deployment per node',
+      oppTag:'PULSE Insight', opp:'Growth is led by verified discovery, not ad spend. Destinations with trusted ecosystems compound fastest — and earliest.' },
+    { finding:'Underused land near demand corridors is the region’s <em>largest dormant asset</em>. Glamping and eco-cabin activations score highest on fit.',
+      metrics:[['Sites with land + demand',68,'12 sites'],['Capital readiness',54,'medium'],['Projected yield',82,'18‑24%']],
+      parts:'Property owner (land) + experience operator + capital partner', jv:'Land-for-equity JV · operator builds &amp; runs · 3-way split',
+      oppTag:'PULSE Opportunity', opp:'Match owners with unused land to verified operators and capital. Structured as a land-for-equity JV with outcome tracking — High Potential, validate readiness first.' },
+    { finding:'Investor-ready opportunities cluster around <em>activation, not acquisition</em> — packaging existing verified supply outperforms new builds on risk-adjusted return.',
+      metrics:[['Scored pipeline',74,'9 deals'],['Avg trust score',88,'verified'],['Execution complexity',46,'moderate']],
+      parts:'Capital partners + verified operators + tourism board', jv:'Activation fund · co-invest per opportunity · milestone-gated',
+      oppTag:'PULSE Opportunity', opp:'Nine trust-verified, readiness-scored opportunities are open to capital — campaigns, bundles and activations with measurable, milestone-gated returns.' }
+  ];
+  var qs=document.querySelectorAll('#ask .ask-q'), out=document.getElementById('askOut');
+  if(!qs.length||!out) return;
+  var fEl=document.getElementById('askFinding'), mEl=document.getElementById('askMetrics'),
+      tEl=document.getElementById('askOppTag'), oEl=document.getElementById('askOppText'),
+      pEl=document.getElementById('askParts'), jEl=document.getElementById('askJV');
+  function render(i){
+    var d=DATA[i]; if(!d) return;
+    fEl.innerHTML=d.finding;
+    mEl.innerHTML=d.metrics.map(function(m){
+      return '<div class="ask-metric"><span class="mlabel">'+m[0]+'</span><span class="mtrack"><span class="mfill" data-w="'+m[1]+'"></span></span><span class="mval">'+m[2]+'</span></div>';
+    }).join('');
+    if(pEl) pEl.textContent=d.parts||'—';
+    if(jEl) jEl.innerHTML=d.jv||'—';
+    tEl.textContent=d.oppTag; oEl.textContent=d.opp;
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){
+      mEl.querySelectorAll('.mfill').forEach(function(f){ f.style.width=f.getAttribute('data-w')+'%'; });
+    });});
+  }
+  function select(i){
+    qs.forEach(function(q){ q.classList.toggle('on', +q.getAttribute('data-ask')===i); });
+    out.classList.add('swap');
+    setTimeout(function(){ render(i); out.classList.remove('swap'); }, 320);
+  }
+  qs.forEach(function(q){ q.addEventListener('click',function(){ select(+q.getAttribute('data-ask')); }); });
+  render(0);
+})();
+
+/* Roadmap ascending illumination + opportunity participants stagger */
+(function(){
+  var steps=document.querySelectorAll('#road .road-step');
+  var hasST=(typeof window.gsap!=='undefined')&&(typeof window.ScrollTrigger!=='undefined');
+  if(steps.length){
+    if(!hasST){ steps.forEach(function(s){ s.classList.add('on'); }); }
+    else { window.ScrollTrigger.create({trigger:'#road',start:'top 72%',once:true,onEnter:function(){
+      steps.forEach(function(s,i){ setTimeout(function(){ s.classList.add('on'); }, i*180); });
+    }}); }
+  }
+  var parts=document.querySelectorAll('#oppParts .opp-p');
+  if(parts.length && hasST){
+    window.gsap.set(parts,{opacity:0,y:14});
+    window.ScrollTrigger.create({trigger:'#oppParts',start:'top 82%',once:true,onEnter:function(){
+      window.gsap.to(parts,{opacity:1,y:0,duration:.5,stagger:.05,ease:'power2.out'});
+    }});
+  }
+})();
+</script>
+<script>
+(function(){
+  var steps=document.querySelectorAll('#jvFlow .jv-step'); if(!steps.length) return;
+  var hasST=(typeof window.gsap!=='undefined')&&(typeof window.ScrollTrigger!=='undefined');
+  if(!hasST){ steps.forEach(function(s){s.classList.add('on');}); return; }
+  window.ScrollTrigger.create({trigger:'#jvFlow',start:'top 78%',once:true,onEnter:function(){
+    steps.forEach(function(s,i){ setTimeout(function(){ s.classList.add('on'); }, i*150); });
+  }});
+})();
+</script>
+</body>
+</html>

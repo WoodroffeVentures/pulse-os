@@ -1,0 +1,3 @@
+import { NextResponse } from "next/server"; import { z } from "zod";
+const Input=z.object({ eventType:z.string(), propertyType:z.string().optional(), context:z.string().optional() });
+export async function POST(req:Request){ const input=Input.parse(await req.json()); const tasks = input.eventType.includes("booking") ? ["Confirm room readiness","Send pre-arrival WhatsApp draft","Prepare local recommendations","Check payment status"] : ["Create manager review task","Draft response for approval","Identify root cause","Schedule recovery action"]; return NextResponse.json({ eventType:input.eventType, risk_level:"low", approval_required:false, tasks:tasks.map((title,i)=>({title,priority:i===0?"high":"medium",category:i===1?"guest_service":"operations"})) }); }

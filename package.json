@@ -1,0 +1,17 @@
+{
+  "name": "pulse-os",
+  "version": "0.1.0",
+  "private": true,
+  "license": "AGPL-3.0-or-later",
+  "packageManager": "pnpm@9.15.4",
+  "scripts": {
+    "dev": "pnpm --filter @pulse/web dev",
+    "build": "pnpm --filter @pulse/web build",
+    "start": "pnpm --filter @pulse/web start",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {"prettier":"^3.4.2", "typescript":"^5.7.2"},
+  "engines": {"node": ">=20.11.0"}
+}

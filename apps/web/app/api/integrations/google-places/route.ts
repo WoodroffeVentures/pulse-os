@@ -1,0 +1,2 @@
+import { NextResponse } from "next/server";
+export async function GET(req:Request){ const { searchParams } = new URL(req.url); const location=searchParams.get("location") ?? "Ballito"; return NextResponse.json({ location, provider:"mock-google-places", attractions:[{name:"Willard Beach",category:"Beach",rating:4.6,distance_km:1.2},{name:"Holla Trails",category:"Adventure",rating:4.7,distance_km:9.4},{name:"The Market",category:"Dining",rating:4.5,distance_km:2.8}] }); }

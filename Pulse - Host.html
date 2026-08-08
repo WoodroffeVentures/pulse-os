@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE HOST — Hospitality Intelligence at Global Scale</title>
+<meta name="description" content="PULSE HOST is the hospitality operating system that manages participation, not just transactions. From a single boutique property to a portfolio of 200 hotels — one intelligence layer that learns, connects and grows.">
+<meta name="theme-color" content="#07090E">
+<meta property="og:title" content="PULSE HOST — Hospitality Intelligence at Global Scale">
+<meta property="og:description" content="Most platforms manage bookings. PULSE HOST manages participation.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#07090E;--navy:#0B1220;--navy2:#0E1626;--line:rgba(255,255,255,0.09);--line2:rgba(255,255,255,0.14);
+  --brass:#B08D57;--gold:#E8D9A8;--gold2:#C6A66B;--teal:#2BB8A5;--purple:#9B6DFF;--red:#D65D5D;
+  --warm:#F4EFE6;--muted:#9AA4B2;--dim:#5C6677;
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',sans-serif;--mono:'JetBrains Mono',monospace;--ease:cubic-bezier(0.22,1,0.36,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--black);color:var(--warm);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+::selection{background:rgba(43,184,165,.25);}::-webkit-scrollbar{width:0;}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.01em;line-height:1.05;}
+em{font-style:italic;color:var(--gold);}
+.eyebrow{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--brass);font-weight:600;}
+.lede{font-size:clamp(15px,1.9vw,20px);line-height:1.7;color:var(--muted);font-weight:300;}
+.mono{font-family:var(--mono);}
+.grain{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+.progress{position:fixed;top:0;left:0;height:2px;width:0;z-index:8000;background:linear-gradient(90deg,var(--teal),var(--gold));box-shadow:0 0 12px rgba(43,184,165,.5);}
+.nav{position:fixed;top:0;left:0;right:0;z-index:7000;display:flex;align-items:center;justify-content:space-between;padding:16px clamp(20px,5vw,56px);transition:background .6s var(--ease),border-color .6s var(--ease),padding .6s var(--ease);border-bottom:1px solid transparent;}
+.nav.scrolled{background:rgba(7,9,14,.78);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);padding-top:12px;padding-bottom:12px;}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;color:var(--warm);}
+.brand-mark{width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,var(--gold),var(--brass));display:flex;align-items:center;justify-content:center;}
+.brand-mark span{width:9px;height:9px;border-radius:50%;background:var(--black);}
+.brand-name{font-weight:600;letter-spacing:.16em;font-size:13.5px;}.brand-name b{color:var(--teal);font-weight:600;}
+.nav-right{display:flex;align-items:center;gap:14px;}
+.nav-search{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:30px;padding:8px 14px;color:var(--dim);font-size:12px;cursor:pointer;transition:border-color .2s;}
+.nav-search:hover{border-color:var(--line2);}
+.nav-search kbd{font-family:var(--mono);font-size:10px;background:rgba(255,255,255,.06);border-radius:4px;padding:1px 5px;color:var(--muted);}
+.nav-cta{font-size:12.5px;font-weight:600;letter-spacing:.05em;color:var(--black);background:linear-gradient(135deg,var(--gold),var(--brass));border:none;border-radius:40px;padding:10px 20px;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s;}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(232,217,168,.3);}
+/* sub-nav */
+.subnav{position:fixed;top:58px;left:0;right:0;z-index:6900;display:flex;gap:4px;justify-content:center;padding:8px;background:rgba(7,9,14,.55);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow-x:auto;transition:top .6s var(--ease);}
+.subnav.scrolled{top:50px;}
+.subnav a{font-size:11.5px;letter-spacing:.04em;color:var(--muted);text-decoration:none;padding:6px 12px;border-radius:20px;white-space:nowrap;transition:color .2s,background .2s;}
+.subnav a:hover{color:var(--warm);background:rgba(255,255,255,.04);}
+@media(max-width:760px){.subnav{justify-content:flex-start;}}
+.btn{display:inline-flex;align-items:center;gap:9px;border-radius:44px;font-weight:600;letter-spacing:.04em;cursor:pointer;font-size:15px;padding:15px 30px;border:1px solid transparent;text-decoration:none;transition:transform .2s,box-shadow .2s,border-color .2s,color .2s;font-family:inherit;}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--brass));color:var(--black);}.btn-gold:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(232,217,168,.3);}
+.btn-line{background:transparent;color:var(--warm);border-color:var(--line2);}.btn-line:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,56px);}
+section{position:relative;}.chapter{padding:clamp(80px,12vh,150px) 0;}
+.cn{font-family:var(--mono);font-size:12px;color:var(--brass);letter-spacing:.2em;margin-bottom:20px;}
+.h2{font-size:clamp(28px,5vw,58px);font-weight:300;line-height:1.08;margin:8px 0 0;}
+.center{text-align:center;}.reveal{opacity:0;}
+.demo-tag{display:inline-flex;align-items:center;gap:7px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);border:1px solid rgba(43,184,165,.3);border-radius:14px;padding:4px 10px;}
+
+/* hero */
+.h-hero{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;padding:140px 24px 70px;}
+.h-hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(48% 50% at 50% 22%,rgba(43,184,165,.14),transparent 60%),radial-gradient(40% 45% at 78% 60%,rgba(232,217,168,.10),transparent 60%),radial-gradient(40% 45% at 20% 65%,rgba(155,109,255,.08),transparent 60%),linear-gradient(180deg,#080B14,#07090E);}
+.h-hero-inner{position:relative;z-index:3;max-width:920px;}
+.h-hero h1{font-size:clamp(36px,7vw,82px);font-weight:300;letter-spacing:-.02em;}
+.h-hero h1 .accent{font-style:italic;color:var(--gold);}
+.h-hero-sub{max-width:640px;margin:28px auto 36px;opacity:0;}
+.h-hero-ctas{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;opacity:0;}
+/* command dashboard mock */
+.cmd{position:relative;z-index:3;width:100%;max-width:1080px;margin:60px auto 0;border:1px solid var(--line2);border-radius:20px;overflow:hidden;background:rgba(8,13,24,.7);box-shadow:0 60px 140px rgba(0,0,0,.6);opacity:0;transform:translateY(30px);}
+.cmd-bar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(11,18,32,.6);}
+.cmd-bar .t{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:9px;}
+.cmd-bar .t .d{width:7px;height:7px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);}
+.cmd-props{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);}
+.cmd-prop{background:rgba(11,18,32,.6);padding:18px;text-align:left;}
+.cmd-prop .pn{font-size:13.5px;font-weight:600;color:var(--warm);}
+.cmd-prop .pl{font-size:10.5px;color:var(--dim);margin-top:2px;}
+.cmd-prop-row{display:flex;align-items:center;gap:14px;margin-top:14px;}
+.ring{position:relative;width:54px;height:54px;flex-shrink:0;}
+.ring svg{transform:rotate(-90deg);}
+.ring .rt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:13px;color:var(--gold);}
+.cmd-prop-metrics{flex:1;display:flex;flex-direction:column;gap:7px;}
+.cmd-mini{display:flex;justify-content:space-between;font-size:11px;}
+.cmd-mini .k{color:var(--dim);}.cmd-mini .v{color:var(--warm);font-family:var(--mono);}
+.cmd-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:14px 20px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);}
+.cmd-foot .pill{font-size:10px;letter-spacing:.06em;color:var(--gold);border:1px solid rgba(232,217,168,.25);border-radius:14px;padding:4px 11px;}
+@media(max-width:820px){.cmd-props{grid-template-columns:1fr;}}
+
+/* module sections */
+.mod{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;}
+.mod.flip .mod-visual{order:-1;}
+@media(max-width:880px){.mod{grid-template-columns:1fr;gap:30px;}.mod.flip .mod-visual{order:0;}}
+.mod-num{font-family:var(--mono);font-size:13px;color:var(--brass);}
+.mod h3{font-size:clamp(26px,3.4vw,40px);font-weight:300;margin:12px 0 0;}
+.mod p{font-size:15px;color:var(--muted);line-height:1.7;margin-top:16px;font-weight:300;}
+.mod-key{display:inline-flex;align-items:center;gap:9px;margin-top:20px;font-size:12px;color:var(--gold);border:1px solid rgba(232,217,168,.25);border-radius:20px;padding:7px 14px;}
+.mod-key .mono{color:var(--warm);}
+.panel{border:1px solid var(--line);border-radius:18px;background:linear-gradient(160deg,rgba(14,22,38,.75),rgba(11,18,32,.75));overflow:hidden;box-shadow:0 30px 70px rgba(0,0,0,.4);}
+.panel-h{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.panel-h .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 8px var(--teal);}
+.panel-b{padding:20px;}
+.tile-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.tile{background:rgba(2,9,18,.45);border:1px solid var(--line);border-radius:11px;padding:13px;}
+.tile .v{font-family:var(--mono);font-size:20px;color:var(--gold);}
+.tile .v.teal{color:var(--teal);}.tile .v.red{color:var(--red);}
+.tile .k{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin-top:6px;}
+.bars{display:flex;flex-direction:column;gap:11px;margin-top:6px;}
+.bar-row{display:flex;align-items:center;gap:12px;}
+.bar-row .bl{font-size:12px;color:var(--muted);width:110px;flex-shrink:0;}
+.bar-row .bt{flex:1;height:8px;border-radius:5px;background:rgba(255,255,255,.06);overflow:hidden;}
+.bar-row .bf{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--brass),var(--gold));}
+.bar-row .bv{font-family:var(--mono);font-size:12px;color:var(--gold);width:64px;text-align:right;flex-shrink:0;}
+.spark{display:flex;align-items:flex-end;gap:4px;height:60px;margin-top:8px;}
+.spark i{flex:1;background:linear-gradient(180deg,var(--teal),rgba(43,184,165,.15));border-radius:3px;}
+.line-item{display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:13px;color:var(--muted);}
+.line-item:last-child{border-bottom:none;}
+.line-item .li-d{width:6px;height:6px;border-radius:50%;background:var(--brass);flex-shrink:0;}
+.line-item .li-t{color:var(--warm);}
+.line-item .li-s{margin-left:auto;font-size:10px;letter-spacing:.06em;border-radius:12px;padding:3px 9px;}
+.s-approve{color:var(--gold);border:1px solid rgba(232,217,168,.3);}
+.s-ok{color:var(--teal);border:1px solid rgba(43,184,165,.3);}
+.guest-card{display:flex;align-items:center;gap:13px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05);}
+.guest-card:last-child{border-bottom:none;}
+.guest-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,rgba(232,217,168,.2),rgba(43,184,165,.15));display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--gold);flex-shrink:0;}
+.guest-card .gn{font-size:13.5px;color:var(--warm);}.guest-card .gd{font-size:11px;color:var(--dim);margin-top:1px;}
+.guest-card .gv{margin-left:auto;font-family:var(--mono);font-size:13px;color:var(--gold);}
+
+/* compare */
+.compare{border:1px solid var(--line);border-radius:18px;overflow:hidden;margin-top:50px;}
+.compare-row{display:grid;grid-template-columns:1fr 1fr;}
+.compare-row>div{padding:16px 22px;border-top:1px solid var(--line);font-size:14px;}
+.compare-row:first-child>div{border-top:none;font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;}
+.compare-row .legacy{color:var(--muted);border-right:1px solid var(--line);background:rgba(255,255,255,.01);}
+.compare-row .pulse{color:var(--warm);}
+.compare-row:first-child .legacy{color:var(--dim);}
+.compare-row:first-child .pulse{color:var(--gold);}
+
+/* scale tiers */
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:50px;}
+.tier{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.02);padding:24px;transition:transform .4s var(--ease),border-color .4s var(--ease);}
+.tier:hover{transform:translateY(-5px);border-color:rgba(232,217,168,.4);}
+.tier .scope{font-family:var(--mono);font-size:13px;color:var(--teal);}
+.tier .name{font-family:var(--serif);font-size:24px;color:var(--warm);margin-top:10px;}
+.tier .desc{font-size:12px;color:var(--muted);margin-top:8px;line-height:1.5;}
+@media(max-width:820px){.tiers{grid-template-columns:1fr 1fr;}}
+
+/* investor */
+.inv{border:1px solid rgba(232,217,168,.2);border-radius:20px;background:linear-gradient(160deg,rgba(20,16,4,.6),rgba(11,18,32,.6));padding:clamp(30px,5vw,56px);margin-top:50px;text-align:center;}
+.inv-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:38px;}
+.inv-stat .v{font-family:var(--mono);font-size:clamp(22px,2.8vw,34px);color:var(--gold);}
+.inv-stat .k{font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.4;}
+@media(max-width:760px){.inv-stats{grid-template-columns:1fr 1fr;}}
+
+.final{position:relative;text-align:center;padding:clamp(80px,14vh,150px) 24px;border-top:1px solid var(--line);overflow:hidden;}
+.final-glow{position:absolute;top:40%;left:50%;width:900px;height:700px;max-width:140vw;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(43,184,165,.1),transparent 60%);pointer-events:none;}
+.final h2{position:relative;font-size:clamp(34px,6.5vw,78px);font-weight:300;letter-spacing:-.02em;}
+.final-sub{position:relative;max-width:560px;margin:26px auto 40px;}
+.final-ctas{position:relative;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+.final-doctrine{position:relative;margin-top:46px;font-size:11px;letter-spacing:.2em;color:var(--dim);}
+footer{border-top:1px solid var(--line);padding:40px clamp(20px,5vw,56px);text-align:center;font-size:11px;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;}
+
+/* ⌘K search */
+.search-overlay{position:fixed;inset:0;z-index:9500;background:rgba(7,9,14,.82);backdrop-filter:blur(10px);display:none;align-items:flex-start;justify-content:center;padding:14vh 20px 0;}
+.search-overlay.open{display:flex;}
+.search-box{width:100%;max-width:640px;background:var(--navy);border:1px solid var(--line2);border-radius:18px;overflow:hidden;box-shadow:0 50px 120px rgba(0,0,0,.6);}
+.search-input-row{display:flex;align-items:center;gap:12px;padding:18px 22px;border-bottom:1px solid var(--line);}
+.search-input-row input{flex:1;background:none;border:none;outline:none;color:var(--warm);font-family:inherit;font-size:16px;}
+.search-input-row input::placeholder{color:var(--dim);}
+.search-input-row .esc{font-family:var(--mono);font-size:10px;color:var(--dim);border:1px solid var(--line);border-radius:5px;padding:2px 7px;}
+.search-results{max-height:50vh;overflow-y:auto;padding:8px;}
+.search-cat{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);padding:12px 14px 6px;}
+.search-item{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:11px;cursor:pointer;transition:background .15s;text-decoration:none;}
+.search-item:hover{background:rgba(255,255,255,.04);}
+.search-item .si-ic{width:30px;height:30px;border-radius:8px;background:rgba(176,141,87,.14);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
+.search-item .si-t{font-size:13.5px;color:var(--warm);}
+.search-item .si-d{font-size:11.5px;color:var(--muted);margin-top:2px;}
+.search-foot{padding:10px 16px;border-top:1px solid var(--line);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);}
+@media (prefers-reduced-motion: reduce){*{scroll-behavior:auto !important;}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="progress" id="progress"></div>
+
+<nav class="nav" id="nav">
+  <a class="brand" href="pulse-experience.html"><span class="brand-mark"><span></span></span><span class="brand-name">PULSE <b>HOST</b></span></a>
+  <div class="nav-right">
+    <div class="nav-search" id="searchTrigger"><span>Search intelligence…</span><kbd>⌘K</kbd></div>
+    <a class="nav-cta" href="pulse-os-v2.html#page-trial">Request Access</a>
+  </div>
+</nav>
+<div class="subnav" id="subnav">
+  <a href="#overview">Overview</a><a href="#operations">Operations</a><a href="#guests">Guests</a><a href="#intelligence">Intelligence</a>
+  <a href="#revenue">Revenue</a><a href="#discovery">Discovery</a><a href="#staff">Staff</a><a href="#growth">Growth</a>
+</div>
+
+<!-- HERO -->
+<header class="h-hero" id="top">
+  <div class="h-hero-bg"></div>
+  <div class="h-hero-inner">
+    <div class="eyebrow reveal">PULSE HOST</div>
+    <h1 style="margin-top:22px;">Hospitality intelligence<br>at <span class="accent">global scale.</span></h1>
+    <p class="h-hero-sub lede">From a single boutique property to a portfolio of 200 hotels — one intelligence layer that learns, connects and grows with you. Most platforms manage bookings. <em>PULSE HOST manages participation.</em></p>
+    <div class="h-hero-ctas"><a class="btn btn-gold" href="pulse-os-v2.html#page-trial">Request PULSE Host Access</a><a class="btn btn-line" href="pulse-os-v2.html#page-morning">See It Live →</a></div>
+  </div>
+  <!-- command dashboard mock -->
+  <div class="cmd" id="cmd">
+    <div class="cmd-bar"><span class="t"><span class="d"></span>Portfolio Command · Morning Brief</span><span class="demo-tag">◆ Intelligence Demo · AED</span></div>
+    <div class="cmd-props">
+      <div class="cmd-prop">
+        <div class="pn">Palm Jumeirah Residence</div><div class="pl">Dubai · 48 keys</div>
+        <div class="cmd-prop-row">
+          <div class="ring"><svg width="54" height="54"><circle cx="27" cy="27" r="22" stroke="rgba(255,255,255,.08)" stroke-width="5" fill="none"/><circle cx="27" cy="27" r="22" stroke="url(#g1)" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="138" stroke-dashoffset="11"/><defs><linearGradient id="g1"><stop offset="0" stop-color="#2BB8A5"/><stop offset="1" stop-color="#E8D9A8"/></linearGradient></defs></svg><div class="rt">92</div></div>
+          <div class="cmd-prop-metrics"><div class="cmd-mini"><span class="k">Occupancy</span><span class="v">88%</span></div><div class="cmd-mini"><span class="k">RevPAR</span><span class="v">AED 940</span></div><div class="cmd-mini"><span class="k">Open tasks</span><span class="v">3</span></div></div>
+        </div>
+      </div>
+      <div class="cmd-prop">
+        <div class="pn">Desert Camp — Liwa</div><div class="pl">Abu Dhabi · 22 tents</div>
+        <div class="cmd-prop-row">
+          <div class="ring"><svg width="54" height="54"><circle cx="27" cy="27" r="22" stroke="rgba(255,255,255,.08)" stroke-width="5" fill="none"/><circle cx="27" cy="27" r="22" stroke="url(#g2)" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="138" stroke-dashoffset="36"/><defs><linearGradient id="g2"><stop offset="0" stop-color="#D65D5D"/><stop offset="1" stop-color="#E8D9A8"/></linearGradient></defs></svg><div class="rt">74</div></div>
+          <div class="cmd-prop-metrics"><div class="cmd-mini"><span class="k">Occupancy</span><span class="v">71%</span></div><div class="cmd-mini"><span class="k">RevPAR</span><span class="v">AED 1,180</span></div><div class="cmd-mini"><span class="k">Open tasks</span><span class="v">6</span></div></div>
+        </div>
+      </div>
+      <div class="cmd-prop">
+        <div class="pn">Downtown Serviced Apts</div><div class="pl">Dubai · 64 units</div>
+        <div class="cmd-prop-row">
+          <div class="ring"><svg width="54" height="54"><circle cx="27" cy="27" r="22" stroke="rgba(255,255,255,.08)" stroke-width="5" fill="none"/><circle cx="27" cy="27" r="22" stroke="url(#g3)" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="138" stroke-dashoffset="5"/><defs><linearGradient id="g3"><stop offset="0" stop-color="#2BB8A5"/><stop offset="1" stop-color="#E8D9A8"/></linearGradient></defs></svg><div class="rt">96</div></div>
+          <div class="cmd-prop-metrics"><div class="cmd-mini"><span class="k">Occupancy</span><span class="v">93%</span></div><div class="cmd-mini"><span class="k">RevPAR</span><span class="v">AED 760</span></div><div class="cmd-mini"><span class="k">Open tasks</span><span class="v">2</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="cmd-foot"><span><b style="color:var(--gold);">PULSE Insight</b> — Desert Camp readiness below threshold · 6 nights unsold this week · recovery package ready for approval.</span><span class="pill">Approve →</span></div>
+  </div>
+</header>
+
+<!-- OVERVIEW -->
+<section class="chapter" id="overview"><div class="wrap center">
+  <div class="cn reveal center">THE OPERATING SYSTEM</div>
+  <h2 class="h2 reveal" style="max-width:860px;margin:0 auto;">Eight intelligence modules.<br>One connected portfolio.</h2>
+  <p class="lede reveal" style="max-width:620px;margin:22px auto 0;">Every property, connected to one intelligence layer — so a portfolio behaves like a network, not a collection of silos. What hospitality should become. Not what it currently is.</p>
+</div></section>
+
+<!-- 1 OPERATIONS -->
+<section class="chapter" id="operations"><div class="wrap"><div class="mod">
+  <div>
+    <div class="mod-num reveal">01 — OPERATIONS READINESS</div>
+    <h3 class="reveal">Know every property's state<br>before the day begins.</h3>
+    <p class="reveal">Property-by-property readiness scores, task completion, the maintenance pipeline, housekeeping status and staff assignment — one operational truth across the portfolio, scored 0–100.</p>
+    <div class="mod-key reveal">Key metric&nbsp;·&nbsp;<span class="mono">Operational Readiness Score</span></div>
+  </div>
+  <div class="mod-visual reveal"><div class="panel">
+    <div class="panel-h"><span>Readiness · Portfolio</span><span class="dot"></span></div>
+    <div class="panel-b">
+      <div class="bars">
+        <div class="bar-row"><span class="bl">Palm Jumeirah</span><span class="bt"><span class="bf" style="width:92%"></span></span><span class="bv">92</span></div>
+        <div class="bar-row"><span class="bl">Downtown Apts</span><span class="bt"><span class="bf" style="width:96%"></span></span><span class="bv">96</span></div>
+        <div class="bar-row"><span class="bl">Desert Camp</span><span class="bt"><span class="bf" style="width:74%;background:linear-gradient(90deg,#D65D5D,#E8D9A8)"></span></span><span class="bv" style="color:#f3b5b5">74</span></div>
+        <div class="bar-row"><span class="bl">Marina Suites</span><span class="bt"><span class="bf" style="width:88%"></span></span><span class="bv">88</span></div>
+      </div>
+      <div class="tile-row" style="margin-top:18px;"><div class="tile"><div class="v teal">94%</div><div class="k">Task completion</div></div><div class="tile"><div class="v">11</div><div class="k">Maintenance open</div></div><div class="tile"><div class="v red">1</div><div class="k">Below threshold</div></div></div>
+    </div>
+  </div></div>
+</div></div></section>
+
+<!-- 2 GUESTS -->
+<section class="chapter" id="guests"><div class="wrap"><div class="mod flip">
+  <div>
+    <div class="mod-num reveal">02 — GUEST INTELLIGENCE</div>
+    <h3 class="reveal">Every guest, understood<br>before they arrive.</h3>
+    <p class="reveal">Profiles built from every interaction — stay history, review sentiment, communication log, VIP identification and repeat-booking prediction. The guest becomes a first-class entity, not a reservation.</p>
+    <div class="mod-key reveal">Key metric&nbsp;·&nbsp;<span class="mono">Lifetime Value · Return Probability</span></div>
+  </div>
+  <div class="mod-visual reveal"><div class="panel">
+    <div class="panel-h"><span>Guest Intelligence</span><span class="dot"></span></div>
+    <div class="panel-b">
+      <div class="guest-card"><div class="guest-av">AK</div><div><div class="gn">Aisha K. · VIP ★★</div><div class="gd">5 stays · wellness · return 86%</div></div><div class="gv">AED 142k</div></div>
+      <div class="guest-card"><div class="guest-av">JM</div><div><div class="gn">James M.</div><div class="gd">Business · fast WiFi · return 64%</div></div><div class="gv">AED 38k</div></div>
+      <div class="guest-card"><div class="guest-av">RP</div><div><div class="gn">Rashid &amp; Priya</div><div class="gd">Anniversary · suite pref · return 91%</div></div><div class="gv">AED 96k</div></div>
+      <div class="tile-row" style="margin-top:16px;"><div class="tile"><div class="v">4.8★</div><div class="k">Satisfaction</div></div><div class="tile"><div class="v teal">73%</div><div class="k">Return prob</div></div><div class="tile"><div class="v">AED 92k</div><div class="k">Avg LTV</div></div></div>
+    </div>
+  </div></div>
+</div></div></section>
+
+<!-- 3 REVENUE -->
+<section class="chapter" id="revenue"><div class="wrap"><div class="mod">
+  <div>
+    <div class="mod-num reveal">03 — REVENUE INTELLIGENCE</div>
+    <h3 class="reveal">Find the revenue<br>before it's lost.</h3>
+    <p class="reveal">Occupancy-gap detection, RevPAR and ADR by property, channel performance, pricing-signal alerts and seasonal trend lines — so every unsold night surfaces as recoverable opportunity, not a line in a report.</p>
+    <div class="mod-key reveal">Key metric&nbsp;·&nbsp;<span class="mono">RevPAR · Channel Cost · Gap Value</span></div>
+  </div>
+  <div class="mod-visual reveal"><div class="panel">
+    <div class="panel-h"><span>Channel Performance · AED</span><span class="dot"></span></div>
+    <div class="panel-b">
+      <div class="bars">
+        <div class="bar-row"><span class="bl">Direct · 0%</span><span class="bt"><span class="bf" style="width:42%;background:linear-gradient(90deg,#2BB8A5,#E8D9A8)"></span></span><span class="bv">AED 2.1M</span></div>
+        <div class="bar-row"><span class="bl">Booking.com</span><span class="bt"><span class="bf" style="width:64%"></span></span><span class="bv">AED 3.0M</span></div>
+        <div class="bar-row"><span class="bl">Expedia</span><span class="bt"><span class="bf" style="width:38%"></span></span><span class="bv">AED 1.4M</span></div>
+        <div class="bar-row"><span class="bl">Airbnb</span><span class="bt"><span class="bf" style="width:30%"></span></span><span class="bv">AED 0.9M</span></div>
+      </div>
+      <div class="tile-row" style="margin-top:18px;"><div class="tile"><div class="v">AED 912</div><div class="k">RevPAR</div></div><div class="tile"><div class="v">AED 1,240</div><div class="k">ADR</div></div><div class="tile"><div class="v red">AED 184k</div><div class="k">Gap value</div></div></div>
+    </div>
+  </div></div>
+</div></div></section>
+
+<!-- 4 DISCOVERY -->
+<section class="chapter" id="discovery"><div class="wrap"><div class="mod flip">
+  <div>
+    <div class="mod-num reveal">04 — LOCAL DISCOVERY</div>
+    <h3 class="reveal">Curated, trust-scored<br>for every guest.</h3>
+    <p class="reveal">Verified local recommendations attached to each property, guest-guide generation, vendor management and a clean category taxonomy — discovery that elevates the stay and earns the destination's trust.</p>
+    <div class="mod-key reveal">Key metric&nbsp;·&nbsp;<span class="mono">Discovery Trust · Engagement Rate</span></div>
+  </div>
+  <div class="mod-visual reveal"><div class="panel">
+    <div class="panel-h"><span>Verified Discovery · Attached</span><span class="dot"></span></div>
+    <div class="panel-b">
+      <div class="line-item"><span class="li-d"></span><span class="li-t">Desert dining · Al Fanar</span><span class="li-s s-ok">Trust 93</span></div>
+      <div class="line-item"><span class="li-d"></span><span class="li-t">Dune drive · verified guide</span><span class="li-s s-ok">Trust 90</span></div>
+      <div class="line-item"><span class="li-d"></span><span class="li-t">Marina yacht · partner</span><span class="li-s s-ok">Trust 88</span></div>
+      <div class="line-item"><span class="li-d"></span><span class="li-t">Unverified operator</span><span class="li-s" style="color:#f3b5b5;border:1px solid rgba(214,93,93,.3)">Held</span></div>
+      <div class="tile-row" style="margin-top:16px;"><div class="tile"><div class="v teal">31</div><div class="k">Verified vendors</div></div><div class="tile"><div class="v">68%</div><div class="k">Guest engagement</div></div><div class="tile"><div class="v">12</div><div class="k">Pending validation</div></div></div>
+    </div>
+  </div></div>
+</div></div></section>
+
+<!-- 5 INTELLIGENCE -->
+<section class="chapter" id="intelligence"><div class="wrap"><div class="mod">
+  <div>
+    <div class="mod-num reveal">05 — PULSE INSIGHTS</div>
+    <h3 class="reveal">A daily intelligence brief.<br>Drafted. Awaiting <em>your</em> approval.</h3>
+    <p class="reveal">The morning brief, daily priorities, risk alerts, opportunity flags and drafted responses — every output evidence-led and approval-gated. PULSE assists. You govern. Nothing publishes or sends without a human decision.</p>
+    <div class="mod-key reveal">Key metric&nbsp;·&nbsp;<span class="mono">Insights · Actions Taken · Revenue Protected</span></div>
+  </div>
+  <div class="mod-visual reveal"><div class="panel">
+    <div class="panel-h"><span>PULSE Insights · Approval Queue</span><span class="dot"></span></div>
+    <div class="panel-b">
+      <div class="line-item"><span class="li-d"></span><span class="li-t">Review response · Desert Camp</span><span class="li-s s-approve">Approve</span></div>
+      <div class="line-item"><span class="li-d"></span><span class="li-t">Recovery package · 6 gap nights</span><span class="li-s s-approve">Approve</span></div>
+      <div class="line-item"><span class="li-d"></span><span class="li-t">VIP arrival prep · Aisha K.</span><span class="li-s s-ok">Auto</span></div>
+      <div class="tile-row" style="margin-top:16px;"><div class="tile"><div class="v">1,820</div><div class="k">Insights / mo</div></div><div class="tile"><div class="v teal">640</div><div class="k">Actions taken</div></div><div class="tile"><div class="v gold">AED 340k</div><div class="k">Revenue protected</div></div></div>
+      <div style="margin-top:14px;font-size:11px;color:var(--dim);">AI is infrastructure. Outputs are PULSE Insights · PULSE Recommendations — always draft-first.</div>
+    </div>
+  </div></div>
+</div></div></section>
+
+<!-- 6 TRUST -->
+<section class="chapter"><div class="wrap"><div class="mod flip">
+  <div>
+    <div class="mod-num reveal">06 — TRUST INTELLIGENCE</div>
+    <h3 class="reveal">Know who delivers<br>before you partner.</h3>
+    <p class="reveal">Vendor validation queue, trust-score calculation, partner scoring, community ratings and flagged participants — the verification layer that protects the guest and the brand.</p>
+    <div class="mod-key reveal">Key metric&nbsp;·&nbsp;<span class="mono">Ecosystem Trust · Verified Partners</span></div>
+  </div>
+  <div class="mod-visual reveal"><div class="panel">
+    <div class="panel-h"><span>Trust Intelligence</span><span class="dot"></span></div>
+    <div class="panel-b">
+      <div class="spark"><i style="height:55%"></i><i style="height:62%"></i><i style="height:58%"></i><i style="height:70%"></i><i style="height:76%"></i><i style="height:82%"></i><i style="height:88%"></i><i style="height:94%"></i></div>
+      <div class="tile-row" style="margin-top:18px;"><div class="tile"><div class="v teal">88</div><div class="k">Ecosystem trust</div></div><div class="tile"><div class="v">142</div><div class="k">Verified partners</div></div><div class="tile"><div class="v">23</div><div class="k">Pending</div></div></div>
+    </div>
+  </div></div>
+</div></div></section>
+
+<!-- 7 STAFF -->
+<section class="chapter" id="staff"><div class="wrap"><div class="mod">
+  <div>
+    <div class="mod-num reveal">07 — STAFF INTELLIGENCE</div>
+    <h3 class="reveal">Teams that perform,<br>visible in real time.</h3>
+    <p class="reveal">Task performance, SLA tracking, assignment load, housekeeping efficiency and maintenance response time — accountability becomes evidence, not memory, across every property and shift.</p>
+    <div class="mod-key reveal">Key metric&nbsp;·&nbsp;<span class="mono">Staff Performance Index · SLA Compliance</span></div>
+  </div>
+  <div class="mod-visual reveal"><div class="panel">
+    <div class="panel-h"><span>Staff Performance</span><span class="dot"></span></div>
+    <div class="panel-b">
+      <div class="bars">
+        <div class="bar-row"><span class="bl">Housekeeping</span><span class="bt"><span class="bf" style="width:95%"></span></span><span class="bv">95%</span></div>
+        <div class="bar-row"><span class="bl">Maintenance</span><span class="bt"><span class="bf" style="width:88%"></span></span><span class="bv">88%</span></div>
+        <div class="bar-row"><span class="bl">Guest services</span><span class="bt"><span class="bf" style="width:92%"></span></span><span class="bv">92%</span></div>
+      </div>
+      <div class="tile-row" style="margin-top:18px;"><div class="tile"><div class="v teal">91</div><div class="k">Performance index</div></div><div class="tile"><div class="v">96%</div><div class="k">SLA compliance</div></div><div class="tile"><div class="v">18m</div><div class="k">Avg response</div></div></div>
+    </div>
+  </div></div>
+</div></div></section>
+
+<!-- 8 GROWTH -->
+<section class="chapter" id="growth"><div class="wrap"><div class="mod flip">
+  <div>
+    <div class="mod-num reveal">08 — GROWTH INTELLIGENCE</div>
+    <h3 class="reveal">Reduce OTA dependency.<br>Grow direct.</h3>
+    <p class="reveal">Review trajectory, booking trend, market position versus the competitive set, direct-booking growth and OTA-dependency reduction — the trend lines that tell a board where the portfolio is genuinely heading.</p>
+    <div class="mod-key reveal">Key metric&nbsp;·&nbsp;<span class="mono">Review Trajectory · Direct Booking Rate</span></div>
+  </div>
+  <div class="mod-visual reveal"><div class="panel">
+    <div class="panel-h"><span>Growth Index · Trajectory</span><span class="dot"></span></div>
+    <div class="panel-b">
+      <div class="spark"><i style="height:40%"></i><i style="height:48%"></i><i style="height:46%"></i><i style="height:58%"></i><i style="height:64%"></i><i style="height:62%"></i><i style="height:74%"></i><i style="height:86%"></i><i style="height:100%"></i></div>
+      <div class="tile-row" style="margin-top:18px;"><div class="tile"><div class="v gold">4.4→4.8</div><div class="k">Review trajectory</div></div><div class="tile"><div class="v teal">+31%</div><div class="k">Direct bookings</div></div><div class="tile"><div class="v">−14%</div><div class="k">OTA dependency</div></div></div>
+    </div>
+  </div></div>
+</div></div></section>
+
+<!-- COMPARE -->
+<section class="chapter"><div class="wrap">
+  <div class="cn reveal center">THE SHIFT</div>
+  <h2 class="h2 reveal center" style="max-width:760px;margin:0 auto;">From managing bookings<br>to managing <em>participation.</em></h2>
+  <div class="compare reveal">
+    <div class="compare-row"><div class="legacy">Legacy PMS</div><div class="pulse">PULSE HOST</div></div>
+    <div class="compare-row"><div class="legacy">Manages bookings</div><div class="pulse">Manages participation</div></div>
+    <div class="compare-row"><div class="legacy">Reports history</div><div class="pulse">Reveals opportunity</div></div>
+    <div class="compare-row"><div class="legacy">Tracks reservations</div><div class="pulse">Tracks intelligence</div></div>
+    <div class="compare-row"><div class="legacy">Siloed by property</div><div class="pulse">Connected by network</div></div>
+  </div>
+</div></section>
+
+<!-- SCALE -->
+<section class="chapter"><div class="wrap center">
+  <div class="cn reveal center">INFINITE SCALE</div>
+  <h2 class="h2 reveal" style="max-width:720px;margin:0 auto;">One intelligence layer.<br>Every size of portfolio.</h2>
+  <div class="tiers">
+    <div class="tier reveal"><div class="scope">1 property</div><div class="name">Starter</div><div class="desc">A single boutique property, fully intelligent from day one.</div></div>
+    <div class="tier reveal"><div class="scope">2–10</div><div class="name">Portfolio</div><div class="desc">A connected portfolio that behaves as one network.</div></div>
+    <div class="tier reveal"><div class="scope">10–50</div><div class="name">Enterprise</div><div class="desc">Group-grade operations, revenue and growth intelligence.</div></div>
+    <div class="tier reveal"><div class="scope">50+</div><div class="name">Sovereign</div><div class="desc">Operator-of-scale intelligence across a destination.</div></div>
+  </div>
+</div></section>
+
+<!-- INVESTOR -->
+<section class="chapter"><div class="wrap">
+  <div class="inv reveal">
+    <div class="eyebrow center">For the Gulf · For the World</div>
+    <h2 class="h2" style="margin:14px auto 0;max-width:720px;">Built for the Gulf.<br>Designed for the world.</h2>
+    <div class="inv-stats">
+      <div class="inv-stat"><div class="v" data-count="150000">0</div><div class="k">UAE hotel keys</div></div>
+      <div class="inv-stat"><div class="v">AED <span data-count="30">0</span>B+</div><div class="k">Annual tourism revenue</div></div>
+      <div class="inv-stat"><div class="v" data-count="40">0</div>M+<div class="k">GCC tourists targeted by 2030</div></div>
+      <div class="inv-stat"><div class="v">2030</div><div class="k">Saudi Vision demand horizon</div></div>
+    </div>
+    <p class="lede" style="max-width:620px;margin:30px auto 0;font-size:14.5px;">Saudi Vision 2030 and the UAE's tourism ambition are creating unprecedented demand for hospitality intelligence. PULSE HOST is the intelligence layer every operator will need — and the network every destination will run on.</p>
+    <div style="margin-top:30px;"><a class="btn btn-gold" href="pulse-os-v2.html#page-trial">Book an Investor Briefing</a></div>
+  </div>
+</div></section>
+
+<!-- FINAL -->
+<section class="final">
+  <div class="final-glow"></div>
+  <h2 class="reveal">What hospitality<br><em>should become.</em></h2>
+  <p class="final-sub lede reveal">Not what it currently is. One intelligence layer that learns, connects and grows — proven live, built to scale from one property to a portfolio of hundreds.</p>
+  <div class="final-ctas reveal">
+    <a class="btn btn-gold" href="pulse-os-v2.html#page-trial">Request PULSE Host Access</a>
+    <a class="btn btn-line" href="pulse-os-v2.html#page-morning">See It Live · Farmstead</a>
+    <a class="btn btn-line" href="pulse-destination.html">Destination Intelligence →</a>
+  </div>
+  <div class="final-doctrine reveal">MOST PLATFORMS MANAGE TRANSACTIONS · PULSE MANAGES PARTICIPATION</div>
+</section>
+<footer>PULSE HOST · Hospitality Intelligence at Global Scale · Farmstead is the proof</footer>
+
+<!-- ⌘K SEARCH -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <div class="search-input-row"><span style="color:var(--dim);">⌕</span><input id="searchInput" placeholder="Search opportunities, destinations, businesses, insights…" autocomplete="off"><span class="esc">ESC</span></div>
+    <div class="search-results" id="searchResults"></div>
+    <div class="search-foot">PULSE Intelligence Search · Preview</div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGSAP=typeof window.gsap!=='undefined', hasST=hasGSAP&&typeof window.ScrollTrigger!=='undefined';
+  var lenis=null;
+  if(!reduce&&typeof window.Lenis!=='undefined'){ lenis=new Lenis({duration:1.15,smoothWheel:true}); function raf(t){lenis.raf(t);requestAnimationFrame(raf);} requestAnimationFrame(raf); if(hasST) lenis.on('scroll',ScrollTrigger.update); }
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){ a.addEventListener('click',function(e){ var id=a.getAttribute('href'); if(id.length<2)return; var el=id==='#top'?document.body:document.querySelector(id); if(!el)return; e.preventDefault(); if(lenis)lenis.scrollTo(el,{offset:-70}); else window.scrollTo({top:0,behavior:'smooth'}); }); });
+  var nav=document.getElementById('nav'),subnav=document.getElementById('subnav'),prog=document.getElementById('progress');
+  function onS(){var y=window.scrollY||0;nav.classList.toggle('scrolled',y>40);subnav.classList.toggle('scrolled',y>40);var h=document.documentElement.scrollHeight-window.innerHeight;prog.style.width=(h>0?y/h*100:0)+'%';}
+  window.addEventListener('scroll',onS,{passive:true}); onS();
+  if(hasGSAP){ var tl=gsap.timeline({delay:.2}); tl.to('.h-hero .eyebrow',{opacity:1,y:0,duration:.9,ease:'power2.out'},0).to('.h-hero-sub',{opacity:1,duration:.9,ease:'power2.out'},.5).to('.h-hero-ctas',{opacity:1,duration:.9,ease:'power2.out'},.7).to('#cmd',{opacity:1,y:0,duration:1.1,ease:'power3.out'},.6); }
+  else { document.querySelectorAll('.h-hero .eyebrow,.h-hero-sub,.h-hero-ctas,#cmd').forEach(function(e){e.style.opacity=1;e.style.transform='none';}); }
+  function reveal(el){ if(!hasST){el.style.opacity=1;el.style.transform='none';return;} gsap.set(el,{opacity:0,y:30}); ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:function(){gsap.to(el,{opacity:1,y:0,duration:.8,ease:'power3.out'});}}); }
+  document.querySelectorAll('.reveal').forEach(reveal);
+  function cu(el){ if(el.__d)return; el.__d=1; var tgt=parseFloat(el.getAttribute('data-count'))||0,suf=el.getAttribute('data-suffix')||'',dur=1400,st=performance.now();
+    function step(now){var p=Math.min((now-st)/dur,1),e=1-Math.pow(1-p,3),v=tgt*e; el.textContent=(tgt>=1000?Math.round(v).toLocaleString():Math.round(v))+suf; if(p<1)requestAnimationFrame(step);} requestAnimationFrame(step); }
+  document.querySelectorAll('[data-count]').forEach(function(el){ if(!hasST){cu(el);return;} ScrollTrigger.create({trigger:el,start:'top 92%',once:true,onEnter:function(){cu(el);}}); });
+  /* ⌘K search */
+  (function(){
+    var overlay=document.getElementById('searchOverlay'),input=document.getElementById('searchInput'),results=document.getElementById('searchResults'),trigger=document.getElementById('searchTrigger');
+    var DATA=[
+      {cat:'Opportunities',ic:'◇',t:'UAE Inbound Tourism Activation 2025',d:'Viability 84 · ◉ Participate',href:'pulse-opportunities.html'},
+      {cat:'Opportunities',ic:'◇',t:'Desert Camp recovery package',d:'6 gap nights · est. AED 64,000',href:'pulse-opportunities.html'},
+      {cat:'Destinations',ic:'⬡',t:'Ras Al Khaimah',d:'1,840 verified businesses · 3 active opportunities',href:'pulse-destination.html'},
+      {cat:'Businesses',ic:'◈',t:'Palm Jumeirah Residence',d:'Readiness 92 · 88% occupancy · RevPAR AED 940',href:'pulse-os-v2.html#page-properties'},
+      {cat:'Businesses',ic:'◈',t:'Farmstead Hospitality',d:'Trust Score 91 · Tenant #001 · Live',href:'pulse-os-v2.html#page-morning'},
+      {cat:'Insights',ic:'✦',t:'Revenue gap detected',d:'AED 184k portfolio gap value this quarter',href:'pulse-os-v2.html#page-revenue'},
+      {cat:'Insights',ic:'✦',t:'Direct booking growth',d:'+31% · OTA dependency −14%',href:'pulse-os-v2.html#page-revenue'}
+    ];
+    function render(q){ q=(q||'').toLowerCase(); var f=DATA.filter(function(x){return !q||(x.t+' '+x.d+' '+x.cat).toLowerCase().indexOf(q)>-1;}); var cats=['Opportunities','Destinations','Businesses','Insights'],html='';
+      cats.forEach(function(c){ var items=f.filter(function(x){return x.cat===c;}); if(!items.length)return; html+='<div class="search-cat">'+c+'</div>'; items.forEach(function(x){ html+='<a class="search-item" href="'+x.href+'"><span class="si-ic">'+x.ic+'</span><span><span class="si-t">'+x.t+'</span><span class="si-d" style="display:block">'+x.d+'</span></span></a>'; }); });
+      if(!html) html='<div class="search-cat">No results</div>'; results.innerHTML=html; }
+    function open(){ overlay.classList.add('open'); render(''); setTimeout(function(){input.focus();},40); if(lenis)lenis.stop(); }
+    function close(){ overlay.classList.remove('open'); input.value=''; if(lenis)lenis.start(); }
+    if(trigger) trigger.addEventListener('click',open);
+    if(input) input.addEventListener('input',function(){render(input.value);});
+    if(overlay) overlay.addEventListener('click',function(e){ if(e.target===overlay) close(); });
+    document.addEventListener('keydown',function(e){ if((e.metaKey||e.ctrlKey)&&(e.key==='k'||e.key==='K')){ e.preventDefault(); overlay.classList.contains('open')?close():open(); } else if(e.key==='Escape'&&overlay.classList.contains('open')){ close(); } });
+  })();
+})();
+</script>
+</body>
+</html>

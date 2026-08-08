@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE Opportunities — The JV Opportunity Network</title>
+<meta name="description" content="You have a skill. A venue has a gap. PULSE connects them — transparently, fairly, with shared upside.">
+<meta name="theme-color" content="#07090E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+<style>
+:root{
+  --black:#07090E;--navy:#0B1220;--navy2:#0E1626;
+  --line:rgba(255,255,255,0.08);--line2:rgba(255,255,255,0.14);
+  --brass:#B08D57;--gold:#E8D9A8;--gold2:#C6A66B;
+  --teal:#2BB8A5;--purple:#9B6DFF;
+  --warm:#F4EFE6;--muted:#9AA4B2;--dim:#5C6677;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Inter',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--black);color:var(--warm);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+::selection{background:rgba(155,109,255,.25);}
+
+.grain{position:fixed;inset:0;z-index:9000;pointer-events:none;opacity:.045;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+.progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--purple),var(--gold));z-index:8999;width:0%;transition:width .1s linear;}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:8000;padding:18px clamp(20px,5vw,56px);display:flex;align-items:center;justify-content:space-between;background:rgba(7,9,14,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);}
+.nav-brand{display:flex;align-items:center;gap:10px;}
+.nav-mark{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,var(--purple),rgba(155,109,255,.6));display:flex;align-items:center;justify-content:center;}
+.nav-mark-dot{width:9px;height:9px;border-radius:50%;background:var(--black);}
+.nav-name{font-weight:700;letter-spacing:.2em;font-size:14px;}
+.nav-name b{color:var(--purple);}
+.nav-links{display:flex;align-items:center;gap:24px;}
+.nav-links a{font-size:12.5px;color:var(--muted);letter-spacing:.03em;transition:color .2s;}
+.nav-links a:hover{color:var(--gold);}
+.nav-cta{font-size:12px;font-weight:600;letter-spacing:.06em;color:var(--black);background:linear-gradient(135deg,var(--purple),rgba(155,109,255,.8));border-radius:40px;padding:9px 20px;transition:transform .2s,box-shadow .2s;}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(155,109,255,.4);}
+@media(max-width:700px){.nav-links{display:none;}}
+
+section{position:relative;}
+
+/* HERO */
+.s-hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:120px clamp(20px,5vw,80px) 80px;overflow:hidden;}
+.hero-bg{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(50% 60% at 50% 40%,rgba(155,109,255,.14),transparent 70%),
+  radial-gradient(35% 45% at 20% 70%,rgba(43,184,165,.08),transparent 60%),
+  radial-gradient(35% 45% at 80% 20%,rgba(232,217,168,.08),transparent 60%);}
+.hero-eyebrow{font-size:11px;letter-spacing:.36em;text-transform:uppercase;color:var(--purple);font-weight:600;margin-bottom:28px;}
+.hero-title{font-family:var(--serif);font-weight:300;font-size:clamp(42px,8vw,92px);line-height:1.0;letter-spacing:-.025em;max-width:900px;margin:0 auto 32px;}
+.hero-title em{font-style:italic;color:var(--gold);}
+.hero-title .accent{color:var(--purple);}
+.hero-sub{font-size:clamp(16px,2vw,20px);color:var(--muted);font-weight:300;line-height:1.7;max-width:680px;margin:0 auto 48px;}
+.hero-cta-row{display:flex;align-items:center;gap:16px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{font-size:13px;font-weight:600;letter-spacing:.05em;color:var(--black);background:linear-gradient(135deg,var(--purple),rgba(155,109,255,.85));border-radius:40px;padding:14px 32px;transition:transform .2s,box-shadow .2s;display:inline-block;}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(155,109,255,.4);}
+.btn-ghost{font-size:13px;color:var(--muted);border:1px solid var(--line2);border-radius:40px;padding:13px 28px;transition:border-color .2s,color .2s;display:inline-block;}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.hero-stat-row{margin-top:72px;display:flex;gap:clamp(24px,4vw,60px);justify-content:center;flex-wrap:wrap;}
+.hero-stat .num{font-family:var(--serif);font-size:clamp(32px,5vw,52px);font-weight:300;color:var(--purple);}
+.hero-stat .label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-top:4px;}
+.demo-note{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin-top:16px;}
+
+/* layouts */
+.s-wrap{max-width:1180px;margin:0 auto;padding:0 clamp(20px,5vw,56px);}
+.s-pad{padding:clamp(80px,10vh,130px) 0;}
+.s-label{font-size:10px;letter-spacing:.36em;text-transform:uppercase;color:var(--dim);margin-bottom:14px;}
+.s-title{font-family:var(--serif);font-weight:300;font-size:clamp(32px,5vw,58px);line-height:1.08;letter-spacing:-.02em;}
+.s-title em{font-style:italic;color:var(--gold);}
+.s-body{font-size:clamp(15px,1.7vw,18px);color:var(--muted);font-weight:300;line-height:1.8;max-width:620px;margin-top:20px;}
+.divider{height:1px;background:var(--line);}
+
+/* pulse dot */
+@keyframes pulse-dot{0%,100%{opacity:1;}50%{opacity:.35;}}
+@keyframes pulse-ring{0%{transform:scale(1);opacity:.6;}100%{transform:scale(2.2);opacity:0;}}
+
+/* OBJECT CARD */
+.object-card{background:linear-gradient(165deg,rgba(14,22,38,.9),rgba(11,18,32,.7));border:1px solid rgba(155,109,255,.22);border-radius:24px;padding:clamp(28px,4vw,48px);max-width:780px;margin:48px auto 0;position:relative;overflow:hidden;}
+.object-card::before{content:'';position:absolute;top:-40%;right:-20%;width:70%;height:80%;background:radial-gradient(circle,rgba(155,109,255,.1),transparent 70%);pointer-events:none;}
+.obj-header{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px;}
+.obj-tag{font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--purple);background:rgba(155,109,255,.1);border:1px solid rgba(155,109,255,.2);border-radius:6px;padding:4px 10px;}
+.obj-status{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--teal);background:rgba(43,184,165,.08);border:1px solid rgba(43,184,165,.18);border-radius:6px;padding:4px 10px;display:flex;align-items:center;gap:6px;}
+.obj-status-dot{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse-dot 2s ease-in-out infinite;}
+.obj-name{font-family:var(--serif);font-size:clamp(22px,3vw,34px);font-weight:400;margin-bottom:8px;line-height:1.1;}
+.obj-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.obj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:580px){.obj-grid{grid-template-columns:1fr 1fr;}}
+.obj-cell{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:14px 16px;}
+.obj-cell-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
+.obj-cell-val{font-size:14px;font-weight:500;color:var(--warm);}
+.obj-cell-val.gold{color:var(--gold2);}
+.obj-proposer{display:flex;align-items:center;gap:12px;margin-top:24px;padding:14px 16px;background:rgba(155,109,255,.05);border:1px solid rgba(155,109,255,.12);border-radius:12px;}
+.proposer-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--purple),rgba(155,109,255,.5));display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;color:var(--black);flex-shrink:0;}
+.proposer-name{font-size:13px;font-weight:500;}
+.proposer-role{font-size:11px;color:var(--dim);}
+.proposer-tag{margin-left:auto;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);flex-shrink:0;}
+
+/* FLOW */
+.flow-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:56px;}
+@media(max-width:860px){.flow-steps{grid-template-columns:1fr 1fr;gap:14px;}}
+@media(max-width:520px){.flow-steps{grid-template-columns:1fr;}}
+.flow-step{padding:28px 24px;background:linear-gradient(165deg,rgba(14,22,38,.85),rgba(11,18,32,.6));border:1px solid var(--line);position:relative;transition:border-color .4s,background .4s;}
+.flow-step:hover{background:linear-gradient(165deg,rgba(18,28,46,.9),rgba(14,22,38,.7));border-color:var(--line2);}
+.flow-step:first-child{border-radius:16px 0 0 16px;}
+.flow-step:last-child{border-radius:0 16px 16px 0;}
+@media(max-width:860px){.flow-step{border-radius:14px !important;}}
+.flow-num{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.18em;margin-bottom:16px;}
+.flow-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.flow-step-title{font-size:14px;font-weight:600;color:var(--warm);margin-bottom:8px;}
+.flow-step-desc{font-size:12.5px;color:var(--muted);line-height:1.6;}
+.flow-arrow{position:absolute;right:-14px;top:50%;transform:translateY(-50%);z-index:2;color:var(--dim);font-size:20px;line-height:1;}
+@media(max-width:860px){.flow-arrow{display:none;}}
+
+/* VENUE SECTION */
+.venue-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,60px);align-items:start;margin-top:56px;}
+@media(max-width:800px){.venue-layout{grid-template-columns:1fr;}}
+.venue-inbox{background:linear-gradient(165deg,rgba(14,22,38,.9),rgba(11,18,32,.7));border:1px solid var(--line2);border-radius:20px;overflow:hidden;}
+.venue-inbox-header{padding:16px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;}
+.venue-inbox-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);animation:pulse-dot 2.5s ease-in-out infinite;}
+.venue-inbox-title{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.venue-inbox-count{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--purple);}
+.opp-item{padding:16px 22px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .2s;}
+.opp-item:hover{background:rgba(155,109,255,.04);}
+.opp-item.selected{background:rgba(155,109,255,.07);border-left:2px solid var(--purple);}
+.opp-item:last-child{border-bottom:none;}
+.opp-item-row{display:flex;align-items:center;gap:10px;}
+.opp-proposer-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--purple),rgba(155,109,255,.5));display:flex;align-items:center;justify-content:center;font-size:11px;font-family:var(--serif);flex-shrink:0;}
+.opp-meta{flex:1;min-width:0;}
+.opp-meta-name{font-size:13px;font-weight:500;color:var(--warm);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.opp-meta-type{font-size:11px;color:var(--dim);}
+.opp-score{font-family:var(--mono);font-size:11px;font-weight:500;flex-shrink:0;}
+.score-high{color:var(--teal);}
+.score-med{color:var(--gold2);}
+
+.venue-actions{display:flex;flex-direction:column;gap:14px;}
+.action-card{padding:20px 24px;border-radius:16px;border:1px solid var(--line);background:rgba(14,22,38,.6);cursor:pointer;transition:transform .3s var(--ease),border-color .3s,box-shadow .3s;}
+.action-card:hover{transform:translateY(-3px);}
+.action-card.accept{border-color:rgba(43,184,165,.3);}.action-card.accept:hover{box-shadow:0 16px 40px rgba(43,184,165,.15);}
+.action-card.decline{border-color:rgba(232,100,100,.2);}.action-card.decline:hover{box-shadow:0 16px 40px rgba(232,100,100,.1);}
+.action-card.conditional{border-color:rgba(232,217,168,.3);}.action-card.conditional:hover{box-shadow:0 16px 40px rgba(232,217,168,.1);}
+.action-card.present{border-color:rgba(155,109,255,.3);}.action-card.present:hover{box-shadow:0 16px 40px rgba(155,109,255,.15);}
+.action-icon{width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+.action-card.accept .action-icon{background:rgba(43,184,165,.12);}
+.action-card.decline .action-icon{background:rgba(232,100,100,.08);}
+.action-card.conditional .action-icon{background:rgba(232,217,168,.1);}
+.action-card.present .action-icon{background:rgba(155,109,255,.12);}
+.action-title{font-size:13px;font-weight:600;margin-bottom:4px;}
+.action-card.accept .action-title{color:var(--teal);}
+.action-card.decline .action-title{color:#e85c5c;}
+.action-card.conditional .action-title{color:var(--gold);}
+.action-card.present .action-title{color:var(--purple);}
+.action-desc{font-size:12px;color:var(--muted);line-height:1.5;}
+.action-feedback{display:none;margin-top:16px;padding:14px 18px;border-radius:12px;font-size:13px;}
+
+/* JV DASHBOARD */
+.jv-dashboard{max-width:860px;margin:56px auto 0;}
+.jv-header-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.jv-title-text{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);}
+.jv-id{font-family:var(--mono);font-size:11px;color:var(--purple);}
+.jv-metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+@media(max-width:640px){.jv-metrics{grid-template-columns:1fr 1fr;}}
+.jv-metric{background:linear-gradient(165deg,rgba(14,22,38,.9),rgba(11,18,32,.7));border:1px solid var(--line);border-radius:14px;padding:16px 18px;}
+.jv-metric-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:8px;}
+.jv-metric-val{font-family:var(--serif);font-size:clamp(22px,3vw,30px);font-weight:300;}
+.jv-metric-sub{font-size:11px;color:var(--dim);margin-top:4px;}
+.jv-split{background:linear-gradient(165deg,rgba(14,22,38,.9),rgba(11,18,32,.7));border:1px solid var(--line);border-radius:16px;overflow:hidden;margin-bottom:16px;}
+.jv-split-header{padding:14px 20px;border-bottom:1px solid var(--line);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.jv-split-body{padding:20px;}
+.split-bar-wrap{display:flex;height:10px;border-radius:5px;overflow:hidden;margin:12px 0;}
+.split-venue-bar{background:linear-gradient(90deg,var(--gold),var(--brass));width:60%;}
+.split-opp-bar{background:linear-gradient(90deg,var(--purple),rgba(155,109,255,.6));width:40%;}
+.split-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);}
+.split-labels b{color:var(--warm);}
+.jv-activity{background:linear-gradient(165deg,rgba(14,22,38,.9),rgba(11,18,32,.7));border:1px solid var(--line);border-radius:16px;overflow:hidden;}
+.jv-activity-header{padding:14px 20px;border-bottom:1px solid var(--line);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.jv-event{padding:12px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;}
+.jv-event:last-child{border-bottom:none;}
+.jv-event-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.jv-event-dot.green{background:var(--teal);}
+.jv-event-dot.gold{background:var(--gold2);}
+.jv-event-dot.purple{background:var(--purple);}
+.jv-event-text{font-size:12.5px;color:var(--muted);flex:1;}
+.jv-event-text b{color:var(--warm);}
+.jv-event-time{font-family:var(--mono);font-size:10px;color:var(--dim);flex-shrink:0;}
+
+/* VIABILITY */
+.viability-engine{background:linear-gradient(165deg,rgba(14,22,38,.95),rgba(11,18,32,.8));border:1px solid var(--line2);border-radius:24px;overflow:hidden;max-width:860px;margin:48px auto 0;}
+.engine-header{padding:20px 28px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;}
+.engine-icon{width:36px;height:36px;border-radius:9px;background:rgba(155,109,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.engine-title{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--warm);}
+.engine-subtitle{font-size:11px;color:var(--dim);margin-top:2px;}
+.engine-body{display:grid;grid-template-columns:1fr 1fr;}
+@media(max-width:720px){.engine-body{grid-template-columns:1fr;}}
+.engine-signals{padding:24px 28px;border-right:1px solid var(--line);}
+@media(max-width:720px){.engine-signals{border-right:none;border-bottom:1px solid var(--line);}}
+.engine-result{padding:24px 28px;}
+.signal-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;}
+.signal-item{display:flex;align-items:center;gap:10px;margin-bottom:12px;cursor:pointer;}
+.signal-toggle{width:34px;height:20px;border-radius:10px;background:rgba(255,255,255,.08);border:1px solid var(--line2);position:relative;transition:background .25s,border-color .25s;flex-shrink:0;}
+.signal-toggle.on{background:rgba(43,184,165,.25);border-color:rgba(43,184,165,.4);}
+.signal-toggle::after{content:'';position:absolute;top:3px;left:3px;width:12px;height:12px;border-radius:50%;background:var(--muted);transition:transform .25s,background .25s;}
+.signal-toggle.on::after{transform:translateX(14px);background:var(--teal);}
+.signal-text{flex:1;font-size:12.5px;color:var(--muted);}
+.signal-item.active .signal-text{color:var(--warm);}
+.signal-weight{font-family:var(--mono);font-size:10px;color:var(--dim);}
+.result-label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;}
+.score-num{font-family:var(--serif);font-size:clamp(52px,8vw,80px);font-weight:300;line-height:1;transition:color .4s;}
+.score-bar-wrap{height:8px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;margin:12px 0;}
+.score-bar-fill{height:100%;border-radius:4px;transition:width .6s var(--ease),background .4s;}
+.rec-chip{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:40px;font-size:12px;font-weight:600;letter-spacing:.06em;transition:all .4s;}
+.chip-participate{background:rgba(43,184,165,.15);border:1px solid rgba(43,184,165,.35);color:var(--teal);}
+.chip-conditional{background:rgba(232,217,168,.1);border:1px solid rgba(232,217,168,.3);color:var(--gold);}
+.chip-hold{background:rgba(155,109,255,.12);border:1px solid rgba(155,109,255,.25);color:var(--purple);}
+.chip-no{background:rgba(232,100,100,.08);border:1px solid rgba(232,100,100,.2);color:#e85c5c;}
+.conf-row{margin-top:14px;font-size:12px;color:var(--muted);}
+.conf-row b{color:var(--warm);}
+.score-disclaimer{margin-top:16px;font-size:11px;color:var(--dim);line-height:1.5;padding:10px 12px;background:rgba(255,255,255,.02);border-radius:8px;border:1px solid var(--line);}
+
+/* EXCHANGE */
+.exchange-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
+@media(max-width:900px){.exchange-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.exchange-grid{grid-template-columns:1fr;}}
+.exchange-card{background:linear-gradient(165deg,rgba(14,22,38,.85),rgba(11,18,32,.65));border:1px solid var(--line);border-radius:18px;padding:24px;transition:transform .35s var(--ease),border-color .35s,box-shadow .35s;}
+.exchange-card:hover{transform:translateY(-5px);border-color:rgba(155,109,255,.25);box-shadow:0 20px 50px rgba(0,0,0,.4);}
+.exc-type{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--purple);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.exc-live{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pulse-dot 2s ease-in-out infinite;flex-shrink:0;}
+.exc-title{font-family:var(--serif);font-size:20px;font-weight:400;margin-bottom:8px;line-height:1.2;}
+.exc-venue{font-size:12px;color:var(--dim);margin-bottom:14px;}
+.exc-proposer{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px;margin-bottom:14px;}
+.exc-proposer-av{width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--purple),rgba(155,109,255,.5));display:flex;align-items:center;justify-content:center;font-size:9px;font-family:var(--serif);color:var(--black);flex-shrink:0;}
+.exc-score-row{display:flex;align-items:center;justify-content:space-between;}
+.exc-score{font-family:var(--mono);font-size:13px;font-weight:500;}
+.exc-status{font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:20px;}
+.status-open{background:rgba(43,184,165,.1);color:var(--teal);border:1px solid rgba(43,184,165,.2);}
+.status-review{background:rgba(232,217,168,.08);color:var(--gold);border:1px solid rgba(232,217,168,.2);}
+.status-conditional{background:rgba(155,109,255,.1);color:var(--purple);border:1px solid rgba(155,109,255,.2);}
+
+/* OUTCOME */
+.outcome-layout{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,4vw,60px);align-items:start;margin-top:56px;}
+@media(max-width:800px){.outcome-layout{grid-template-columns:1fr;}}
+.outcome-card{background:linear-gradient(165deg,rgba(14,22,38,.9),rgba(11,18,32,.7));border:1px solid var(--line);border-radius:18px;padding:24px;}
+.outcome-title{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;}
+.outcome-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--line);}
+.outcome-row:last-child{border-bottom:none;padding-bottom:0;}
+.outcome-icon{width:32px;height:32px;border-radius:8px;background:rgba(43,184,165,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.outcome-txt{flex:1;}
+.outcome-txt-title{font-size:13px;font-weight:500;}
+.outcome-txt-sub{font-size:11px;color:var(--dim);margin-top:2px;}
+.outcome-val{font-family:var(--mono);font-size:12px;font-weight:500;color:var(--teal);flex-shrink:0;}
+.graph-node{display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,.02);border:1px solid var(--line);margin-bottom:8px;transition:border-color .3s;}
+.graph-node:hover{border-color:rgba(155,109,255,.2);}
+.graph-node-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.graph-node-dot.teal{background:var(--teal);}
+.graph-node-dot.gold{background:var(--gold2);}
+.graph-node-dot.dim{background:var(--dim);}
+.graph-node-name{font-size:13px;font-weight:500;flex:1;}
+.graph-node-meta{font-size:11px;color:var(--dim);}
+.graph-node-badge{font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:20px;flex-shrink:0;}
+.badge-verified{background:rgba(43,184,165,.1);color:var(--teal);}
+.badge-pending{background:rgba(232,217,168,.08);color:var(--gold);}
+.badge-inactive{background:rgba(255,255,255,.04);color:var(--dim);}
+
+/* PROOF */
+.proof-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;}
+@media(max-width:800px){.proof-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:520px){.proof-grid{grid-template-columns:1fr;}}
+.proof-tile{padding:24px;border:1px solid var(--line);border-radius:16px;background:rgba(14,22,38,.4);}
+.proof-num{font-family:var(--serif);font-size:clamp(32px,5vw,48px);font-weight:300;color:var(--teal);line-height:1;}
+.proof-label{font-size:12px;color:var(--muted);margin-top:6px;}
+.proof-note{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-top:4px;}
+
+/* CTA */
+.s-cta{text-align:center;}
+.cta-bg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(50% 60% at 50% 50%,rgba(155,109,255,.1),transparent 70%);}
+.cta-title{font-family:var(--serif);font-size:clamp(36px,6vw,72px);font-weight:300;letter-spacing:-.02em;line-height:1.05;margin-bottom:24px;}
+.cta-title em{font-style:italic;color:var(--purple);}
+.cta-sub{font-size:clamp(15px,1.8vw,19px);color:var(--muted);max-width:560px;margin:0 auto 48px;font-weight:300;}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.back-link{display:inline-flex;align-items:center;gap:8px;margin-top:40px;font-size:13px;color:var(--dim);transition:color .2s;}
+.back-link:hover{color:var(--gold);}
+
+.reveal{opacity:0;transform:translateY(28px);}
+
+footer{padding:32px clamp(20px,5vw,56px);border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.foot-note{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);}
+.foot-links{display:flex;gap:20px;flex-wrap:wrap;}
+.foot-links a{font-size:13px;color:var(--muted);transition:color .2s;}
+.foot-links a:hover{color:var(--gold);}
+
+@media(prefers-reduced-motion:reduce){*{animation:none !important;transition:none !important;}.reveal{opacity:1;transform:none;}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="progress-bar" id="progress"></div>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-mark"><div class="nav-mark-dot"></div></div>
+    <span class="nav-name">PULSE <b>Opportunities</b></span>
+  </div>
+  <div class="nav-links">
+    <a href="pulse-os-landing.html">Overview</a>
+    <a href="pulse-travel-discovery.html">Discovery</a>
+    <a href="pulse-host.html">Host</a>
+    <a href="pulse-destination.html">Destination</a>
+  </div>
+  <a class="nav-cta" href="pulse-os-v2.html#page-trial">Get Access</a>
+</nav>
+
+<!-- HERO -->
+<section class="s-hero" id="hero">
+  <div class="hero-bg"></div>
+  <div>
+    <div class="hero-eyebrow reveal">The World's First JV Opportunity Network</div>
+    <h1 class="hero-title reveal">
+      You have a skill.<br>
+      A venue has a <em>gap.</em><br>
+      <span class="accent">PULSE</span> connects them.
+    </h1>
+    <p class="hero-sub reveal">
+      Offer your services for free. Create a shared opportunity. Let the venue decide.
+      Revenue flows into a joint account — tracked, transparent, and measurable from day one.
+    </p>
+    <div class="hero-cta-row reveal">
+      <a class="btn-primary" href="#flow">See How It Works</a>
+      <a class="btn-ghost" href="#exchange">Browse Opportunities</a>
+    </div>
+    <div class="hero-stat-row reveal">
+      <div class="hero-stat">
+        <div class="num" id="stat1">0</div>
+        <div class="label">Opportunities Created</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num" id="stat2">0</div>
+        <div class="label">Venues Participating</div>
+      </div>
+      <div class="hero-stat">
+        <div class="num" id="stat3">0%</div>
+        <div class="label">Revenue Tracked</div>
+      </div>
+    </div>
+    <div class="demo-note reveal">Demo data · Southern Drakensberg pilot scenario</div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 01 OPPORTUNITY OBJECT -->
+<section class="s-pad" id="object">
+  <div class="s-wrap">
+    <div class="s-label reveal">01 — The Opportunity Object</div>
+    <h2 class="s-title reveal">Every opportunity starts<br>as a <em>structured pitch.</em></h2>
+    <p class="s-body reveal">
+      Anyone with a skill, product or service creates a structured offer: what they provide,
+      which venue they're targeting, and how revenue is shared if the venue says yes.
+      No upfront charge. No obligation on either side.
+    </p>
+    <div class="object-card reveal">
+      <div class="obj-header">
+        <div class="obj-tag">OPP-2026-0047</div>
+        <div class="obj-status"><span class="obj-status-dot"></span>Awaiting Venue Review</div>
+      </div>
+      <div class="obj-name">Mountain Photography Experience Package</div>
+      <div class="obj-desc">
+        Professional landscape and lifestyle photography for guest content, social media and marketing assets.
+        Offered free of charge to the venue. Revenue generated from optional guest photography packages
+        sold at the property under a joint account.
+      </div>
+      <div class="obj-grid">
+        <div class="obj-cell">
+          <div class="obj-cell-label">Service Offered</div>
+          <div class="obj-cell-val">Photography sessions</div>
+        </div>
+        <div class="obj-cell">
+          <div class="obj-cell-label">Upfront Cost to Venue</div>
+          <div class="obj-cell-val gold">R 0 · FOC</div>
+        </div>
+        <div class="obj-cell">
+          <div class="obj-cell-label">JV Revenue Split</div>
+          <div class="obj-cell-val">60% Venue / 40% Proposer</div>
+        </div>
+        <div class="obj-cell">
+          <div class="obj-cell-label">Target Venue</div>
+          <div class="obj-cell-val">Sani Stone Lodge</div>
+        </div>
+        <div class="obj-cell">
+          <div class="obj-cell-label">Opportunity Type</div>
+          <div class="obj-cell-val">Guest Experience Bundle</div>
+        </div>
+        <div class="obj-cell">
+          <div class="obj-cell-label">Viability Score</div>
+          <div class="obj-cell-val gold">74 / 100</div>
+        </div>
+      </div>
+      <div class="obj-proposer">
+        <div class="proposer-av">TM</div>
+        <div>
+          <div class="proposer-name">Thabo Mokoena</div>
+          <div class="proposer-role">Freelance photographer · Underberg, KZN</div>
+        </div>
+        <div class="proposer-tag">PULSE Verified</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 02 FLOW -->
+<section class="s-pad" id="flow" style="background:linear-gradient(180deg,var(--black),rgba(11,18,32,.5) 50%,var(--black));">
+  <div class="s-wrap" style="position:relative;z-index:1;">
+    <div class="s-label reveal">02 — How It Works</div>
+    <h2 class="s-title reveal">From pitch to <em>joint venture</em><br>in four steps.</h2>
+    <div class="flow-steps reveal">
+      <div class="flow-step">
+        <div class="flow-num">01</div>
+        <div class="flow-icon" style="background:rgba(155,109,255,.12);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9B6DFF" stroke-width="1.8"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="flow-step-title">Opportunist Pitches</div>
+        <div class="flow-step-desc">Create a structured offer: what you provide, which venue, and what JV terms. Free to pitch. PULSE scores viability before the venue sees it.</div>
+        <div class="flow-arrow">›</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">02</div>
+        <div class="flow-icon" style="background:rgba(232,217,168,.1);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8D9A8" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div class="flow-step-title">Venue Reviews</div>
+        <div class="flow-step-desc">The venue sees the opportunity in their inbox: viability score, proposer profile, evidence, and proposed JV terms. They control the next action entirely.</div>
+        <div class="flow-arrow">›</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">03</div>
+        <div class="flow-icon" style="background:rgba(43,184,165,.1);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2BB8A5" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="flow-step-title">JV Account Opens</div>
+        <div class="flow-step-desc">On acceptance, PULSE opens a shared JV account. Revenue flows in and splits automatically per the agreed terms. Both parties see every transaction.</div>
+        <div class="flow-arrow">›</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-num">04</div>
+        <div class="flow-icon" style="background:rgba(43,184,165,.08);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2BB8A5" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="flow-step-title">Outcomes Tracked</div>
+        <div class="flow-step-desc">Revenue, milestones and outcomes are recorded to the Opportunity Graph — improving future viability scores for this opportunist and similar venues.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 03 VENUE DECISION -->
+<section class="s-pad" id="venue">
+  <div class="s-wrap">
+    <div class="s-label reveal">03 — The Venue's Choice</div>
+    <h2 class="s-title reveal">The venue controls<br>every <em>decision.</em></h2>
+    <p class="s-body reveal">
+      Four responses available. No pressure, no automatic commitment. Every action is logged
+      and leaves an evidence trail — for both the venue and the opportunist.
+    </p>
+    <div class="venue-layout">
+      <div>
+        <div class="venue-inbox reveal">
+          <div class="venue-inbox-header">
+            <div class="venue-inbox-dot"></div>
+            <div class="venue-inbox-title">Opportunity Inbox</div>
+            <div class="venue-inbox-count">3 pending</div>
+          </div>
+          <div class="opp-item selected" onclick="selectOpp(this)">
+            <div class="opp-item-row">
+              <div class="opp-proposer-av">TM</div>
+              <div class="opp-meta">
+                <div class="opp-meta-name">Mountain Photography Package</div>
+                <div class="opp-meta-type">Guest Experience · FOC pitch</div>
+              </div>
+              <div class="opp-score score-med">74</div>
+            </div>
+          </div>
+          <div class="opp-item" onclick="selectOpp(this)">
+            <div class="opp-item-row">
+              <div class="opp-proposer-av">SN</div>
+              <div class="opp-meta">
+                <div class="opp-meta-name">Craft Beer Tasting Evenings</div>
+                <div class="opp-meta-type">F&amp;B Programme · Revenue share</div>
+              </div>
+              <div class="opp-score score-high">88</div>
+            </div>
+          </div>
+          <div class="opp-item" onclick="selectOpp(this)">
+            <div class="opp-item-row">
+              <div class="opp-proposer-av">LP</div>
+              <div class="opp-meta">
+                <div class="opp-meta-name">Drakensberg Trail Guide</div>
+                <div class="opp-meta-type">Adventure Experience · FOC</div>
+              </div>
+              <div class="opp-score score-med">51</div>
+            </div>
+          </div>
+        </div>
+        <p style="font-size:10px;color:var(--dim);margin-top:10px;text-align:center;letter-spacing:.1em;text-transform:uppercase;">Demo data · not real opportunities</p>
+      </div>
+      <div class="venue-actions reveal">
+        <div class="action-card accept" onclick="handleAction('accept')">
+          <div class="action-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2BB8A5" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <div class="action-title">Accept</div>
+          <div class="action-desc">Open a JV account immediately. Revenue tracking begins. Both parties receive confirmation and agreement documentation.</div>
+        </div>
+        <div class="action-card decline" onclick="handleAction('decline')">
+          <div class="action-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e85c5c" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </div>
+          <div class="action-title">Decline</div>
+          <div class="action-desc">Decline with an optional reason. The opportunist is notified. Both parties remain available for future opportunities.</div>
+        </div>
+        <div class="action-card conditional" onclick="handleAction('conditional')">
+          <div class="action-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#E8D9A8" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div class="action-title">Accept with Conditions</div>
+          <div class="action-desc">Accept in principle with specific terms or modifications. Conditions are recorded and must be confirmed before the JV account activates.</div>
+        </div>
+        <div class="action-card present" onclick="handleAction('present')">
+          <div class="action-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9B6DFF" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="action-title">Request Presentation</div>
+          <div class="action-desc">Invite the opportunist to present their case — in person or virtually. PULSE schedules and records the session as evidence.</div>
+        </div>
+        <div class="action-feedback" id="action-feedback"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 04 JV ACCOUNT -->
+<section class="s-pad" id="jv">
+  <div class="s-wrap">
+    <div class="s-label reveal">04 — The JV Account</div>
+    <h2 class="s-title reveal">Shared revenue.<br><em>Full transparency.</em></h2>
+    <p class="s-body reveal">
+      When an opportunity is accepted, PULSE opens a joint venture account. Revenue flows in,
+      splits automatically per the agreed terms, and both parties see every transaction in real time.
+    </p>
+    <div class="jv-dashboard reveal">
+      <div class="jv-header-row">
+        <div class="jv-title-text">JV Account — Mountain Photography Package</div>
+        <div class="jv-id">JV-2026-0047</div>
+      </div>
+      <div class="jv-metrics">
+        <div class="jv-metric">
+          <div class="jv-metric-label">Total Revenue</div>
+          <div class="jv-metric-val" style="color:var(--teal);">R 18,400</div>
+          <div class="jv-metric-sub">Demo · 3 months active</div>
+        </div>
+        <div class="jv-metric">
+          <div class="jv-metric-label">Venue Share 60%</div>
+          <div class="jv-metric-val" style="color:var(--gold);">R 11,040</div>
+          <div class="jv-metric-sub">Sani Stone Lodge</div>
+        </div>
+        <div class="jv-metric">
+          <div class="jv-metric-label">Proposer Share 40%</div>
+          <div class="jv-metric-val" style="color:var(--purple);">R 7,360</div>
+          <div class="jv-metric-sub">Thabo Mokoena</div>
+        </div>
+        <div class="jv-metric">
+          <div class="jv-metric-label">Sessions Delivered</div>
+          <div class="jv-metric-val">23</div>
+          <div class="jv-metric-sub">Demo data</div>
+        </div>
+      </div>
+      <div class="jv-split">
+        <div class="jv-split-header">Revenue Split</div>
+        <div class="jv-split-body">
+          <div class="split-bar-wrap">
+            <div class="split-venue-bar"></div>
+            <div class="split-opp-bar"></div>
+          </div>
+          <div class="split-labels">
+            <span>Venue <b>60%</b> · R 11,040</span>
+            <span>Proposer <b>40%</b> · R 7,360</span>
+          </div>
+        </div>
+      </div>
+      <div class="jv-activity">
+        <div class="jv-activity-header">Recent Activity</div>
+        <div class="jv-event">
+          <div class="jv-event-dot green"></div>
+          <div class="jv-event-text"><b>Photography session completed</b> — 2 guests, Honeymoon package. R 1,800 logged.</div>
+          <div class="jv-event-time">Today</div>
+        </div>
+        <div class="jv-event">
+          <div class="jv-event-dot gold"></div>
+          <div class="jv-event-text">Revenue split disbursed — <b>R 1,080 to venue · R 720 to proposer</b></div>
+          <div class="jv-event-time">Yesterday</div>
+        </div>
+        <div class="jv-event">
+          <div class="jv-event-dot purple"></div>
+          <div class="jv-event-text"><b>Milestone reached:</b> 20 sessions. Participation graph entry updated.</div>
+          <div class="jv-event-time">2 days ago</div>
+        </div>
+        <div class="jv-event">
+          <div class="jv-event-dot green"></div>
+          <div class="jv-event-text">New booking with photography add-on — <b>Weekend Escape package</b></div>
+          <div class="jv-event-time">3 days ago</div>
+        </div>
+      </div>
+      <p style="font-size:10px;color:var(--dim);text-align:center;margin-top:12px;letter-spacing:.12em;text-transform:uppercase;">Demo data · not real financial transactions</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 05 VIABILITY ENGINE -->
+<section class="s-pad" id="viability" style="background:linear-gradient(180deg,var(--black),var(--navy) 50%,var(--black));">
+  <div class="s-wrap">
+    <div class="s-label reveal">05 — Viability Intelligence</div>
+    <h2 class="s-title reveal">Every pitch is scored<br>before it <em>reaches the venue.</em></h2>
+    <p class="s-body reveal">
+      PULSE scores every opportunity against real evidence before the venue sees it.
+      Toggle signals below to see how the score changes — and how the recommendation responds.
+    </p>
+    <div class="viability-engine reveal">
+      <div class="engine-header">
+        <div class="engine-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9B6DFF" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></svg>
+        </div>
+        <div>
+          <div class="engine-title">PULSE Viability Engine</div>
+          <div class="engine-subtitle">Deterministic scoring · evidence-based · human approval required for all outcomes</div>
+        </div>
+      </div>
+      <div class="engine-body">
+        <div class="engine-signals">
+          <div class="signal-label">Evidence Signals — toggle to see impact</div>
+          <div class="signal-item active" onclick="toggleSignal(this,12)">
+            <div class="signal-toggle on"></div>
+            <div class="signal-text">Verified business identity</div>
+            <div class="signal-weight">+12</div>
+          </div>
+          <div class="signal-item active" onclick="toggleSignal(this,10)">
+            <div class="signal-toggle on"></div>
+            <div class="signal-text">Portfolio / past work evidence</div>
+            <div class="signal-weight">+10</div>
+          </div>
+          <div class="signal-item" onclick="toggleSignal(this,9)">
+            <div class="signal-toggle"></div>
+            <div class="signal-text">Venue audience fit confirmed</div>
+            <div class="signal-weight">+9</div>
+          </div>
+          <div class="signal-item active" onclick="toggleSignal(this,8)">
+            <div class="signal-toggle on"></div>
+            <div class="signal-text">Revenue model is clear and fair</div>
+            <div class="signal-weight">+8</div>
+          </div>
+          <div class="signal-item" onclick="toggleSignal(this,7)">
+            <div class="signal-toggle"></div>
+            <div class="signal-text">Operational capacity confirmed</div>
+            <div class="signal-weight">+7</div>
+          </div>
+          <div class="signal-item" onclick="toggleSignal(this,6)">
+            <div class="signal-toggle"></div>
+            <div class="signal-text">Prior positive participation outcome</div>
+            <div class="signal-weight">+6</div>
+          </div>
+          <div class="signal-item active" onclick="toggleSignal(this,5)">
+            <div class="signal-toggle on"></div>
+            <div class="signal-text">Insurance / compliance documentation</div>
+            <div class="signal-weight">+5</div>
+          </div>
+          <div class="signal-item" onclick="toggleSignal(this,4)">
+            <div class="signal-toggle"></div>
+            <div class="signal-text">Regional guest demand signal</div>
+            <div class="signal-weight">+4</div>
+          </div>
+        </div>
+        <div class="engine-result">
+          <div class="result-label">Score</div>
+          <div class="score-num" id="vscore" style="color:var(--gold2);">85</div>
+          <div style="font-size:12px;color:var(--dim);margin-top:4px;">/ 100</div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-fill" id="vbar" style="width:85%;background:linear-gradient(90deg,var(--teal),var(--gold));"></div>
+          </div>
+          <div class="rec-chip chip-participate" id="vchip">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span id="vtext">Participate</span>
+          </div>
+          <div class="conf-row">
+            Confidence: <b id="vconf">82%</b> <span id="vsigs" style="color:var(--dim);">· 4 signals active</span>
+          </div>
+          <div class="score-disclaimer">
+            Score is deterministic and evidence-based. PULSE Insight may explain the result.
+            No recommendation takes effect without human approval.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 06 EXCHANGE -->
+<section class="s-pad" id="exchange">
+  <div class="s-wrap">
+    <div class="s-label reveal">06 — Live Opportunity Exchange</div>
+    <h2 class="s-title reveal">Open opportunities,<br>waiting for a <em>venue.</em></h2>
+    <p class="s-body reveal">
+      Any verified opportunist can browse venues and pitch. Any venue can browse incoming pitches.
+      Every opportunity is scored before either party commits.
+    </p>
+    <div class="exchange-grid">
+      <div class="exchange-card reveal">
+        <div class="exc-type"><span class="exc-live"></span>Seasonal Activation</div>
+        <div class="exc-title">Drakensberg Winter Wellness Retreat</div>
+        <div class="exc-venue">Open to mountain lodges · Underberg region</div>
+        <div class="exc-proposer"><div class="exc-proposer-av">NA</div>Nomvula Abrahams · Yoga &amp; Breathwork</div>
+        <div class="exc-score-row">
+          <div class="exc-score score-high">Score: 81</div>
+          <div class="exc-status status-open">Open</div>
+        </div>
+      </div>
+      <div class="exchange-card reveal">
+        <div class="exc-type"><span class="exc-live"></span>F&B Programme</div>
+        <div class="exc-title">Craft Beer &amp; Local Cuisine Evenings</div>
+        <div class="exc-venue">Sani Stone Lodge · Himeville</div>
+        <div class="exc-proposer"><div class="exc-proposer-av">SN</div>Sipho Nzimande · Craft Brewery</div>
+        <div class="exc-score-row">
+          <div class="exc-score score-high">Score: 88</div>
+          <div class="exc-status status-review">In Review</div>
+        </div>
+      </div>
+      <div class="exchange-card reveal">
+        <div class="exc-type"><span class="exc-live"></span>Adventure Experience</div>
+        <div class="exc-title">Sani Pass &amp; Lesotho Trail Guide</div>
+        <div class="exc-venue">Open to accommodation near Sani Pass</div>
+        <div class="exc-proposer"><div class="exc-proposer-av">LP</div>Lerato Phiri · Mountain Guide Level 3</div>
+        <div class="exc-score-row">
+          <div class="exc-score score-med">Score: 51</div>
+          <div class="exc-status status-conditional">Conditional</div>
+        </div>
+      </div>
+      <div class="exchange-card reveal">
+        <div class="exc-type"><span class="exc-live"></span>Community Partnership</div>
+        <div class="exc-title">Basotho Craft Market at Your Venue</div>
+        <div class="exc-venue">Open to guest-facing properties</div>
+        <div class="exc-proposer"><div class="exc-proposer-av">MZ</div>Mpho Zulu · Artisan Collective</div>
+        <div class="exc-score-row">
+          <div class="exc-score score-high">Score: 79</div>
+          <div class="exc-status status-open">Open</div>
+        </div>
+      </div>
+      <div class="exchange-card reveal">
+        <div class="exc-type"><span class="exc-live"></span>Event Activation</div>
+        <div class="exc-title">Midlands Fly Fishing Experience</div>
+        <div class="exc-venue">Open to farm stays with water access</div>
+        <div class="exc-proposer"><div class="exc-proposer-av">DC</div>David Cronje · Professional Guide</div>
+        <div class="exc-score-row">
+          <div class="exc-score score-high">Score: 76</div>
+          <div class="exc-status status-open">Open</div>
+        </div>
+      </div>
+      <div class="exchange-card reveal">
+        <div class="exc-type"><span class="exc-live"></span>Photography &amp; Content</div>
+        <div class="exc-title">Mountain Photography Package</div>
+        <div class="exc-venue">Sani Stone Lodge · JV Active</div>
+        <div class="exc-proposer"><div class="exc-proposer-av">TM</div>Thabo Mokoena · Photographer</div>
+        <div class="exc-score-row">
+          <div class="exc-score score-med">Score: 74</div>
+          <div class="exc-status status-review">JV Active</div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:10px;color:var(--dim);margin-top:20px;text-align:center;letter-spacing:.12em;text-transform:uppercase;">Demo data — Southern Drakensberg pilot · not real listings</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- 07 OUTCOME -->
+<section class="s-pad" id="outcome" style="background:linear-gradient(180deg,var(--black),var(--navy) 40%,var(--black));">
+  <div class="s-wrap">
+    <div class="s-label reveal">07 — Participation &amp; Outcomes</div>
+    <h2 class="s-title reveal">Every outcome feeds<br>the <em>Opportunity Graph.</em></h2>
+    <p class="s-body reveal">
+      Accepted opportunities generate tracked outcomes. Those outcomes improve future viability
+      scores — for this opportunist, for similar venues, and for the destination overall.
+    </p>
+    <div class="outcome-layout">
+      <div class="outcome-card reveal">
+        <div class="outcome-title">Recorded Outcomes · Demo</div>
+        <div class="outcome-row">
+          <div class="outcome-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2BB8A5" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div>
+          <div class="outcome-txt"><div class="outcome-txt-title">Revenue Generated</div><div class="outcome-txt-sub">Across 6 active JV accounts</div></div>
+          <div class="outcome-val">R 84,200</div>
+        </div>
+        <div class="outcome-row">
+          <div class="outcome-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2BB8A5" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <div class="outcome-txt"><div class="outcome-txt-title">Opportunists Participating</div><div class="outcome-txt-sub">Verified and active</div></div>
+          <div class="outcome-val">14</div>
+        </div>
+        <div class="outcome-row">
+          <div class="outcome-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2BB8A5" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+          <div class="outcome-txt"><div class="outcome-txt-title">Venues Participating</div><div class="outcome-txt-sub">Southern Drakensberg region</div></div>
+          <div class="outcome-val">9</div>
+        </div>
+        <div class="outcome-row">
+          <div class="outcome-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2BB8A5" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+          <div class="outcome-txt"><div class="outcome-txt-title">Avg Time to Activation</div><div class="outcome-txt-sub">From pitch to JV open</div></div>
+          <div class="outcome-val">4.2 days</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;">Participation Graph · Demo Nodes</div>
+        <div class="graph-node">
+          <div class="graph-node-dot teal"></div>
+          <div class="graph-node-name">Thabo Mokoena</div>
+          <div class="graph-node-meta">3 outcomes · R 7,360</div>
+          <div class="graph-node-badge badge-verified">Verified</div>
+        </div>
+        <div class="graph-node">
+          <div class="graph-node-dot teal"></div>
+          <div class="graph-node-name">Sipho Nzimande</div>
+          <div class="graph-node-meta">2 outcomes · R 12,100</div>
+          <div class="graph-node-badge badge-verified">Verified</div>
+        </div>
+        <div class="graph-node">
+          <div class="graph-node-dot gold"></div>
+          <div class="graph-node-name">Nomvula Abrahams</div>
+          <div class="graph-node-meta">1 outcome · pending evidence</div>
+          <div class="graph-node-badge badge-pending">Pending</div>
+        </div>
+        <div class="graph-node">
+          <div class="graph-node-dot gold"></div>
+          <div class="graph-node-name">Lerato Phiri</div>
+          <div class="graph-node-meta">Conditional · readiness gap</div>
+          <div class="graph-node-badge badge-pending">Conditional</div>
+        </div>
+        <div class="graph-node">
+          <div class="graph-node-dot dim"></div>
+          <div class="graph-node-name">David Cronje</div>
+          <div class="graph-node-meta">Pitch submitted · awaiting venue</div>
+          <div class="graph-node-badge badge-inactive">Open</div>
+        </div>
+        <p style="font-size:10px;color:var(--dim);margin-top:10px;letter-spacing:.12em;text-transform:uppercase;">Demo data · not real participants</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROOF — Farmstead last always -->
+<section class="s-pad" id="proof">
+  <div class="s-wrap">
+    <div class="s-label reveal">Tenant #001 · Proof</div>
+    <h2 class="s-title reveal">Farmstead Hospitality<br>is PULSE <em>running live.</em></h2>
+    <p class="s-body reveal">
+      Not a demo. Farmstead Hospitality — JoyWood Farm, KwaZulu-Natal — is the first live
+      production operator on the PULSE platform. Real properties. Real operations.
+      The Opportunity module is the next chapter.
+    </p>
+    <div class="proof-grid">
+      <div class="proof-tile reveal">
+        <div class="proof-num">4</div>
+        <div class="proof-label">Live properties running on PULSE today</div>
+        <div class="proof-note">Live · Farmstead Hospitality</div>
+      </div>
+      <div class="proof-tile reveal">
+        <div class="proof-num">27</div>
+        <div class="proof-label">Operational modules active in production</div>
+        <div class="proof-note">Live · Farmstead Hospitality</div>
+      </div>
+      <div class="proof-tile reveal">
+        <div class="proof-num">6</div>
+        <div class="proof-label">Active JV pilot opportunities (Drakensberg)</div>
+        <div class="proof-note">Demo · Pilot scenario</div>
+      </div>
+    </div>
+    <div style="margin-top:40px;text-align:center;">
+      <a class="btn-primary" href="pulse-os-v2.html#page-morning">Enter Farmstead Live →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CTA -->
+<section class="s-pad s-cta" id="cta">
+  <div class="cta-bg"></div>
+  <div class="s-wrap" style="position:relative;z-index:1;">
+    <h2 class="cta-title reveal">Pitch an opportunity.<br><em>Let the venue decide.</em></h2>
+    <p class="cta-sub reveal">
+      Join the PULSE Opportunity Network. Create a structured pitch, let the viability engine
+      score it, and let venues respond on their own terms.
+    </p>
+    <div class="cta-row reveal">
+      <a class="btn-primary" href="pulse-os-v2.html#page-trial">Pitch an Opportunity</a>
+      <a class="btn-ghost" href="pulse-os-v2.html#page-trial">List Your Venue</a>
+      <a class="btn-ghost" href="pulse-destination.html">Destination Intelligence</a>
+    </div>
+    <a class="back-link reveal" href="pulse-os-landing.html">← Back to PULSE OS Overview</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-links">
+    <a href="pulse-os-landing.html">PULSE OS</a>
+    <a href="pulse-travel-discovery.html">Discovery</a>
+    <a href="pulse-host.html">Host</a>
+    <a href="pulse-destination.html">Destination</a>
+    <a href="pulse-experience.html">The Full Story</a>
+  </div>
+  <div class="foot-note">AI Assists · Humans Govern · Evidence Decides</div>
+</footer>
+
+<script>
+const lenis = new Lenis({ duration: 1.2, easing: t => Math.min(1, 1.001 - Math.pow(2, -10*t)) });
+lenis.on('scroll', ScrollTrigger.update);
+gsap.ticker.add(time => lenis.raf(time * 1000));
+gsap.ticker.lagSmoothing(0);
+lenis.on('scroll', ({progress}) => { document.getElementById('progress').style.width = (progress*100)+'%'; });
+
+gsap.registerPlugin(ScrollTrigger);
+gsap.utils.toArray('.reveal').forEach(el => {
+  gsap.fromTo(el, {opacity:0, y:28}, {
+    opacity:1, y:0, duration:.9, ease:'power3.out',
+    scrollTrigger:{trigger:el, start:'top 88%', toggleActions:'play none none none'}
+  });
+});
+
+// Stat counters
+function countTo(id, target, suffix, dur) {
+  let v = 0; const step = target/(dur/16);
+  const t = setInterval(() => {
+    v = Math.min(v+step, target);
+    document.getElementById(id).textContent = Math.round(v)+suffix;
+    if (v>=target) clearInterval(t);
+  }, 16);
+}
+setTimeout(() => { countTo('stat1',47,'',1200); countTo('stat2',9,'',1000); countTo('stat3',100,'%',1400); }, 600);
+
+// Viability engine
+function toggleSignal(el, w) {
+  const t = el.querySelector('.signal-toggle');
+  const on = t.classList.toggle('on');
+  el.classList.toggle('active', on);
+  recalc();
+}
+function recalc() {
+  let s = 50, active = 0;
+  document.querySelectorAll('.signal-item').forEach(el => {
+    if (el.querySelector('.signal-toggle.on')) {
+      s += parseInt(el.querySelector('.signal-weight').textContent);
+      active++;
+    }
+  });
+  s = Math.max(0, Math.min(100, s));
+  const sc = document.getElementById('vscore');
+  const bar = document.getElementById('vbar');
+  const chip = document.getElementById('vchip');
+  const txt = document.getElementById('vtext');
+  sc.textContent = s;
+  bar.style.width = s+'%';
+  chip.className = 'rec-chip';
+  if (s >= 75) { chip.classList.add('chip-participate'); txt.textContent='Participate'; sc.style.color='var(--teal)'; bar.style.background='linear-gradient(90deg,var(--teal),var(--gold))'; }
+  else if (s >= 55) { chip.classList.add('chip-conditional'); txt.textContent='Join with Conditions'; sc.style.color='var(--gold2)'; bar.style.background='linear-gradient(90deg,var(--gold2),var(--brass))'; }
+  else if (s >= 40) { chip.classList.add('chip-hold'); txt.textContent='Hold — Strengthen Evidence'; sc.style.color='var(--purple)'; bar.style.background='linear-gradient(90deg,var(--purple),rgba(155,109,255,.4))'; }
+  else { chip.classList.add('chip-no'); txt.textContent='Not Suitable'; sc.style.color='#e85c5c'; bar.style.background='linear-gradient(90deg,#e85c5c,rgba(232,100,100,.4))'; }
+  document.getElementById('vconf').textContent = (active>=4?82:58)+'%';
+  document.getElementById('vsigs').textContent = ' · '+active+' signal'+(active!==1?'s':'')+' active';
+}
+recalc();
+
+// Venue interactions
+function selectOpp(el) {
+  document.querySelectorAll('.opp-item').forEach(i => i.classList.remove('selected'));
+  el.classList.add('selected');
+}
+function handleAction(type) {
+  const fb = document.getElementById('action-feedback');
+  const cfg = {
+    accept: {txt:'Opportunity accepted. JV account is being opened — both parties will receive confirmation and agreement documentation.', bg:'rgba(43,184,165,.08)', border:'rgba(43,184,165,.25)', color:'var(--teal)'},
+    decline: {txt:'Opportunity declined. The opportunist has been notified. Both parties remain available for future opportunities.', bg:'rgba(232,100,100,.06)', border:'rgba(232,100,100,.2)', color:'#e85c5c'},
+    conditional: {txt:'Conditional acceptance recorded. Terms will be shared with the opportunist for review before the JV account opens.', bg:'rgba(232,217,168,.06)', border:'rgba(232,217,168,.2)', color:'var(--gold)'},
+    present: {txt:'Presentation requested. PULSE will coordinate scheduling and record the session as evidence.', bg:'rgba(155,109,255,.08)', border:'rgba(155,109,255,.2)', color:'var(--purple)'}
+  };
+  const c = cfg[type];
+  Object.assign(fb.style, {display:'block', background:c.bg, border:'1px solid '+c.border, borderRadius:'12px', padding:'14px 18px', color:c.color, fontSize:'13px', marginTop:'16px'});
+  fb.textContent = c.txt;
+}
+</script>
+</body>
+</html>

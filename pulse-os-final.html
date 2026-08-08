@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PULSE OS — Farmstead Hospitality</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#020912;--s1:#08111f;--s2:#0c1728;--s3:#101e30;
+  --border:rgba(255,255,255,0.08);--border2:rgba(255,255,255,0.14);
+  --gold:#C6A66B;--teal:#2BB8A5;--blue:#3b82f6;
+  --red:#ef4444;--amber:#f59e0b;--green:#22c55e;--pink:#ec4899;--orange:#f97316;
+  --text:#E6EDF5;--muted:#9BA7B8;--dim:#617089;--faint:#2d3748;
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:13px;display:flex;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+.mono{font-family:'JetBrains Mono',monospace}
+
+/* SIDEBAR */
+.sidebar{width:232px;min-height:100vh;background:#010810;border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.sb-logo{height:56px;display:flex;align-items:center;padding:0 16px;border-bottom:1px solid var(--border);gap:10px;flex-shrink:0}
+.sb-mark{width:26px;height:26px;background:var(--gold);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-mark::after{content:'';width:9px;height:9px;background:var(--bg);border-radius:50%}
+.sb-logo-text .name{font-size:11px;font-weight:700;letter-spacing:.18em;color:var(--text)}
+.sb-logo-text .sub{font-size:8px;letter-spacing:.18em;color:var(--dim);margin-top:1px}
+.org-badge{margin:8px;padding:8px 10px;background:var(--s1);border:1px solid var(--border);border-radius:7px;display:flex;align-items:center;gap:8px;flex-shrink:0}
+.org-badge .on{font-size:11px;font-weight:500;color:var(--text)}
+.org-badge .os{font-size:9px;color:var(--dim);margin-top:1px}
+nav{flex:1;padding:6px 8px}
+.nav-sec{margin-bottom:14px}
+.nav-sec-label{font-size:9px;font-weight:600;letter-spacing:.2em;color:var(--faint);padding:0 8px;margin-bottom:3px;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:9px;padding:6px 8px;border-radius:6px;font-size:11px;font-weight:500;color:var(--dim);cursor:pointer;margin-bottom:1px;border:1px solid transparent;transition:all .1s;text-decoration:none;white-space:nowrap}
+.nav-item:hover{color:var(--text);background:var(--s1)}
+.nav-item.active{color:var(--gold);background:rgba(198,166,107,.08);border-color:rgba(198,166,107,.2)}
+.nav-item.locked{opacity:.45;pointer-events:none}
+.nav-item svg{width:13px;height:13px;flex-shrink:0}
+.phase-tag{font-size:8px;margin-left:auto;background:rgba(198,166,107,.1);color:var(--gold);padding:1px 5px;border-radius:3px;letter-spacing:.05em}
+.sb-footer{padding:10px;border-top:1px solid var(--border);text-align:center;font-size:8px;letter-spacing:.15em;color:var(--faint);flex-shrink:0}
+
+/* MAIN */
+.main{flex:1;display:flex;flex-direction:column;min-width:0}
+.topbar{height:56px;background:#010810;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:12px;flex-shrink:0}
+.tb-title{flex:1}
+.tb-title h1{font-size:13px;font-weight:600;letter-spacing:.04em}
+.tb-title p{font-size:9px;letter-spacing:.14em;color:var(--dim);margin-top:1px}
+.tb-search{display:flex;align-items:center;gap:6px;background:var(--s1);border:1px solid var(--border);border-radius:6px;padding:6px 12px;color:var(--faint);font-size:11px}
+.tb-bell{position:relative;padding:6px;cursor:pointer}
+.tb-bell::after{content:'';position:absolute;top:5px;right:5px;width:6px;height:6px;background:var(--gold);border-radius:50%;border:2px solid #010810}
+.avatar{width:28px;height:28px;background:rgba(198,166,107,.15);border:1px solid rgba(198,166,107,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--gold);cursor:pointer;flex-shrink:0}
+.content{flex:1;overflow-y:auto;padding:24px}
+
+/* PAGE */
+.page{display:none}.page.active{display:block}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--faint);border-radius:3px}
+
+/* PANEL */
+.panel{background:var(--s1);border:1px solid var(--border);border-radius:8px}
+.panel-hd{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;border-bottom:1px solid var(--border)}
+.panel-title{display:flex;align-items:center;gap:7px;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--text)}
+.panel-sub{font-size:10px;color:var(--dim)}
+
+/* KPI */
+.kpi{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:14px}
+.kpi.warn{border-color:rgba(245,158,11,.3)}
+.kpi.crit{background:rgba(239,68,68,.04);border-color:rgba(239,68,68,.25)}
+.kpi.good{border-color:rgba(34,197,94,.2)}
+.kpi.gold{border-color:rgba(198,166,107,.25)}
+.kpi-lbl{font-size:9px;font-weight:600;letter-spacing:.18em;color:var(--dim);text-transform:uppercase;margin-bottom:5px}
+.kpi-val{font-size:22px;font-weight:600;color:var(--text);line-height:1;font-family:'JetBrains Mono',monospace}
+.kpi.crit .kpi-val{color:var(--red)}
+.kpi-val .u{font-size:12px;color:var(--dim);font-weight:400;margin-left:2px}
+.kpi-sub{margin-top:5px;display:flex;align-items:center;gap:6px;font-size:10px;color:var(--dim)}
+.up{color:var(--teal);font-weight:500}
+
+/* BADGE */
+.badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:600;letter-spacing:.04em;border:1px solid;white-space:nowrap}
+.b-gold{background:rgba(198,166,107,.1);color:#e2c97e;border-color:rgba(198,166,107,.25)}
+.b-teal{background:rgba(43,184,165,.1);color:#5ee8d9;border-color:rgba(43,184,165,.25)}
+.b-blue{background:rgba(59,130,246,.1);color:#93c5fd;border-color:rgba(59,130,246,.25)}
+.b-red{background:rgba(239,68,68,.1);color:#fca5a5;border-color:rgba(239,68,68,.25)}
+.b-amber{background:rgba(245,158,11,.1);color:#fcd34d;border-color:rgba(245,158,11,.25)}
+.b-green{background:rgba(34,197,94,.1);color:#86efac;border-color:rgba(34,197,94,.25)}
+.b-gray{background:rgba(100,116,139,.1);color:#94a3b8;border-color:rgba(100,116,139,.2)}
+.b-pink{background:rgba(236,72,153,.1);color:#f9a8d4;border-color:rgba(236,72,153,.25)}
+.b-orange{background:rgba(249,115,22,.1);color:#fdba74;border-color:rgba(249,115,22,.25)}
+
+/* ALERT */
+.alert{display:flex;align-items:center;gap:10px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:10px 14px;margin-bottom:18px}
+.alert span{font-size:12px;color:#fca5a5;flex:1}
+.alert-link{font-size:11px;color:var(--red);cursor:pointer;display:flex;align-items:center;gap:4px;white-space:nowrap}
+
+/* ROWS */
+.prop-row{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid var(--border)}
+.prop-row:last-child{border-bottom:none}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot.on{background:var(--teal);box-shadow:0 0 6px rgba(43,184,165,.5)}
+.dot.off{background:var(--faint)}
+.prop-info{flex:1;min-width:0}
+.prop-name{font-size:12px;font-weight:500;color:var(--text)}
+.prop-detail{font-size:10px;color:var(--dim);margin-top:2px}
+
+/* AI PANEL */
+.ai-rec{padding:12px;border-bottom:1px solid var(--border)}
+.ai-rec:last-of-type{border-bottom:none}
+.ai-rec-meta{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.ai-conf{font-size:9px;color:var(--dim);margin-left:auto}
+.ai-text{font-size:11px;color:var(--muted);line-height:1.5}
+.ai-btns{display:flex;gap:6px;margin-top:8px}
+.btn-apply{flex:1;font-size:9px;font-weight:600;padding:5px 8px;border-radius:5px;cursor:pointer;letter-spacing:.05em;text-transform:uppercase;background:rgba(198,166,107,.1);color:var(--gold);border:1px solid rgba(198,166,107,.25)}
+.btn-apply:hover{background:rgba(198,166,107,.2)}
+.btn-dim{flex:1;font-size:9px;font-weight:600;padding:5px 8px;border-radius:5px;cursor:pointer;background:transparent;color:var(--dim);border:1px solid var(--border)}
+.ai-doctrine{padding:9px;border-top:1px solid var(--border);text-align:center;font-size:8px;letter-spacing:.15em;color:var(--faint);text-transform:uppercase}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;padding:9px 16px;font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);border-bottom:1px solid var(--border)}
+.tbl td{padding:11px 16px;border-bottom:1px solid var(--border)}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tbody tr{cursor:pointer;transition:background .1s}
+.tbl tbody tr:hover{background:rgba(255,255,255,.02)}
+
+/* TASK CARD */
+.tk-card{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:8px}
+.tk-card.overdue{border-color:rgba(239,68,68,.3)}
+.tk-card.in-progress{border-color:rgba(245,158,11,.2)}
+.tk-title{font-size:12px;font-weight:500;color:var(--text);line-height:1.4;flex:1}
+.tk-prop{font-size:10px;color:var(--dim);margin-top:3px}
+.tk-badges{display:flex;gap:4px;flex-wrap:wrap;margin-top:8px}
+.tk-due{font-size:10px;color:var(--red);margin-top:6px}
+
+/* KANBAN COL */
+.col-hd{display:flex;align-items:center;gap:6px;margin-bottom:8px;padding:0 4px}
+.col-dot{width:8px;height:8px;border-radius:50%}
+.col-lbl{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.col-count{margin-left:auto;background:var(--s2);border:1px solid var(--border);color:var(--dim);padding:1px 6px;border-radius:10px;font-size:9px}
+
+/* REVIEW CARD */
+.rv-card{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:16px;margin-bottom:10px}
+.rv-stars{font-size:15px;color:var(--amber);letter-spacing:-1px}
+.rv-text{font-size:12px;color:var(--muted);line-height:1.6;margin-top:8px}
+.rv-ai{margin-top:12px;padding:12px;background:rgba(43,184,165,.04);border:1px solid rgba(43,184,165,.15);border-radius:6px}
+.rv-ai-lbl{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:6px}
+.rv-ai-text{font-size:11px;color:var(--muted);line-height:1.6}
+
+/* KNOWLEDGE */
+.kb-card{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:14px}
+.kb-title{font-size:12px;font-weight:500;color:var(--text)}
+.kb-prop{font-size:10px;color:var(--dim);margin-top:2px}
+.kb-content{font-size:11px;color:var(--muted);line-height:1.6;margin-top:8px}
+
+/* LOCKED */
+.locked-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;text-align:center;gap:16px}
+.lock-icon{width:56px;height:56px;background:rgba(198,166,107,.08);border:1px solid rgba(198,166,107,.2);border-radius:14px;display:flex;align-items:center;justify-content:center}
+.lock-phase{font-size:10px;font-weight:700;letter-spacing:.2em;color:var(--gold);text-transform:uppercase}
+.lock-title{font-size:22px;font-weight:600;color:var(--text);margin-top:4px}
+.lock-desc{font-size:13px;color:var(--muted);max-width:440px;line-height:1.6}
+.lock-pills{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+
+/* GRID UTILS */
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g-main{display:grid;grid-template-columns:1fr 300px;gap:14px;margin-bottom:18px}
+.gap-b{margin-bottom:18px}
+
+/* SEARCH INPUT */
+.search-box{display:flex;align-items:center;gap:6px;background:var(--s1);border:1px solid var(--border);border-radius:6px;padding:6px 12px;margin-bottom:16px}
+.search-box input{background:transparent;border:none;color:var(--text);font-size:11px;font-family:inherit;outline:none;flex:1}
+.search-box input::placeholder{color:var(--dim)}
+
+/* BTN */
+.btn-primary{background:var(--gold);color:var(--bg);border:none;padding:7px 14px;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer;letter-spacing:.04em;display:inline-flex;align-items:center;gap:5px}
+.btn-outline{background:var(--s1);color:var(--text);border:1px solid var(--border);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:500;cursor:pointer}
+.filter-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:10px}
+select{background:var(--s1);border:1px solid var(--border);color:var(--text);padding:6px 10px;border-radius:6px;font-size:11px;font-family:inherit;cursor:pointer}
+
+/* SECTION TITLE */
+.pg-title{margin-bottom:18px}
+.pg-title h1{font-size:18px;font-weight:600;color:var(--text)}
+.pg-title p{font-size:12px;color:var(--muted);margin-top:4px}
+
+/* ICAL SYNC */
+.ical-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border)}
+.ical-cell{background:var(--s1);padding:12px 16px}
+.ical-platform{font-size:9px;color:var(--dim);letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
+.ical-status{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text)}
+.ical-detail{font-size:10px;color:var(--dim);margin-top:3px}
+
+/* TASK ROW */
+.task-row{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border)}
+.task-row:last-child{border-bottom:none}
+.task-bar{width:4px;min-height:30px;border-radius:2px;flex-shrink:0;align-self:stretch}
+.task-bar.r{background:var(--red)}.task-bar.a{background:var(--amber)}.task-bar.g{background:var(--teal)}.task-bar.x{background:var(--faint)}
+.task-info{flex:1;min-width:0}
+.task-t{font-size:11px;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.task-p{font-size:10px;color:var(--dim);margin-top:2px}
+
+/* PROP CARD */
+.prop-card{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:16px;cursor:pointer;transition:border-color .15s}
+.prop-card:hover{border-color:rgba(198,166,107,.4)}
+.prop-card-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.pcm-label{font-size:9px;text-transform:uppercase;letter-spacing:.14em;color:var(--dim);margin-bottom:3px}
+.pcm-value{font-family:'JetBrains Mono',monospace;font-size:16px;color:var(--text)}
+
+/* SETTINGS */
+.setting-group{background:var(--s1);border:1px solid var(--border);border-radius:8px;margin-bottom:14px}
+.setting-row{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border)}
+.setting-row:last-child{border-bottom:none}
+.setting-label{font-size:12px;font-weight:500;color:var(--text)}
+.setting-desc{font-size:10px;color:var(--dim);margin-top:2px}
+.toggle{width:36px;height:20px;background:var(--teal);border-radius:10px;position:relative;cursor:pointer;flex-shrink:0}
+.toggle::after{content:'';position:absolute;right:3px;top:3px;width:14px;height:14px;background:white;border-radius:50%}
+.toggle.off{background:var(--faint)}
+.toggle.off::after{right:auto;left:3px}
+
+/* SCHED */
+.mov-tag{font-size:9px;font-weight:700;letter-spacing:.08em;padding:3px 6px;border-radius:4px}
+.mov-arr{background:rgba(43,184,165,.1);color:var(--teal)}
+.mov-dep{background:rgba(245,158,11,.1);color:var(--amber)}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-mark"></div>
+    <div class="sb-logo-text">
+      <div class="name">PULSE</div>
+      <div class="sub">HOSPITALITY OS</div>
+    </div>
+  </div>
+  <div class="org-badge">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C6A66B" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 22V12h6v10M3 9h18"/></svg>
+    <div><div class="on">Farmstead Hospitality</div><div class="os">Production MVP · 4 properties</div></div>
+  </div>
+  <nav>
+    <div class="nav-sec">
+      <div class="nav-sec-label">Command</div>
+      <a class="nav-item active" onclick="go('dashboard','Command Dashboard')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</a>
+      <a class="nav-item" onclick="go('properties','Portfolio')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 22V12h6v10M3 9h18"/></svg>Properties</a>
+      <a class="nav-item" onclick="go('aibrief','AI Brief')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/><circle cx="18" cy="6" r="4" fill="currentColor"/></svg>AI Brief</a>
+    </div>
+    <div class="nav-sec">
+      <div class="nav-sec-label">Live Operations</div>
+      <a class="nav-item" onclick="go('bookings','Reservations')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Bookings</a>
+      <a class="nav-item" onclick="go('tasks','Task Engine')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Tasks</a>
+      <a class="nav-item" onclick="go('housekeeping','Housekeeping')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Housekeeping</a>
+      <a class="nav-item" onclick="go('maintenance','Maintenance')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>Maintenance</a>
+      <a class="nav-item" onclick="go('works','Works Register')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>Works</a>
+      <a class="nav-item" onclick="go('guests','Guest CRM')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Guests</a>
+      <a class="nav-item" onclick="go('reviews','Review Intelligence')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Reviews</a>
+      <a class="nav-item" onclick="go('guides','Guest Guides')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>Guest Guides</a>
+      <a class="nav-item" onclick="go('brain','Knowledge Brain')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Brain</a>
+    </div>
+    <div class="nav-sec">
+      <div class="nav-sec-label">Locked Roadmap</div>
+      <a class="nav-item locked">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Visibility <span class="phase-tag">PH.2</span></a>
+      <a class="nav-item locked">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Growth <span class="phase-tag">PH.3</span></a>
+      <a class="nav-item locked">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Local Ecosystem <span class="phase-tag">PH.4</span></a>
+      <a class="nav-item locked">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Destination <span class="phase-tag">PH.5</span></a>
+      <a class="nav-item locked">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Opportunities <span class="phase-tag">PH.6</span></a>
+      <a class="nav-item locked">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Economic Intel <span class="phase-tag">PH.7</span></a>
+    </div>
+    <div class="nav-sec">
+      <div class="nav-sec-label">Platform</div>
+      <a class="nav-item" onclick="go('settings','Platform Settings')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M16.24 7.76a6 6 0 0 1 0 8.48M12 2a10 10 0 0 0 0 20"/></svg>Settings</a>
+    </div>
+  </nav>
+  <div class="sb-footer">AI ASSISTS · HUMANS GOVERN · EVIDENCE DECIDES</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="tb-title">
+      <h1 id="page-title">Command Dashboard</h1>
+      <p id="page-sub">Fri 30 May 2026 · FARMSTEAD HOSPITALITY · PHASE 1 PRODUCTION</p>
+    </div>
+    <div class="tb-search">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Search platform...
+    </div>
+    <div class="tb-bell">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--dim)" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+    </div>
+    <div class="avatar">KW</div>
+  </div>
+
+  <div class="content">
+
+<!-- ════════════════════ DASHBOARD ════════════════════ -->
+<div class="page active" id="page-dashboard">
+  <div class="alert">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    <span>2 overdue tasks — Woody's Cottage post-checkout inspection + Swallows Nest pre-arrival clean</span>
+    <a class="alert-link" onclick="go('tasks','Task Engine')">View Tasks →</a>
+  </div>
+
+  <div class="g4">
+    <div class="kpi"><div class="kpi-lbl">Occupancy</div><div class="kpi-val">73<span class="u">%</span></div><div class="kpi-sub"><span class="up">↑ 8%</span> vs last month</div></div>
+    <div class="kpi"><div class="kpi-lbl">ADR</div><div class="kpi-val">R1,850</div><div class="kpi-sub">avg daily rate</div></div>
+    <div class="kpi"><div class="kpi-lbl">RevPAR</div><div class="kpi-val">R1,351</div><div class="kpi-sub">revenue per room</div></div>
+    <div class="kpi good"><div class="kpi-lbl">Avg Rating</div><div class="kpi-val">4.8<span class="u">/ 5</span></div><div class="kpi-sub">across all platforms</div></div>
+    <div class="kpi warn"><div class="kpi-lbl">Open Tasks</div><div class="kpi-val">7</div><div class="kpi-sub">4 properties</div></div>
+    <div class="kpi crit"><div class="kpi-lbl">Overdue</div><div class="kpi-val">2</div><div class="kpi-sub">immediate attention</div></div>
+    <div class="kpi"><div class="kpi-lbl">Arrivals Today</div><div class="kpi-val">1</div><div class="kpi-sub">Swallows Nest</div></div>
+    <div class="kpi gold"><div class="kpi-lbl">Rev This Month</div><div class="kpi-val">R42.8k</div><div class="kpi-sub"><span class="up">↑ 12%</span> vs last month</div></div>
+  </div>
+
+  <div class="g-main">
+    <div class="panel">
+      <div class="panel-hd"><div class="panel-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 22V12h6v10M3 9h18"/></svg>
+        Property Status</div><span class="panel-sub">4 active</span></div>
+      <div class="prop-row">
+        <div class="dot on"></div>
+        <div class="prop-info"><div class="prop-name">Jackals Rest</div><div class="prop-detail">Sarah &amp; Mark Thompson · check-out 2 Jun</div></div>
+        <div style="display:flex;gap:5px"><span class="badge b-teal">Checked In</span><span class="badge b-pink">Airbnb</span></div>
+      </div>
+      <div class="prop-row">
+        <div class="dot off"></div>
+        <div class="prop-info"><div class="prop-name">Swallows Nest Studio</div><div class="prop-detail">Priya Govender arriving today · ⚠ overdue clean</div></div>
+        <div style="display:flex;gap:5px"><span class="badge b-red">Overdue Task</span><span class="badge b-blue">Confirmed</span></div>
+      </div>
+      <div class="prop-row">
+        <div class="dot off"></div>
+        <div class="prop-info"><div class="prop-name">Woody's Cottage</div><div class="prop-detail">Next: James Nkosi · 1 Jun</div></div>
+        <div style="display:flex;gap:5px"><span class="badge b-red">Overdue Task</span><span class="badge b-blue">Confirmed</span></div>
+      </div>
+      <div class="prop-row">
+        <div class="dot off"></div>
+        <div class="prop-info"><div class="prop-name">Meadows Cottage</div><div class="prop-detail">Next: Kobus &amp; Anel van der Berg · 6 Jun</div></div>
+        <div style="display:flex;gap:5px"><span class="badge b-teal">Ready</span><span class="badge b-orange">LekkeSlaap</span></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-hd"><div class="panel-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/></svg>
+        AI Recommendations</div></div>
+      <div class="ai-rec">
+        <div class="ai-rec-meta"><span class="badge b-amber">Medium Risk</span><span class="ai-conf">82% confidence</span></div>
+        <div class="ai-text">Respond to 3★ Booking.com review — Swallows Nest hot water issue. Draft ready for approval.</div>
+        <div class="ai-btns"><button class="btn-apply">Review Draft</button><button class="btn-dim">Dismiss</button></div>
+      </div>
+      <div class="ai-rec">
+        <div class="ai-rec-meta"><span class="badge b-teal">Low Risk</span><span class="ai-conf">74% confidence</span></div>
+        <div class="ai-text">Meadows Cottage has 3 gap nights next week. Consider LekkeSlaap last-minute promo.</div>
+        <div class="ai-btns"><button class="btn-apply">Apply</button><button class="btn-dim">Dismiss</button></div>
+      </div>
+      <div class="ai-rec">
+        <div class="ai-rec-meta"><span class="badge b-teal">Low Risk</span><span class="ai-conf">91% confidence</span></div>
+        <div class="ai-text">Jackals Rest checkout today — ideal moment to send post-stay WhatsApp review request.</div>
+        <div class="ai-btns"><button class="btn-apply">Apply</button><button class="btn-dim">Dismiss</button></div>
+      </div>
+      <div class="ai-doctrine">AI Assists · Humans Govern · Evidence Decides</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="panel">
+      <div class="panel-hd"><div class="panel-title">Today's Movements</div></div>
+      <div class="task-row"><span class="mov-tag mov-arr">ARRIVAL</span><div class="task-info"><div class="task-t">Priya Govender</div><div class="task-p">Swallows Nest Studio</div></div><span class="badge b-gray">Direct</span></div>
+      <div class="task-row"><span class="mov-tag mov-dep">DEPART</span><div class="task-info"><div class="task-t">Sarah &amp; Mark Thompson</div><div class="task-p">Jackals Rest</div></div><span class="badge b-pink">Airbnb</span></div>
+    </div>
+    <div class="panel">
+      <div class="panel-hd"><div class="panel-title">Priority Tasks</div></div>
+      <div class="task-row"><div class="task-bar r"></div><div class="task-info"><div class="task-t">Post-checkout inspection — Woody's</div><div class="task-p">Overdue 29 May</div></div><span class="badge b-red">Overdue</span></div>
+      <div class="task-row"><div class="task-bar r"></div><div class="task-info"><div class="task-t">Pre-arrival clean — Swallows Nest</div><div class="task-p">Due today</div></div><span class="badge b-red">Overdue</span></div>
+      <div class="task-row"><div class="task-bar a"></div><div class="task-info"><div class="task-t">Prepare welcome pack — Jackals Rest</div><div class="task-p">Guest services</div></div><span class="badge b-amber">High</span></div>
+      <div class="task-row"><div class="task-bar x"></div><div class="task-info"><div class="task-t">Replace cabinet hinge — main bedroom</div><div class="task-p">Jackals Rest · Maintenance</div></div><span class="badge b-gold">In Progress</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ PROPERTIES ════════════════════ -->
+<div class="page" id="page-properties">
+  <div class="pg-title"><h1>Farmstead Portfolio</h1><p>Four operating properties. One command layer.</p></div>
+  <div class="g2 gap-b">
+    <div class="prop-card" onclick="go('dashboard','Command Dashboard')">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:15px;font-weight:600;color:var(--text)">Jackals Rest</div>
+          <div style="font-size:11px;color:var(--dim);margin-top:2px">Self-catering cottage · JoyWood Farm</div>
+        </div>
+        <span class="badge b-teal">Checked In</span>
+      </div>
+      <div class="prop-card-metrics">
+        <div><div class="pcm-label">Bookings</div><div class="pcm-value">3</div></div>
+        <div><div class="pcm-label">Revenue</div><div class="pcm-value">R21.4k</div></div>
+        <div><div class="pcm-label">Open Work</div><div class="pcm-value">2</div></div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:5px;flex-wrap:wrap">
+        <span class="badge b-pink">Airbnb</span><span class="badge b-blue">Booking.com</span><span class="badge b-orange">LekkeSlaap</span>
+      </div>
+    </div>
+    <div class="prop-card">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:15px;font-weight:600;color:var(--text)">Woody's Cottage</div>
+          <div style="font-size:11px;color:var(--dim);margin-top:2px">Self-catering cottage · JoyWood Farm</div>
+        </div>
+        <span class="badge b-red">Overdue Task</span>
+      </div>
+      <div class="prop-card-metrics">
+        <div><div class="pcm-label">Bookings</div><div class="pcm-value">1</div></div>
+        <div><div class="pcm-label">Revenue</div><div class="pcm-value">R4,200</div></div>
+        <div><div class="pcm-label">Open Work</div><div class="pcm-value">1</div></div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:5px"><span class="badge b-gray">Direct</span><span class="badge b-blue">Booking.com</span></div>
+    </div>
+    <div class="prop-card">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:15px;font-weight:600;color:var(--text)">Swallows Nest Studio</div>
+          <div style="font-size:11px;color:var(--dim);margin-top:2px">Self-catering studio · JoyWood Farm</div>
+        </div>
+        <span class="badge b-red">Overdue Task</span>
+      </div>
+      <div class="prop-card-metrics">
+        <div><div class="pcm-label">Bookings</div><div class="pcm-value">1</div></div>
+        <div><div class="pcm-label">Revenue</div><div class="pcm-value">R5,600</div></div>
+        <div><div class="pcm-label">Open Work</div><div class="pcm-value">2</div></div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:5px"><span class="badge b-gray">Direct</span></div>
+    </div>
+    <div class="prop-card">
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:15px;font-weight:600;color:var(--text)">Meadows Cottage</div>
+          <div style="font-size:11px;color:var(--dim);margin-top:2px">Self-catering cottage · JoyWood Farm</div>
+        </div>
+        <span class="badge b-teal">Ready</span>
+      </div>
+      <div class="prop-card-metrics">
+        <div><div class="pcm-label">Bookings</div><div class="pcm-value">1</div></div>
+        <div><div class="pcm-label">Revenue</div><div class="pcm-value">R6,300</div></div>
+        <div><div class="pcm-label">Open Work</div><div class="pcm-value">1</div></div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:5px"><span class="badge b-orange">LekkeSlaap</span></div>
+    </div>
+  </div>
+  <div style="background:rgba(198,166,107,.05);border:1px solid rgba(198,166,107,.2);border-radius:8px;padding:14px">
+    <div style="font-size:10px;font-weight:600;letter-spacing:.15em;color:var(--gold);text-transform:uppercase;margin-bottom:6px">MVP BOUNDARY</div>
+    <p style="font-size:12px;color:var(--muted);line-height:1.6">Farmstead is the only active production tenant. Multi-tenant, group, destination and government expansion stays architecturally ready but locked until Phase 4–7.</p>
+  </div>
+</div>
+
+<!-- ════════════════════ AI BRIEF ════════════════════ -->
+<div class="page" id="page-aibrief">
+  <div class="pg-title"><h1>AI Daily Brief</h1><p>Draft-first intelligence. Nothing publishes or sends automatically.</p></div>
+  <div class="panel gap-b">
+    <div class="panel-hd">
+      <div class="panel-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Today's Operating Brief · 30 May 2026</div>
+      <span class="badge b-teal">Auto-generated · 06:00</span>
+    </div>
+    <div class="g3" style="padding:16px;gap:16px">
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:10px">Arrivals to Prepare</div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:10px;margin-bottom:6px">
+          <div style="font-size:12px;font-weight:500;color:var(--text)">Priya Govender</div>
+          <div style="font-size:10px;color:var(--dim);margin-top:2px">Swallows Nest Studio · Direct booking</div>
+          <div style="font-size:10px;color:var(--red);margin-top:4px">⚠ Pre-arrival clean overdue</div>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:10px">
+          <div style="font-size:12px;font-weight:500;color:var(--text)">James Nkosi</div>
+          <div style="font-size:10px;color:var(--dim);margin-top:2px">Woody's Cottage · Booking.com · arrives 1 Jun</div>
+          <div style="font-size:10px;color:var(--amber);margin-top:4px">Pre-arrival tasks not started</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:10px">Priority Work</div>
+        <div style="background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:10px;margin-bottom:6px">
+          <div style="font-size:11px;color:var(--text)">Post-checkout inspection</div>
+          <div style="font-size:10px;color:var(--dim);margin-top:2px">Woody's Cottage</div>
+          <div style="margin-top:6px"><span class="badge b-red">Overdue</span></div>
+        </div>
+        <div style="background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:10px;margin-bottom:6px">
+          <div style="font-size:11px;color:var(--text)">Pre-arrival clean</div>
+          <div style="font-size:10px;color:var(--dim);margin-top:2px">Swallows Nest Studio</div>
+          <div style="margin-top:6px"><span class="badge b-red">Overdue</span></div>
+        </div>
+        <div style="background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:10px">
+          <div style="font-size:11px;color:var(--text)">Welcome pack prep</div>
+          <div style="font-size:10px;color:var(--dim);margin-top:2px">Jackals Rest</div>
+          <div style="margin-top:6px"><span class="badge b-amber">High</span></div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:.14em;color:var(--gold);text-transform:uppercase;margin-bottom:10px">Review Attention</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:36px;color:var(--text);margin-bottom:6px">3</div>
+        <p style="font-size:11px;color:var(--muted);line-height:1.6">Reviews pending response. AI drafts ready for 2. All require human approval before any public response is published.</p>
+        <div style="margin-top:12px"><button class="btn-apply" style="width:100%" onclick="go('reviews','Review Intelligence')">Review Queue →</button></div>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-hd"><div class="panel-title">AI Recommendations — Requires Approval</div><span class="badge b-amber">3 pending</span></div>
+    <div class="ai-rec">
+      <div class="ai-rec-meta"><span class="badge b-amber">Medium Risk</span><span class="ai-conf">82%</span></div>
+      <div class="ai-text">Respond to 3★ Booking.com review — Swallows Nest hot water complaint. Draft generated, awaiting approval.</div>
+      <div class="ai-btns"><button class="btn-apply" onclick="go('reviews','Review Intelligence')">View Draft</button><button class="btn-dim">Dismiss</button></div>
+    </div>
+    <div class="ai-rec">
+      <div class="ai-rec-meta"><span class="badge b-teal">Low Risk</span><span class="ai-conf">74%</span></div>
+      <div class="ai-text">Meadows Cottage has 3 gap nights 2–5 Jun. Suggested LekkeSlaap last-minute special. Draft ready.</div>
+      <div class="ai-btns"><button class="btn-apply">Apply</button><button class="btn-dim">Dismiss</button></div>
+    </div>
+    <div class="ai-rec">
+      <div class="ai-rec-meta"><span class="badge b-teal">Low Risk</span><span class="ai-conf">91%</span></div>
+      <div class="ai-text">Jackals Rest checkout today. Optimal window for post-stay WhatsApp review request draft.</div>
+      <div class="ai-btns"><button class="btn-apply">Apply</button><button class="btn-dim">Dismiss</button></div>
+    </div>
+    <div class="ai-doctrine">AI Assists · Humans Govern · Evidence Decides · No Autonomous Public Actions</div>
+  </div>
+</div>
+
+<!-- ════════════════════ BOOKINGS ════════════════════ -->
+<div class="page" id="page-bookings">
+  <div class="filter-row">
+    <div style="display:flex;gap:8px">
+      <select><option>All Properties</option><option>Jackals Rest</option><option>Woody's Cottage</option><option>Swallows Nest</option><option>Meadows Cottage</option></select>
+      <select><option>All Statuses</option><option>Confirmed</option><option>Checked In</option></select>
+      <select><option>All Platforms</option><option>Airbnb</option><option>Booking.com</option><option>LekkeSlaap</option><option>Direct</option></select>
+    </div>
+    <button class="btn-primary">+ New Booking</button>
+  </div>
+  <div class="panel gap-b">
+    <div class="panel-hd">
+      <div class="panel-title">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        iCal Sync — Jackals Rest</div>
+      <button class="btn-outline">Sync Now</button>
+    </div>
+    <div class="ical-grid">
+      <div class="ical-cell">
+        <div class="ical-platform">Booking.com</div>
+        <div class="ical-status"><div class="dot on"></div>Last synced 14 min ago</div>
+        <div class="ical-detail">3 bookings imported</div>
+      </div>
+      <div class="ical-cell">
+        <div class="ical-platform">Airbnb</div>
+        <div class="ical-status"><div class="dot on"></div>Last synced 14 min ago</div>
+        <div class="ical-detail">2 bookings imported</div>
+      </div>
+      <div class="ical-cell">
+        <div class="ical-platform">LekkeSlaap</div>
+        <div class="ical-status"><div style="width:8px;height:8px;border-radius:50%;background:var(--amber);flex-shrink:0"></div>Pending sync</div>
+        <div class="ical-detail">Awaiting first sync</div>
+      </div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-hd"><div class="panel-title">Active Reservations</div><span class="panel-sub">4 bookings</span></div>
+    <table class="tbl">
+      <thead><tr><th>Guest</th><th>Property</th><th>Check-in</th><th>Check-out</th><th>Platform</th><th>Value</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:500;color:var(--text)">Sarah &amp; Mark Thompson</td><td style="color:var(--dim)">Jackals Rest</td><td class="mono">29 May</td><td class="mono">2 Jun</td><td><span class="badge b-pink">Airbnb</span></td><td class="mono">R7,400</td><td><span class="badge b-teal">Checked In</span></td></tr>
+        <tr><td style="font-weight:500;color:var(--text)">Priya Govender</td><td style="color:var(--dim)">Swallows Nest Studio</td><td class="mono">30 May</td><td class="mono">3 Jun</td><td><span class="badge b-gray">Direct</span></td><td class="mono">R5,600</td><td><span class="badge b-blue">Confirmed</span></td></tr>
+        <tr><td style="font-weight:500;color:var(--text)">James Nkosi</td><td style="color:var(--dim)">Woody's Cottage</td><td class="mono">1 Jun</td><td class="mono">4 Jun</td><td><span class="badge b-blue">Booking.com</span></td><td class="mono">R4,200</td><td><span class="badge b-blue">Confirmed</span></td></tr>
+        <tr><td style="font-weight:500;color:var(--text)">Kobus &amp; Anel van der Berg</td><td style="color:var(--dim)">Meadows Cottage</td><td class="mono">6 Jun</td><td class="mono">9 Jun</td><td><span class="badge b-orange">LekkeSlaap</span></td><td class="mono">R6,300</td><td><span class="badge b-blue">Confirmed</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════ TASKS ════════════════════ -->
+<div class="page" id="page-tasks">
+  <div class="filter-row">
+    <div style="display:flex;gap:8px">
+      <select><option>All Properties</option><option>Jackals Rest</option><option>Woody's Cottage</option><option>Swallows Nest</option><option>Meadows Cottage</option></select>
+      <select><option>All Categories</option><option>Housekeeping</option><option>Maintenance</option><option>Guest Services</option><option>Inspection</option></select>
+    </div>
+    <button class="btn-primary">+ New Task</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-items:start">
+    <div>
+      <div class="col-hd"><div class="col-dot" style="background:var(--red)"></div><span class="col-lbl" style="color:var(--red)">Overdue</span><span class="col-count" style="background:rgba(239,68,68,.1);color:var(--red);border-color:rgba(239,68,68,.2)">2</span></div>
+      <div class="tk-card overdue"><div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px"><span class="tk-title">Post-checkout inspection — Woody's Cottage</span><span style="font-size:16px;flex-shrink:0">🔍</span></div><div class="tk-prop">Woody's Cottage</div><div class="tk-badges"><span class="badge b-red">Overdue</span><span class="badge b-amber">High</span></div><div class="tk-due">Due: 29 May 2026</div></div>
+      <div class="tk-card overdue"><div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px"><span class="tk-title">Pre-arrival clean — Swallows Nest</span><span style="font-size:16px;flex-shrink:0">🧹</span></div><div class="tk-prop">Swallows Nest Studio</div><div class="tk-badges"><span class="badge b-red">Overdue</span><span class="badge b-red">Urgent</span></div><div class="tk-due">Due: 30 May 08:00</div></div>
+    </div>
+    <div>
+      <div class="col-hd"><div class="col-dot" style="background:var(--blue)"></div><span class="col-lbl">Open</span><span class="col-count">3</span></div>
+      <div class="tk-card"><div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px"><span class="tk-title">Prepare welcome pack — Jackals Rest</span><span style="font-size:16px;flex-shrink:0">🌟</span></div><div class="tk-prop">Jackals Rest</div><div class="tk-badges"><span class="badge b-blue">Open</span><span class="badge b-amber">High</span></div></div>
+      <div class="tk-card"><div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px"><span class="tk-title">Weekly linen restock — Meadows Cottage</span><span style="font-size:16px;flex-shrink:0">🧹</span></div><div class="tk-prop">Meadows Cottage</div><div class="tk-badges"><span class="badge b-blue">Open</span><span class="badge b-gray">Low</span></div></div>
+      <div class="tk-card"><div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px"><span class="tk-title">Respond to Booking.com review</span><span style="font-size:16px;flex-shrink:0">⭐</span></div><div class="tk-prop">Swallows Nest Studio</div><div class="tk-badges"><span class="badge b-blue">Open</span><span class="badge b-amber">Medium</span></div></div>
+    </div>
+    <div>
+      <div class="col-hd"><div class="col-dot" style="background:var(--amber)"></div><span class="col-lbl">In Progress</span><span class="col-count">1</span></div>
+      <div class="tk-card in-progress"><div style="display:flex;justify-content:space-between;gap:8px;margin-bottom:6px"><span class="tk-title">Replace cabinet hinge — main bedroom</span><span style="font-size:16px;flex-shrink:0">🔧</span></div><div class="tk-prop">Jackals Rest</div><div class="tk-badges"><span class="badge b-amber">In Progress</span><span class="badge b-amber">Medium</span></div></div>
+    </div>
+    <div>
+      <div class="col-hd"><div class="col-dot" style="background:var(--teal)"></div><span class="col-lbl">Completed Today</span><span class="col-count">2</span></div>
+      <div class="tk-card" style="opacity:.55"><div style="font-size:12px;font-weight:500;color:var(--text);text-decoration:line-through;margin-bottom:5px">Jackals Rest checkout clean</div><div class="tk-prop">Jackals Rest · 09:30</div><div class="tk-badges" style="margin-top:8px"><span class="badge b-teal">Completed</span></div></div>
+      <div class="tk-card" style="opacity:.55;margin-top:8px"><div style="font-size:12px;font-weight:500;color:var(--text);text-decoration:line-through;margin-bottom:5px">Guest welcome message sent</div><div class="tk-prop">Meadows Cottage · 08:15</div><div class="tk-badges" style="margin-top:8px"><span class="badge b-teal">Completed</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ HOUSEKEEPING ════════════════════ -->
+<div class="page" id="page-housekeeping">
+  <div class="pg-title"><h1>Housekeeping</h1><p>Cleaning readiness, turnovers and inspections across all properties.</p></div>
+  <div class="g2">
+    <div class="panel">
+      <div class="panel-hd"><div class="panel-title">🧹 Jackals Rest</div><span class="badge b-teal">Ready</span></div>
+      <div style="padding:14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:10px"><div class="kpi-lbl">Next Arrival</div><div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--text);margin-top:3px">2 Jun</div></div>
+          <div style="background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:10px"><div class="kpi-lbl">Clean Status</div><div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--teal);margin-top:3px">Done</div></div>
+        </div>
+        <div style="font-size:10px;color:var(--dim);margin-bottom:6px">Checkout clean completed 09:30</div>
+        <span class="badge b-teal">No Pending Tasks</span>
+      </div>
+    </div>
+    <div class="panel" style="border-color:rgba(239,68,68,.3)">
+      <div class="panel-hd"><div class="panel-title">🧹 Swallows Nest Studio</div><span class="badge b-red">Overdue</span></div>
+      <div style="padding:14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+          <div style="background:var(--s2);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:10px"><div class="kpi-lbl">Arrival</div><div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--red);margin-top:3px">Today</div></div>
+          <div style="background:var(--s2);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:10px"><div class="kpi-lbl">Clean Status</div><div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--red);margin-top:3px">Overdue</div></div>
+        </div>
+        <div style="background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:10px;font-size:11px;color:#fca5a5">Pre-arrival clean due 08:00 — not started. Guest arrives today.</div>
+        <button class="btn-primary" style="margin-top:10px;width:100%;justify-content:center">Mark as In Progress</button>
+      </div>
+    </div>
+    <div class="panel" style="border-color:rgba(239,68,68,.25)">
+      <div class="panel-hd"><div class="panel-title">🔍 Woody's Cottage</div><span class="badge b-red">Inspection Overdue</span></div>
+      <div style="padding:14px">
+        <div style="background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:6px;padding:10px;font-size:11px;color:#fca5a5;margin-bottom:10px">Post-checkout inspection overdue since 29 May. Next guest James Nkosi arrives 1 Jun.</div>
+        <button class="btn-primary" style="width:100%;justify-content:center">Start Inspection</button>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-hd"><div class="panel-title">🧹 Meadows Cottage</div><span class="badge b-teal">Ready</span></div>
+      <div style="padding:14px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:10px"><div class="kpi-lbl">Next Arrival</div><div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--text);margin-top:3px">6 Jun</div></div>
+          <div style="background:var(--s2);border:1px solid var(--border);border-radius:6px;padding:10px"><div class="kpi-lbl">Clean Status</div><div style="font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--teal);margin-top:3px">Done</div></div>
+        </div>
+        <div style="font-size:10px;color:var(--dim);margin-top:10px">Linen restock task open (low priority)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ MAINTENANCE ════════════════════ -->
+<div class="page" id="page-maintenance">
+  <div class="pg-title"><h1>Maintenance</h1><p>Active maintenance issues across Farmstead properties.</p></div>
+  <div class="g4" style="grid-template-columns:repeat(4,1fr)">
+    <div class="kpi warn"><div class="kpi-lbl">Open Issues</div><div class="kpi-val">2</div><div class="kpi-sub">2 properties</div></div>
+    <div class="kpi"><div class="kpi-lbl">In Progress</div><div class="kpi-val">1</div><div class="kpi-sub">Jackals Rest</div></div>
+    <div class="kpi good"><div class="kpi-lbl">Resolved (30d)</div><div class="kpi-val">7</div><div class="kpi-sub">all properties</div></div>
+    <div class="kpi"><div class="kpi-lbl">Avg Resolution</div><div class="kpi-val mono">2.1<span class="u">days</span></div></div>
+  </div>
+  <div class="panel">
+    <div class="panel-hd"><div class="panel-title">Active Issues</div><button class="btn-primary">+ Log Issue</button></div>
+    <table class="tbl">
+      <thead><tr><th>Issue</th><th>Property</th><th>Category</th><th>Priority</th><th>Status</th><th>Logged</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:500;color:var(--text)">Replace cabinet hinge — main bedroom</td><td style="color:var(--dim)">Jackals Rest</td><td><span class="badge b-gray">Structural</span></td><td><span class="badge b-amber">Medium</span></td><td><span class="badge b-gold">In Progress</span></td><td class="mono" style="color:var(--dim)">28 May</td></tr>
+        <tr><td style="font-weight:500;color:var(--text)">Hot water intermittent — Unit 2</td><td style="color:var(--dim)">Swallows Nest</td><td><span class="badge b-gray">Plumbing</span></td><td><span class="badge b-red">High</span></td><td><span class="badge b-blue">Open</span></td><td class="mono" style="color:var(--dim)">28 May</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="panel" style="margin-top:14px">
+    <div class="panel-hd"><div class="panel-title">Recently Resolved</div></div>
+    <table class="tbl">
+      <thead><tr><th>Issue</th><th>Property</th><th>Resolved</th></tr></thead>
+      <tbody>
+        <tr><td style="color:var(--dim);text-decoration:line-through">Pool pump filter clean</td><td style="color:var(--dim)">Jackals Rest</td><td class="mono" style="color:var(--dim)">22 May</td></tr>
+        <tr><td style="color:var(--dim);text-decoration:line-through">Window seal replacement — bedroom</td><td style="color:var(--dim)">Woody's Cottage</td><td class="mono" style="color:var(--dim)">18 May</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════ WORKS ════════════════════ -->
+<div class="page" id="page-works">
+  <div class="pg-title"><h1>Works Register</h1><p>Improvement projects, upgrades and capital works across all properties.</p></div>
+  <div class="g3 gap-b">
+    <div class="kb-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div><div class="kb-title">WiFi Signal Booster — Bedroom</div><div class="kb-prop">Woody's Cottage · Improvement</div></div>
+        <span class="badge b-amber">Planned</span>
+      </div>
+      <div class="kb-content">Guest feedback indicates weak signal in bedroom. New mesh node to be installed June. Budget: R1,200.</div>
+    </div>
+    <div class="kb-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div><div class="kb-title">Braai Area Upgrade — Deck Resurfacing</div><div class="kb-prop">Jackals Rest · Capital Works</div></div>
+        <span class="badge b-teal">In Progress</span>
+      </div>
+      <div class="kb-content">Deck boards showing wear. Resurfacing scheduled Q3. Contractor quote: R8,400. Deposit paid.</div>
+    </div>
+    <div class="kb-card">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start">
+        <div><div class="kb-title">Solar Geyser Installation</div><div class="kb-prop">Swallows Nest Studio · ESG</div></div>
+        <span class="badge b-blue">Under Review</span>
+      </div>
+      <div class="kb-content">Hot water cost reduction and ESG positioning. Quote received R18,500. ROI analysis in progress.</div>
+    </div>
+  </div>
+  <div class="panel">
+    <div class="panel-hd"><div class="panel-title">All Works Items</div><button class="btn-primary">+ Log Work Item</button></div>
+    <table class="tbl">
+      <thead><tr><th>Item</th><th>Property</th><th>Type</th><th>Budget</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td style="font-weight:500;color:var(--text)">WiFi signal booster — bedroom</td><td style="color:var(--dim)">Woody's Cottage</td><td><span class="badge b-gray">Improvement</span></td><td class="mono">R1,200</td><td><span class="badge b-amber">Planned</span></td></tr>
+        <tr><td style="font-weight:500;color:var(--text)">Deck resurfacing — braai area</td><td style="color:var(--dim)">Jackals Rest</td><td><span class="badge b-gray">Capital</span></td><td class="mono">R8,400</td><td><span class="badge b-teal">In Progress</span></td></tr>
+        <tr><td style="font-weight:500;color:var(--text)">Solar geyser installation</td><td style="color:var(--dim)">Swallows Nest</td><td><span class="badge b-gray">ESG</span></td><td class="mono">R18,500</td><td><span class="badge b-blue">Under Review</span></td></tr>
+        <tr><td style="font-weight:500;color:var(--text)">External repaint — full property</td><td style="color:var(--dim)">Meadows Cottage</td><td><span class="badge b-gray">Maintenance</span></td><td class="mono">R6,800</td><td><span class="badge b-gray">Backlog</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════ GUESTS ════════════════════ -->
+<div class="page" id="page-guests">
+  <div class="filter-row">
+    <div class="search-box" style="margin-bottom:0;flex:1;max-width:320px">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--dim)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input placeholder="Search guests...">
+    </div>
+    <button class="btn-primary">+ Add Guest</button>
+  </div>
+  <div class="panel">
+    <table class="tbl">
+      <thead><tr><th>Guest</th><th>Contact</th><th>Stays</th><th>Last Stay</th><th>Preferred Property</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td><div style="font-weight:500;color:var(--text)">Sarah Thompson</div><div style="font-size:10px;color:var(--dim)">South Africa</div></td><td style="color:var(--dim)">sarah@gmail.com</td><td class="mono">3</td><td style="color:var(--dim)">29 May 2026</td><td style="color:var(--dim)">Jackals Rest</td><td><span class="badge b-teal">Checked In</span></td></tr>
+        <tr><td><div style="font-weight:500;color:var(--text)">Priya Govender</div><div style="font-size:10px;color:var(--dim)">South Africa</div></td><td style="color:var(--dim)">priya.g@icloud.com</td><td class="mono">1</td><td style="color:var(--dim)">30 May 2026</td><td style="color:var(--dim)">Swallows Nest</td><td><span class="badge b-blue">Arriving Today</span></td></tr>
+        <tr><td><div style="font-weight:500;color:var(--text)">James Nkosi</div><div style="font-size:10px;color:var(--dim)">South Africa</div></td><td style="color:var(--dim)">j.nkosi@work.co.za</td><td class="mono">2</td><td style="color:var(--dim)">15 Apr 2026</td><td style="color:var(--dim)">Woody's Cottage</td><td><span class="badge b-blue">Upcoming</span></td></tr>
+        <tr><td><div style="font-weight:500;color:var(--text)">Kobus van der Berg</div><div style="font-size:10px;color:var(--dim)">South Africa</div></td><td style="color:var(--dim)">kobus@vdb.co.za</td><td class="mono">5</td><td style="color:var(--dim)">12 Mar 2026</td><td style="color:var(--dim)">Meadows Cottage</td><td><span class="badge b-teal">Repeat Guest</span></td></tr>
+        <tr><td><div style="font-weight:500;color:var(--text)">Liezel van Wyk</div><div style="font-size:10px;color:var(--dim)">South Africa</div></td><td style="color:var(--dim)">liezel@gmail.com</td><td class="mono">2</td><td style="color:var(--dim)">8 Feb 2026</td><td style="color:var(--dim)">Jackals Rest</td><td><span class="badge b-gray">Past Guest</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════ REVIEWS ════════════════════ -->
+<div class="page" id="page-reviews">
+  <div class="g4 gap-b">
+    <div class="kpi good"><div class="kpi-lbl">Avg Rating</div><div class="kpi-val">4.8<span class="u">/ 5</span></div></div>
+    <div class="kpi"><div class="kpi-lbl">Total Reviews</div><div class="kpi-val">47</div><div class="kpi-sub">last 12 months</div></div>
+    <div class="kpi warn"><div class="kpi-lbl">Pending Response</div><div class="kpi-val">3</div><div class="kpi-sub">2 drafts ready</div></div>
+    <div class="kpi good"><div class="kpi-lbl">Response Rate</div><div class="kpi-val">89<span class="u">%</span></div><div class="kpi-sub"><span class="up">↑ 4%</span></div></div>
+  </div>
+  <div class="rv-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+      <div><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span class="rv-stars">★★★★★</span><span class="badge b-pink">Airbnb</span><span class="badge b-teal">Positive</span><span style="font-size:10px;color:var(--dim)">27 May · Jackals Rest</span></div><div style="font-size:13px;font-weight:600;color:var(--text)">Absolutely magical farm stay</div></div>
+      <span class="badge b-amber">Pending</span>
+    </div>
+    <div class="rv-text">"The most peaceful place we have stayed. The fireplace was perfect on cold nights and the host was incredibly responsive. Will definitely be returning."</div>
+    <div class="rv-ai">
+      <div class="rv-ai-lbl">AI Draft Response · Low Risk · Auto-approvable</div>
+      <div class="rv-ai-text">Thank you so much — your review made our day! We're so glad the fireplace and peaceful setting gave you exactly the escape you were looking for. The farm comes alive in those quiet evenings by the fire. We'd love to welcome you back soon!</div>
+      <div class="ai-btns" style="margin-top:10px"><button class="btn-apply">Approve &amp; Publish</button><button class="btn-dim">Edit Draft</button><button class="btn-dim">Dismiss</button></div>
+    </div>
+  </div>
+  <div class="rv-card" style="border-color:rgba(239,68,68,.2)">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+      <div><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span class="rv-stars">★★★</span><span style="color:var(--dim);font-size:14px">☆☆</span><span class="badge b-blue">Booking.com</span><span class="badge b-red">Negative</span><span style="font-size:10px;color:var(--dim)">28 May · Swallows Nest</span></div><div style="font-size:13px;font-weight:600;color:var(--text)">Good but hot water issue</div></div>
+      <span class="badge b-red">Needs Attention</span>
+    </div>
+    <div class="rv-text">"Nice property but we had hot water problems on day 2. Took a few hours to sort out. Property itself is lovely but this was frustrating."</div>
+    <div style="margin-top:10px;padding:8px 12px;background:rgba(239,68,68,.05);border:1px solid rgba(239,68,68,.2);border-radius:6px;font-size:11px;color:#fca5a5">⚡ AI flagged: maintenance task created · manager escalation triggered · response requires human approval</div>
+    <div class="ai-btns" style="margin-top:10px"><button class="btn-apply">Generate Response Draft</button><button class="btn-dim">View Related Task</button></div>
+  </div>
+  <div class="rv-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px">
+      <div><div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span class="rv-stars">★★★★</span><span style="color:var(--dim);font-size:14px">☆</span><span class="badge b-blue">Google</span><span class="badge b-teal">Positive</span><span style="font-size:10px;color:var(--dim)">23 May · Woody's Cottage</span></div></div>
+      <span class="badge b-teal">Draft Ready</span>
+    </div>
+    <div class="rv-text">"Beautiful setting, cottage was clean and well-equipped. WiFi could be stronger in the bedroom area."</div>
+    <div class="rv-ai">
+      <div class="rv-ai-lbl">AI Draft Response · Medium Risk · Requires Approval</div>
+      <div class="rv-ai-text">Thank you for staying with us at Woody's Cottage! We're so glad you enjoyed the setting and found everything well-equipped. We hear you on the WiFi — a signal booster for the bedroom is on our improvement list for next month. Hope to welcome you back soon!</div>
+      <div class="ai-btns" style="margin-top:10px"><button class="btn-apply">Approve &amp; Publish</button><button class="btn-dim">Edit Draft</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ GUEST GUIDES ════════════════════ -->
+<div class="page" id="page-guides">
+  <div class="pg-title"><h1>Guest Guides</h1><p>Property information delivered to guests at check-in.</p></div>
+  <div class="g2">
+    <div class="panel">
+      <div class="panel-hd"><div class="panel-title">Jackals Rest Guest Guide</div><span class="badge b-teal">Published</span></div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:10px">
+        <div class="kb-card"><div class="kb-title">WiFi Access</div><div class="kb-content">Network: JoyWood Farm · Guest Network: JoyWood Farm Guest</div></div>
+        <div class="kb-card"><div class="kb-title">Check-in Procedure</div><div class="kb-content">Key lockbox is beside the front door. Code will be sent via WhatsApp 2 hours before arrival. Return key to lockbox at checkout.</div></div>
+        <div class="kb-card"><div class="kb-title">Fireplace Instructions</div><div class="kb-content">Stack logs crisscross. Open flue fully. Use firelighters at the base. Allow 10 min before reducing flue to ¾.</div></div>
+        <div class="kb-card"><div class="kb-title">TV Remote</div><div class="kb-content">Main remote on coffee table. Press INPUT for HDMI sources. HDMI 1 = DStv. HDMI 2 = streaming stick.</div></div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-hd"><div class="panel-title">Woody's Cottage Guest Guide</div><span class="badge b-teal">Published</span></div>
+      <div style="padding:14px;display:flex;flex-direction:column;gap:10px">
+        <div class="kb-card"><div class="kb-title">WiFi Access</div><div class="kb-content">Network: JoyWood Farm · Guest Network: JoyWood Farm Guest</div></div>
+        <div class="kb-card"><div class="kb-title">Sliding Door Warning</div><div class="kb-content">Remove key after locking the sliding door. Do not leave in lock overnight — key can stick in cold weather.</div></div>
+        <div class="kb-card"><div class="kb-title">AC Remote</div><div class="kb-content">AC remote is in the bedside drawer. Set to 21°C for comfortable sleep. Auto mode is recommended.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ BRAIN ════════════════════ -->
+<div class="page" id="page-brain">
+  <div class="pg-title"><h1>Knowledge Brain</h1><p>Searchable operating knowledge — SOPs, appliance guides, WiFi, lessons learned.</p></div>
+  <div class="search-box">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--dim)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input placeholder="Search Farmstead knowledge...">
+  </div>
+  <div class="g2">
+    <div class="kb-card"><div style="display:flex;justify-content:space-between"><div><div class="kb-title">Fireplace Stacking Instructions</div><div class="kb-prop">Jackals Rest · All properties</div></div><span class="badge b-teal">Guest Visible</span></div><div class="kb-content">Stack logs in a crisscross pattern. Open flue fully before lighting. Use firelighters at the base. Allow 10 minutes before closing flue to ¾ position. Never use wet wood.</div></div>
+    <div class="kb-card"><div style="display:flex;justify-content:space-between"><div><div class="kb-title">Fireplace Smoke Prevention</div><div class="kb-prop">All properties</div></div><span class="badge b-teal">Guest Visible</span></div><div class="kb-content">Always ensure flue is fully open before lighting. Do not use wet wood. If smoke enters, open flue fully and open nearest window briefly.</div></div>
+    <div class="kb-card"><div style="display:flex;justify-content:space-between"><div><div class="kb-title">Sliding Door Key Warning</div><div class="kb-prop">Woody's Cottage</div></div><span class="badge b-teal">Guest Visible</span></div><div class="kb-content">The sliding door key must be removed after locking. Do not leave in lock overnight — key can stick in cold weather causing lockout.</div></div>
+    <div class="kb-card"><div style="display:flex;justify-content:space-between"><div><div class="kb-title">WiFi Access — JoyWood Farm</div><div class="kb-prop">All properties</div></div><span class="badge b-teal">Guest Visible</span></div><div class="kb-content">Main network: JoyWood Farm · Guest network: JoyWood Farm Guest. Password provided in welcome message. Signal is strong in main areas; bedroom booster installation scheduled June 2026 for Woody's.</div></div>
+    <div class="kb-card"><div style="display:flex;justify-content:space-between"><div><div class="kb-title">TV Remote Instructions</div><div class="kb-prop">Jackals Rest</div></div><span class="badge b-teal">Guest Visible</span></div><div class="kb-content">Main TV remote on the coffee table. Press INPUT to switch between HDMI sources. HDMI 1 = DStv decoder. HDMI 2 = streaming stick.</div></div>
+    <div class="kb-card"><div style="display:flex;justify-content:space-between"><div><div class="kb-title">Pool Chemical Schedule</div><div class="kb-prop">Jackals Rest · Internal</div></div><span class="badge b-gray">Internal Only</span></div><div class="kb-content">Shock treatment every Monday. pH check Tuesday and Friday. Chlorine top-up as needed. Contractor cleans second Thursday each month.</div></div>
+  </div>
+</div>
+
+<!-- ════════════════════ SETTINGS ════════════════════ -->
+<div class="page" id="page-settings">
+  <div class="pg-title"><h1>Platform Settings</h1><p>Tenant configuration, AI governance and integration controls.</p></div>
+  <div style="font-size:10px;font-weight:600;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;margin-bottom:8px">Organisation</div>
+  <div class="setting-group">
+    <div class="setting-row"><div><div class="setting-label">Organisation Name</div><div class="setting-desc">Farmstead Hospitality</div></div><button class="btn-outline">Edit</button></div>
+    <div class="setting-row"><div><div class="setting-label">Production Scope</div><div class="setting-desc">Phase 1 — Farmstead MVP only</div></div><span class="badge b-teal">Active</span></div>
+    <div class="setting-row"><div><div class="setting-label">Subscription Plan</div><div class="setting-desc">Professional · 4 properties</div></div><span class="badge b-gold">Professional</span></div>
+  </div>
+  <div style="font-size:10px;font-weight:600;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;margin-bottom:8px">AI Governance</div>
+  <div class="setting-group">
+    <div class="setting-row"><div><div class="setting-label">Draft-First Mode</div><div class="setting-desc">All AI outputs require human review before any public action</div></div><div class="toggle"></div></div>
+    <div class="setting-row"><div><div class="setting-label">Auto-approve Low Risk</div><div class="setting-desc">Low-risk summaries and internal recommendations apply automatically</div></div><div class="toggle"></div></div>
+    <div class="setting-row"><div><div class="setting-label">Block Autonomous Responses</div><div class="setting-desc">AI may never publish guest-facing content without approval</div></div><div class="toggle"></div></div>
+    <div class="setting-row"><div><div class="setting-label">AI Action Logging</div><div class="setting-desc">All AI calls logged to audit trail (required)</div></div><span class="badge b-teal">Enforced</span></div>
+  </div>
+  <div style="font-size:10px;font-weight:600;letter-spacing:.15em;color:var(--dim);text-transform:uppercase;margin-bottom:8px">Integrations</div>
+  <div class="setting-group">
+    <div class="setting-row"><div><div class="setting-label">Booking.com iCal — Jackals Rest</div><div class="setting-desc">Last synced 14 min ago · 3 bookings</div></div><span class="badge b-teal">Connected</span></div>
+    <div class="setting-row"><div><div class="setting-label">Airbnb iCal — Jackals Rest</div><div class="setting-desc">Last synced 14 min ago · 2 bookings</div></div><span class="badge b-teal">Connected</span></div>
+    <div class="setting-row"><div><div class="setting-label">LekkeSlaap iCal — Jackals Rest</div><div class="setting-desc">Pending first sync</div></div><span class="badge b-amber">Pending</span></div>
+    <div class="setting-row"><div><div class="setting-label">Anthropic AI Gateway</div><div class="setting-desc">claude-sonnet — review responses, briefs, recommendations</div></div><span class="badge b-gray">Needs Key</span></div>
+  </div>
+</div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<script>
+const titles={dashboard:'Command Dashboard',properties:'Portfolio',aibrief:'AI Brief',bookings:'Reservations',tasks:'Task Engine',housekeeping:'Housekeeping',maintenance:'Maintenance',works:'Works Register',guests:'Guest CRM',reviews:'Review Intelligence',guides:'Guest Guides',brain:'Knowledge Brain',settings:'Platform Settings'};
+
+function go(id,title){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  const pg=document.getElementById('page-'+id);
+  if(pg)pg.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>{
+    if(n.getAttribute('onclick')===`go('${id}','${title}')`)n.classList.add('active');
+  });
+  document.getElementById('page-title').textContent=titles[id]||title;
+  window.location.hash=id;
+}
+
+// hash routing on load
+const h=window.location.hash.replace('#','');
+if(h&&document.getElementById('page-'+h))go(h,titles[h]||h);
+</script>
+</body>
+</html>
