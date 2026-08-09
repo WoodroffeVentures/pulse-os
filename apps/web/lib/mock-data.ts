@@ -160,6 +160,112 @@ export const mockBookings: Booking[] = [
   },
 ];
 
+// ─── Mock reservation data ────────────────────────────────────────────────────
+
+const PROP1 = 'b1b2c3d4-0001-0001-0001-000000000001'; // Woody's Cottage
+const PROP2 = 'b1b2c3d4-0001-0001-0001-000000000002'; // Swallows Nest
+const PROP3 = 'b1b2c3d4-0001-0001-0001-000000000003'; // Meadows Cottage
+const PROP4 = 'b1b2c3d4-0001-0001-0001-000000000004'; // Jackals Rest
+
+export const mockRoomTypes = [
+  { id: 'rt-001', property_id: PROP1, name: "Woody's Cottage", code: 'WDY', max_occupancy: 6, bed_configuration: '1 king + 2 singles', is_active: true },
+  { id: 'rt-002', property_id: PROP2, name: 'Swallows Nest Studio', code: 'SWN', max_occupancy: 2, bed_configuration: '1 queen', is_active: true },
+  { id: 'rt-003', property_id: PROP3, name: 'Meadows Cottage', code: 'MDW', max_occupancy: 4, bed_configuration: '1 king + 1 double', is_active: true },
+  { id: 'rt-004', property_id: PROP4, name: 'Jackals Rest', code: 'JKL', max_occupancy: 8, bed_configuration: '2 king + 2 singles', is_active: true },
+];
+
+export const mockRatePlans = [
+  { id: 'rp-001', property_id: PROP1, name: 'Standard Rate', code: 'STD', meal_plan: 'self_catering', min_nights: 2, is_active: true },
+  { id: 'rp-002', property_id: PROP2, name: 'Standard Rate', code: 'STD', meal_plan: 'self_catering', min_nights: 1, is_active: true },
+  { id: 'rp-003', property_id: PROP3, name: 'Standard Rate', code: 'STD', meal_plan: 'self_catering', min_nights: 2, is_active: true },
+  { id: 'rp-004', property_id: PROP4, name: 'Standard Rate', code: 'STD', meal_plan: 'self_catering', min_nights: 2, is_active: true },
+  { id: 'rp-005', property_id: PROP4, name: 'Weekend Rate', code: 'WKD', meal_plan: 'self_catering', min_nights: 2, is_active: true },
+];
+
+export const mockReservations = [
+  {
+    id: 'res-001', property_id: PROP4, room_type_id: 'rt-004', rate_plan_id: 'rp-004',
+    confirmation_number: 'PULSE-A3F8D1', channel_code: 'airbnb',
+    check_in_date: fmt(addDays(today, -1)), check_out_date: fmt(addDays(today, 3)),
+    booked_at: addDays(today, -14).toISOString(),
+    adults: 2, children: 0, status: 'checked_in', source: 'airbnb',
+    total_amount: 7400, outstanding_balance: 0, currency: 'ZAR',
+    guest_name: 'Sarah & Mark Thompson', guest_email: 'sarah.thompson@gmail.com', guest_phone: '+27 82 111 2233',
+    property_name: 'Jackals Rest', room_type_name: 'Jackals Rest',
+  },
+  {
+    id: 'res-002', property_id: PROP1, room_type_id: 'rt-001', rate_plan_id: 'rp-001',
+    confirmation_number: 'PULSE-B7C2E4', channel_code: 'booking_com',
+    check_in_date: fmt(addDays(today, 2)), check_out_date: fmt(addDays(today, 5)),
+    booked_at: addDays(today, -7).toISOString(),
+    adults: 1, children: 0, status: 'confirmed', source: 'booking_com',
+    total_amount: 4200, outstanding_balance: 4200, currency: 'ZAR',
+    guest_name: 'James Nkosi', guest_email: 'james.nkosi@outlook.com', guest_phone: '+27 71 444 5566',
+    property_name: "Woody's Cottage", room_type_name: "Woody's Cottage",
+  },
+  {
+    id: 'res-003', property_id: PROP2, room_type_id: 'rt-002', rate_plan_id: 'rp-002',
+    confirmation_number: 'PULSE-C9D1F6', channel_code: 'direct',
+    check_in_date: fmt(today), check_out_date: fmt(addDays(today, 4)),
+    booked_at: addDays(today, -3).toISOString(),
+    adults: 2, children: 1, status: 'confirmed', source: 'direct',
+    total_amount: 5600, outstanding_balance: 2800, currency: 'ZAR',
+    guest_name: 'Priya Govender', guest_email: 'priya.govender@gmail.com', guest_phone: '+27 83 777 8899',
+    property_name: 'Swallows Nest Studio', room_type_name: 'Swallows Nest Studio',
+  },
+  {
+    id: 'res-004', property_id: PROP3, room_type_id: 'rt-003', rate_plan_id: 'rp-003',
+    confirmation_number: 'PULSE-D4E8A2', channel_code: 'lekke_slaap',
+    check_in_date: fmt(addDays(today, 7)), check_out_date: fmt(addDays(today, 10)),
+    booked_at: addDays(today, -5).toISOString(),
+    adults: 2, children: 0, status: 'confirmed', source: 'lekke_slaap',
+    total_amount: 6300, outstanding_balance: 6300, currency: 'ZAR',
+    guest_name: 'Kobus & Anel van der Berg', guest_email: 'kobus.vdberg@icloud.com', guest_phone: '+27 79 333 4455',
+    property_name: 'Meadows Cottage', room_type_name: 'Meadows Cottage',
+  },
+  {
+    id: 'res-005', property_id: PROP1, room_type_id: 'rt-001', rate_plan_id: 'rp-001',
+    confirmation_number: 'PULSE-E2F9B3', channel_code: 'airbnb',
+    check_in_date: fmt(addDays(today, -5)), check_out_date: fmt(addDays(today, -1)),
+    booked_at: addDays(today, -20).toISOString(),
+    adults: 2, children: 0, status: 'checked_out', source: 'airbnb',
+    total_amount: 5200, outstanding_balance: 0, currency: 'ZAR',
+    guest_name: 'Lindiwe Dlamini', guest_email: 'lindiwe.dlamini@gmail.com', guest_phone: '+27 66 555 6677',
+    property_name: "Woody's Cottage", room_type_name: "Woody's Cottage",
+  },
+  {
+    id: 'res-006', property_id: PROP4, room_type_id: 'rt-004', rate_plan_id: 'rp-005',
+    confirmation_number: 'PULSE-F5G3H1', channel_code: 'direct',
+    check_in_date: fmt(addDays(today, 14)), check_out_date: fmt(addDays(today, 17)),
+    booked_at: today.toISOString(),
+    adults: 4, children: 2, status: 'deposit_paid', source: 'direct',
+    total_amount: 9800, outstanding_balance: 4900, currency: 'ZAR',
+    guest_name: 'De Wet Family', guest_email: 'dewet.family@gmail.com', guest_phone: '+27 82 999 0011',
+    property_name: 'Jackals Rest', room_type_name: 'Jackals Rest',
+    special_requests: 'Cot for baby, extra towels',
+  },
+  {
+    id: 'res-007', property_id: PROP3, room_type_id: 'rt-003', rate_plan_id: 'rp-003',
+    confirmation_number: 'PULSE-G8H4I2', channel_code: 'booking_com',
+    check_in_date: fmt(addDays(today, 21)), check_out_date: fmt(addDays(today, 25)),
+    booked_at: addDays(today, -2).toISOString(),
+    adults: 2, children: 0, status: 'confirmed', source: 'booking_com',
+    total_amount: 8400, outstanding_balance: 8400, currency: 'ZAR',
+    guest_name: 'Rudi & Helena Joubert', guest_email: 'rudi.joubert@telkom.net', guest_phone: '+27 84 222 3344',
+    property_name: 'Meadows Cottage', room_type_name: 'Meadows Cottage',
+  },
+  {
+    id: 'res-008', property_id: PROP2, room_type_id: 'rt-002', rate_plan_id: 'rp-002',
+    confirmation_number: 'PULSE-H1I7J5', channel_code: 'direct',
+    check_in_date: fmt(today), check_out_date: fmt(addDays(today, 2)),
+    booked_at: addDays(today, -1).toISOString(),
+    adults: 1, children: 0, status: 'checked_in', source: 'direct',
+    total_amount: 2200, outstanding_balance: 0, currency: 'ZAR',
+    guest_name: 'Thabo Mokoena', guest_email: 'thabo.m@gmail.com', guest_phone: '+27 73 888 9900',
+    property_name: 'Swallows Nest Studio', room_type_name: 'Swallows Nest Studio',
+  },
+];
+
 export const mockTasks: Task[] = [
   {
     id: 'tk-001',

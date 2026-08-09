@@ -5,6 +5,8 @@ import { cn } from '@/lib/utils';
 import {
   LayoutDashboard,
   Calendar,
+  CalendarDays,
+  ConciergeBell,
   CheckSquare,
   Users,
   Star,
@@ -22,6 +24,8 @@ import {
   Map,
   Landmark,
   Network,
+  BadgeDollarSign,
+  Wifi,
 } from 'lucide-react';
 
 const navItems = [
@@ -36,7 +40,11 @@ const navItems = [
   {
     label: 'LIVE OPERATIONS',
     items: [
-      { href: '/bookings', icon: Calendar, label: 'Bookings' },
+      { href: '/front-desk', icon: ConciergeBell, label: 'Front Desk' },
+      { href: '/reservations', icon: CalendarDays, label: 'Reservations' },
+      { href: '/bookings', icon: Calendar, label: 'Bookings (Legacy)' },
+      { href: '/rates', icon: BadgeDollarSign, label: 'Rates' },
+      { href: '/channels', icon: Wifi, label: 'Channels' },
       { href: '/tasks', icon: CheckSquare, label: 'Tasks' },
       { href: '/housekeeping', icon: Home, label: 'Housekeeping' },
       { href: '/maintenance', icon: Wrench, label: 'Maintenance' },
