@@ -1,8 +1,22 @@
-import { brainEntries, farmsteadProperties } from '@/lib/mock-data';
+'use client';
+import { useState, useEffect } from 'react';
+import { listBrainEntries } from '@/lib/queries/brain';
+import { listProperties } from '@/lib/queries/properties';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { BookOpen } from 'lucide-react';
 
+const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 export default function GuestGuidesPage() {
+  const [brainEntries, setBrainEntries] = useState<any[]>([]);
+  const [properties, setProperties] = useState<any[]>([]);
+
+  useEffect(() => {
+    Promise.all([listBrainEntries(ORG_ID), listProperties(ORG_ID)])
+      .then(([b, p]) => { setBrainEntries(b.rows); setProperties(p.rows); })
+      .catch(console.error);
+  }, []);
+
   return (
     <div className="space-y-6">
       <div>
@@ -11,9 +25,9 @@ export default function GuestGuidesPage() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        {farmsteadProperties.map((property) => {
+        {properties.map((property: any) => {
           const entries = brainEntries.filter(
-            (entry) => (entry.property_id === property.id || !entry.property_id) && entry.guest_visible
+            (entry: any) => (entry.property_id === property.id || !entry.property_id) && entry.guest_visible
           );
 
           return (
@@ -26,7 +40,7 @@ export default function GuestGuidesPage() {
                 <StatusBadge status="draft" />
               </div>
               <div className="mt-4 space-y-2">
-                {entries.map((entry) => (
+                {entries.map((entry: any) => (
                   <div key={entry.id} className="rounded border border-white/10 bg-[#020912] px-3 py-2">
                     <div className="text-xs font-medium text-[#E6EDF5]">{entry.title}</div>
                     <div className="mt-1 text-[10px] uppercase tracking-widest text-[#617089]">{entry.category}</div>

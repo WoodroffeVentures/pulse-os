@@ -1,11 +1,28 @@
-import { aiRecommendations, mockBookings, mockReviews, mockTasks } from '@/lib/mock-data';
+'use client';
+import { useState, useEffect } from 'react';
+import { aiRecommendations } from '@/lib/mock-data';
+import { listBookings } from '@/lib/queries/bookings';
+import { listTasks } from '@/lib/queries/tasks';
+import { listReviews } from '@/lib/queries/reviews';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Bot, ShieldAlert } from 'lucide-react';
 
+const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 export default function AiBriefPage() {
-  const arrivals = mockBookings.filter((booking) => booking.status === 'confirmed').slice(0, 3);
-  const urgentTasks = mockTasks.filter((task) => task.status === 'overdue' || task.priority === 'high');
-  const pendingReviews = mockReviews.filter((review) => review.response_status !== 'responded');
+  const [bookings, setBookings] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<any[]>([]);
+
+  useEffect(() => {
+    Promise.all([listBookings(ORG_ID), listTasks(ORG_ID), listReviews(ORG_ID)])
+      .then(([b, t, r]) => { setBookings(b.rows); setTasks(t.rows); setReviews(r.rows); })
+      .catch(console.error);
+  }, []);
+
+  const arrivals = bookings.filter((b: any) => b.status === 'confirmed').slice(0, 3);
+  const urgentTasks = tasks.filter((t: any) => t.status === 'overdue' || t.priority === 'high');
+  const pendingReviews = reviews.filter((r: any) => r.response_status !== 'responded');
 
   return (
     <div className="space-y-6">
@@ -23,9 +40,9 @@ export default function AiBriefPage() {
           <div>
             <div className="text-xs font-semibold text-[#E6EDF5]">Arrivals To Prepare</div>
             <div className="mt-3 space-y-2">
-              {arrivals.map((booking) => (
+              {arrivals.map((booking: any) => (
                 <div key={booking.id} className="rounded border border-white/10 bg-[#020912] px-3 py-2 text-xs text-[#9BA7B8]">
-                  {booking.guest_name} · {booking.source.replace(/_/g, ' ')}
+                  {booking.guest_name ?? (booking.guests ? `${booking.guests.first_name} ${booking.guests.last_name}` : 'Guest')} · {(booking.source ?? '').replace(/_/g, ' ')}
                 </div>
               ))}
             </div>
@@ -33,7 +50,7 @@ export default function AiBriefPage() {
           <div>
             <div className="text-xs font-semibold text-[#E6EDF5]">Priority Work</div>
             <div className="mt-3 space-y-2">
-              {urgentTasks.map((task) => (
+              {urgentTasks.map((task: any) => (
                 <div key={task.id} className="rounded border border-white/10 bg-[#020912] px-3 py-2">
                   <div className="text-xs text-[#E6EDF5]">{task.title}</div>
                   <div className="mt-2"><StatusBadge status={task.priority} /></div>

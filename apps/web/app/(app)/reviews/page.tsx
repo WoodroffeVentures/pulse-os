@@ -1,9 +1,12 @@
 'use client';
-import { useState } from 'react';
-import { mockReviews, farmsteadProperties } from '@/lib/mock-data';
+import { useState, useEffect } from 'react';
+import { listReviews } from '@/lib/queries/reviews';
+import { listProperties } from '@/lib/queries/properties';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { MetricTile } from '@/components/ui/metric-tile';
 import { Star, ChevronDown, ChevronUp, Bot } from 'lucide-react';
+
+const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -23,15 +26,25 @@ function StarRating({ rating }: { rating: number }) {
 
 export default function ReviewsPage() {
   const [expandedDraft, setExpandedDraft] = useState<string | null>(null);
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [properties, setProperties] = useState<any[]>([]);
+  const [source, setSource] = useState<'live' | 'demo'>('demo');
 
-  const avgRating =
-    mockReviews.reduce((sum, r) => sum + r.rating, 0) / mockReviews.length;
-  const pending = mockReviews.filter((r) => r.response_status === 'pending').length;
-  const draftReady = mockReviews.filter((r) => r.response_status === 'draft_ready').length;
+  useEffect(() => {
+    Promise.all([listReviews(ORG_ID), listProperties(ORG_ID)])
+      .then(([r, p]) => { setReviews(r.rows); setProperties(p.rows); setSource(r.source); })
+      .catch(console.error);
+  }, []);
+
+  const avgRating = reviews.length
+    ? reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / reviews.length
+    : 0;
+  const pending = reviews.filter((r: any) => r.response_status === 'pending').length;
+  const draftReady = reviews.filter((r: any) => r.response_status === 'draft_ready').length;
 
   const ratingDist = [5, 4, 3, 2, 1].map((star) => ({
     star,
-    count: mockReviews.filter((r) => r.rating === star).length,
+    count: reviews.filter((r: any) => r.rating === star).length,
   }));
   const maxCount = Math.max(...ratingDist.map((d) => d.count), 1);
 
@@ -40,7 +53,7 @@ export default function ReviewsPage() {
       {/* KPI Row */}
       <div className="grid grid-cols-4 gap-3">
         <MetricTile label="Avg Rating" value={avgRating.toFixed(1)} unit="/ 5" variant="success" />
-        <MetricTile label="Total Reviews" value={mockReviews.length} />
+        <MetricTile label="Total Reviews" value={reviews.length} />
         <MetricTile
           label="Pending Response"
           value={pending}
@@ -57,8 +70,8 @@ export default function ReviewsPage() {
       <div className="grid grid-cols-3 gap-6">
         {/* Review Cards */}
         <div className="col-span-2 space-y-4">
-          {mockReviews.map((review) => {
-            const prop = farmsteadProperties.find((p) => p.id === review.property_id);
+          {reviews.map((review: any) => {
+            const prop = properties.find((p: any) => p.id === review.property_id);
             const draft = review.ai_response_draft ?? review.recommended_response;
             const isExpanded = expandedDraft === review.id;
 
@@ -194,7 +207,7 @@ export default function ReviewsPage() {
               {[
                 { label: 'Pending Response', count: pending, color: 'text-amber-400' },
                 { label: 'Draft Ready', count: draftReady, color: 'text-blue-400' },
-                { label: 'Responded', count: mockReviews.filter(r => r.response_status === 'responded').length, color: 'text-green-400' },
+                { label: 'Responded', count: reviews.filter((r: any) => r.response_status === 'responded').length, color: 'text-green-400' },
               ].map((item) => (
                 <div key={item.label} className="flex items-center justify-between">
                   <span className="text-xs text-[#64748b]">{item.label}</span>

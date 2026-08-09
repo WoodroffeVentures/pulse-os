@@ -1,9 +1,21 @@
-import { farmsteadProperties, mockTasks } from '@/lib/mock-data';
+'use client';
+import { useState, useEffect } from 'react';
+import { listProperties } from '@/lib/queries/properties';
+import { listTasks } from '@/lib/queries/tasks';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Wrench } from 'lucide-react';
 
+const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 export default function MaintenancePage() {
-  const maintenanceTasks = mockTasks.filter((task) => task.category === 'maintenance');
+  const [properties, setProperties] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<any[]>([]);
+  useEffect(() => {
+    Promise.all([listProperties(ORG_ID), listTasks(ORG_ID)])
+      .then(([p, t]) => { setProperties(p.rows); setTasks(t.rows); })
+      .catch(console.error);
+  }, []);
+  const maintenanceTasks = tasks.filter((task: any) => task.category === 'maintenance');
 
   return (
     <div className="space-y-6">
@@ -18,8 +30,8 @@ export default function MaintenancePage() {
           <span className="text-xs font-semibold uppercase tracking-widest text-[#E6EDF5]">Active Maintenance Queue</span>
         </div>
         <div className="divide-y divide-white/10">
-          {maintenanceTasks.map((task) => {
-            const property = farmsteadProperties.find((item) => item.id === task.property_id);
+          {maintenanceTasks.map((task: any) => {
+            const property = properties.find((item: any) => item.id === task.property_id);
             return (
               <div key={task.id} className="grid gap-3 px-4 py-3 md:grid-cols-[1fr_180px_120px_120px] md:items-center">
                 <div>

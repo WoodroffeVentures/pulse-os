@@ -1,10 +1,23 @@
-import { farmsteadProperties, mockBookings, mockTasks } from '@/lib/mock-data';
+'use client';
+import { useState, useEffect } from 'react';
+import { listProperties } from '@/lib/queries/properties';
+import { listBookings } from '@/lib/queries/bookings';
+import { listTasks } from '@/lib/queries/tasks';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Home } from 'lucide-react';
 
+const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 export default function HousekeepingPage() {
-  const housekeepingTasks = mockTasks.filter(
-    (task) => task.category === 'housekeeping' || task.category === 'inspection'
+  const [data, setData] = useState<{ properties: any[]; bookings: any[]; tasks: any[]; source: 'live' | 'demo' } | null>(null);
+  useEffect(() => {
+    Promise.all([listProperties(ORG_ID), listBookings(ORG_ID), listTasks(ORG_ID)])
+      .then(([p, b, t]) => setData({ properties: p.rows, bookings: b.rows, tasks: t.rows, source: p.source }))
+      .catch(console.error);
+  }, []);
+  if (!data) return <div className="p-6 text-[#617089] text-sm">Loading…</div>;
+  const housekeepingTasks = data.tasks.filter(
+    (task: any) => task.category === 'housekeeping' || task.category === 'inspection'
   );
 
   return (
@@ -15,11 +28,11 @@ export default function HousekeepingPage() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        {farmsteadProperties.map((property) => {
-          const arrivals = mockBookings.filter(
-            (booking) => booking.property_id === property.id && booking.status === 'confirmed'
+        {data.properties.map((property: any) => {
+          const arrivals = data.bookings.filter(
+            (booking: any) => booking.property_id === property.id && booking.status === 'confirmed'
           );
-          const tasks = housekeepingTasks.filter((task) => task.property_id === property.id);
+          const tasks = housekeepingTasks.filter((task: any) => task.property_id === property.id);
 
           return (
             <div key={property.id} className="rounded-lg border border-white/10 bg-[#08111f] p-4">

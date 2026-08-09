@@ -1,22 +1,34 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { brainEntries, farmsteadProperties } from '@/lib/mock-data';
+import { useMemo, useState, useEffect } from 'react';
+import { listBrainEntries } from '@/lib/queries/brain';
+import { listProperties } from '@/lib/queries/properties';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Search } from 'lucide-react';
 
+const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 export default function BrainPage() {
   const [query, setQuery] = useState('');
+  const [entries, setEntries] = useState<any[]>([]);
+  const [properties, setProperties] = useState<any[]>([]);
+  const [source, setSource] = useState<'live' | 'demo'>('demo');
+
+  useEffect(() => {
+    Promise.all([listBrainEntries(ORG_ID), listProperties(ORG_ID)])
+      .then(([b, p]) => { setEntries(b.rows); setProperties(p.rows); setSource(b.source); })
+      .catch(console.error);
+  }, []);
 
   const filtered = useMemo(() => {
     const q = query.toLowerCase();
-    return brainEntries.filter(
-      (entry) =>
+    return entries.filter(
+      (entry: any) =>
         entry.title.toLowerCase().includes(q) ||
         entry.content.toLowerCase().includes(q) ||
         entry.category.toLowerCase().includes(q)
     );
-  }, [query]);
+  }, [query, entries]);
 
   return (
     <div className="space-y-6">
@@ -36,8 +48,8 @@ export default function BrainPage() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        {filtered.map((entry) => {
-          const property = farmsteadProperties.find((item) => item.id === entry.property_id);
+        {filtered.map((entry: any) => {
+          const property = properties.find((item: any) => item.id === entry.property_id);
           return (
             <article key={entry.id} className="rounded-lg border border-white/10 bg-[#08111f] p-4">
               <div className="flex items-start justify-between gap-3">

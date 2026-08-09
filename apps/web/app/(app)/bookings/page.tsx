@@ -1,9 +1,10 @@
 'use client';
-import { useState } from 'react';
-import { mockBookings, farmsteadProperties } from '@/lib/mock-data';
+import { useState, useEffect } from 'react';
+import { listBookings } from '@/lib/queries/bookings';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Calendar, Plus, RefreshCw, CheckCircle2, AlertCircle, Clock } from 'lucide-react';
-import type { Booking } from '@/lib/types';
+
+const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
 
 const icalSources = [
   {
@@ -49,8 +50,15 @@ export default function BookingsPage() {
   const [statusFilter, setStatusFilter] = useState('All');
   const [sourceFilter, setSourceFilter] = useState('All');
   const [propertyFilter, setPropertyFilter] = useState('All');
+  const [allBookings, setAllBookings] = useState<any[]>([]);
+  const [properties, setProperties] = useState<any[]>([]);
+  const [source, setSource] = useState<'live' | 'demo'>('demo');
 
-  const filtered = mockBookings.filter((b) => {
+  useEffect(() => {
+    listBookings(ORG_ID).then(r => { setAllBookings(r.rows); setProperties(r.properties as any[]); setSource(r.source); }).catch(console.error);
+  }, []);
+
+  const filtered = allBookings.filter((b: any) => {
     if (statusFilter !== 'All' && b.status !== statusFilter) return false;
     if (sourceFilter !== 'All' && b.source !== sourceFilter) return false;
     if (propertyFilter !== 'All' && b.property_id !== propertyFilter) return false;
@@ -63,7 +71,7 @@ export default function BookingsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-base font-semibold text-[#f1f5f9]">Reservations</h2>
-          <p className="text-xs text-[#64748b] mt-0.5">{mockBookings.length} total bookings across 4 properties</p>
+          <p className="text-xs text-[#64748b] mt-0.5">{allBookings.length} total bookings across {properties.length} properties</p>
         </div>
         <button className="flex items-center gap-2 bg-[#3b82f6] text-white text-xs font-medium px-3 py-2 rounded hover:bg-[#2563eb] transition-colors">
           <Plus className="w-3.5 h-3.5" />
@@ -116,7 +124,7 @@ export default function BookingsPage() {
           className="bg-[#111318] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-1.5 outline-none focus:border-[#3b82f6]"
         >
           <option value="All">All Properties</option>
-          {farmsteadProperties.map((p) => (
+          {properties.map((p: any) => (
             <option key={p.id} value={p.id}>{p.name}</option>
           ))}
         </select>
@@ -157,13 +165,13 @@ export default function BookingsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-[#1e2028]">
-            {filtered.map((b: Booking) => {
-              const prop = farmsteadProperties.find((p) => p.id === b.property_id);
-              const nights = nightsBetween(b.check_in, b.check_out);
+            {filtered.map((b: any) => {
+              const prop = properties.find((p: any) => p.id === b.property_id);
+              const nights = nightsBetween(b.check_in_date ?? b.check_in, b.check_out_date ?? b.check_out);
               return (
                 <tr key={b.id} className="hover:bg-[#161b22] transition-colors cursor-pointer">
                   <td className="px-4 py-3">
-                    <div className="text-sm font-medium text-[#f1f5f9]">{b.guest_name ?? 'Guest'}</div>
+                    <div className="text-sm font-medium text-[#f1f5f9]">{b.guest_name ?? (b.guests ? `${b.guests.first_name} ${b.guests.last_name}` : 'Guest')}</div>
                     {(b.adults || b.children) && (
                       <div className="text-[10px] text-[#64748b]">
                         {b.adults ?? 0} adult{(b.adults ?? 0) !== 1 ? 's' : ''}{b.children ? `, ${b.children} child${b.children !== 1 ? 'ren' : ''}` : ''}
@@ -171,8 +179,8 @@ export default function BookingsPage() {
                     )}
                   </td>
                   <td className="px-4 py-3 text-sm text-[#94a3b8]">{prop?.name ?? '—'}</td>
-                  <td className="px-4 py-3 text-sm font-mono text-[#94a3b8]">{formatDate(b.check_in)}</td>
-                  <td className="px-4 py-3 text-sm font-mono text-[#94a3b8]">{formatDate(b.check_out)}</td>
+                  <td className="px-4 py-3 text-sm font-mono text-[#94a3b8]">{formatDate(b.check_in_date ?? b.check_in)}</td>
+                  <td className="px-4 py-3 text-sm font-mono text-[#94a3b8]">{formatDate(b.check_out_date ?? b.check_out)}</td>
                   <td className="px-4 py-3 text-sm font-mono text-[#f1f5f9]">{nights}</td>
                   <td className="px-4 py-3"><StatusBadge status={b.source} /></td>
                   <td className="px-4 py-3 text-sm font-mono text-[#f1f5f9]">

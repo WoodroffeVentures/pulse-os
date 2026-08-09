@@ -1,7 +1,13 @@
-import { mockTasks, mockBookings, farmsteadProperties } from '@/lib/mock-data';
+'use client';
+import { useState, useEffect } from 'react';
+import { listTasks } from '@/lib/queries/tasks';
+import { listBookings } from '@/lib/queries/bookings';
+import { listProperties } from '@/lib/queries/properties';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { MetricTile } from '@/components/ui/metric-tile';
 import { AlertTriangle, Wrench, Home, Star, Search, CalendarCheck } from 'lucide-react';
+
+const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
 
 const categoryIcons: Record<string, React.ReactNode> = {
   housekeeping: <Home className="w-4 h-4" />,
@@ -20,14 +26,24 @@ const categoryColors: Record<string, string> = {
 };
 
 export default function OperationsPage() {
+  const [allTasks, setAllTasks] = useState<any[]>([]);
+  const [allBookings, setAllBookings] = useState<any[]>([]);
+  const [properties, setProperties] = useState<any[]>([]);
+
+  useEffect(() => {
+    Promise.all([listTasks(ORG_ID), listBookings(ORG_ID), listProperties(ORG_ID)])
+      .then(([t, b, p]) => { setAllTasks(t.rows); setAllBookings(b.rows); setProperties(p.rows); })
+      .catch(console.error);
+  }, []);
+
   const today = new Date().toISOString().split('T')[0];
-  const activeTasks = mockTasks.filter((t) => t.status !== 'completed' && t.status !== 'cancelled');
-  const overdueTasks = activeTasks.filter((t) => t.status === 'overdue');
-  const arrivalsToday = mockBookings.filter((b) => b.check_in === today);
-  const departuresToday = mockBookings.filter((b) => b.check_out === today);
+  const activeTasks = allTasks.filter((t: any) => t.status !== 'completed' && t.status !== 'cancelled');
+  const overdueTasks = activeTasks.filter((t: any) => t.status === 'overdue');
+  const arrivalsToday = allBookings.filter((b: any) => (b.check_in_date ?? b.check_in) === today);
+  const departuresToday = allBookings.filter((b: any) => (b.check_out_date ?? b.check_out) === today);
 
   const tasksByCategory = (category: string) =>
-    activeTasks.filter((t) => t.category === category);
+    activeTasks.filter((t: any) => t.category === category);
 
   return (
     <div className="space-y-6">
@@ -40,7 +56,7 @@ export default function OperationsPage() {
               {overdueTasks.length} overdue task{overdueTasks.length > 1 ? 's' : ''} require immediate attention
             </span>
             <div className="text-xs text-red-400/60 mt-0.5">
-              {overdueTasks.map((t) => t.title).join(' · ')}
+              {overdueTasks.map((t: any) => t.title).join(' · ')}
             </div>
           </div>
         </div>
@@ -75,24 +91,24 @@ export default function OperationsPage() {
           </div>
         ) : (
           <div className="divide-y divide-[#1e2028]">
-            {arrivalsToday.map((b) => {
-              const prop = farmsteadProperties.find((p) => p.id === b.property_id);
+            {arrivalsToday.map((b: any) => {
+              const prop = properties.find((p: any) => p.id === b.property_id);
               return (
                 <div key={b.id + '-arrival'} className="px-4 py-3 flex items-center gap-4">
                   <span className="text-[10px] font-bold bg-green-500/10 text-green-400 px-2 py-0.5 rounded tracking-widest">
                     ARRIVAL
                   </span>
                   <div className="flex-1">
-                    <div className="text-sm font-medium text-[#f1f5f9]">{b.guest_name ?? 'Guest'}</div>
-                    <div className="text-xs text-[#64748b]">{prop?.name} · Checkout {b.check_out}</div>
+                    <div className="text-sm font-medium text-[#f1f5f9]">{b.guest_name ?? (b.guests ? `${b.guests.first_name} ${b.guests.last_name}` : 'Guest')}</div>
+                    <div className="text-xs text-[#64748b]">{prop?.name} · Checkout {b.check_out_date ?? b.check_out}</div>
                   </div>
                   <StatusBadge status={b.source} />
                   <StatusBadge status={b.status} />
                 </div>
               );
             })}
-            {departuresToday.map((b) => {
-              const prop = farmsteadProperties.find((p) => p.id === b.property_id);
+            {departuresToday.map((b: any) => {
+              const prop = properties.find((p: any) => p.id === b.property_id);
               return (
                 <div key={b.id + '-departure'} className="px-4 py-3 flex items-center gap-4">
                   <span className="text-[10px] font-bold bg-amber-500/10 text-amber-400 px-2 py-0.5 rounded tracking-widest">
@@ -151,7 +167,7 @@ export default function OperationsPage() {
                 <div className="px-4 py-4 text-xs text-[#374151] text-center">All clear</div>
               ) : (
                 <div className="divide-y divide-[#1e2028]">
-                  {catTasks.map((task) => (
+                  {catTasks.map((task: any) => (
                     <div key={task.id} className="px-4 py-3 flex items-center gap-3">
                       <div
                         className={`w-1 h-6 rounded-full flex-shrink-0 ${
@@ -165,7 +181,7 @@ export default function OperationsPage() {
                       <div className="flex-1 min-w-0">
                         <div className="text-xs font-medium text-[#f1f5f9] truncate">{task.title}</div>
                         <div className="text-[10px] text-[#64748b] mt-0.5">
-                          {farmsteadProperties.find((p) => p.id === task.property_id)?.name}
+                          {properties.find((p: any) => p.id === task.property_id)?.name}
                         </div>
                       </div>
                       <div className="flex flex-col items-end gap-1">

@@ -1,9 +1,11 @@
 'use client';
-import { useState } from 'react';
-import { mockTasks, farmsteadProperties } from '@/lib/mock-data';
+import { useState, useEffect } from 'react';
+import { listTasks } from '@/lib/queries/tasks';
+import { listProperties } from '@/lib/queries/properties';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Plus, Wrench, Home, Star, DollarSign, CheckCircle, Search } from 'lucide-react';
-import type { Task } from '@/lib/types';
+
+const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
 
 const categoryIcons: Record<string, React.ReactNode> = {
   housekeeping: <Home className="w-3 h-3" />,
@@ -15,7 +17,7 @@ const categoryIcons: Record<string, React.ReactNode> = {
   operations: <Wrench className="w-3 h-3" />,
 };
 
-const columns: { key: Task['status']; label: string }[] = [
+const columns: { key: string; label: string }[] = [
   { key: 'open', label: 'Open' },
   { key: 'in_progress', label: 'In Progress' },
   { key: 'overdue', label: 'Overdue' },
@@ -35,15 +37,24 @@ function formatDue(due?: string) {
 export default function TasksPage() {
   const [propertyFilter, setPropertyFilter] = useState('All');
   const [categoryFilter, setCategoryFilter] = useState('All');
+  const [allTasks, setAllTasks] = useState<any[]>([]);
+  const [properties, setProperties] = useState<any[]>([]);
+  const [source, setSource] = useState<'live' | 'demo'>('demo');
 
-  const filtered = mockTasks.filter((t) => {
+  useEffect(() => {
+    Promise.all([listTasks(ORG_ID), listProperties(ORG_ID)])
+      .then(([t, p]) => { setAllTasks(t.rows); setProperties(p.rows); setSource(t.source); })
+      .catch(console.error);
+  }, []);
+
+  const filtered = allTasks.filter((t: any) => {
     if (propertyFilter !== 'All' && t.property_id !== propertyFilter) return false;
     if (categoryFilter !== 'All' && t.category !== categoryFilter) return false;
     return true;
   });
 
-  const byStatus = (status: Task['status']) =>
-    filtered.filter((t) => t.status === status);
+  const byStatus = (status: string) =>
+    filtered.filter((t: any) => t.status === status);
 
   return (
     <div className="space-y-6">
@@ -52,7 +63,7 @@ export default function TasksPage() {
         <div>
           <h2 className="text-base font-semibold text-[#f1f5f9]">Task Engine</h2>
           <p className="text-xs text-[#64748b] mt-0.5">
-            {mockTasks.filter((t) => t.status !== 'completed').length} active tasks across all properties
+            {allTasks.filter((t: any) => t.status !== 'completed').length} active tasks across all properties
           </p>
         </div>
         <button className="flex items-center gap-2 bg-[#3b82f6] text-white text-xs font-medium px-3 py-2 rounded hover:bg-[#2563eb] transition-colors">
@@ -69,7 +80,7 @@ export default function TasksPage() {
           className="bg-[#111318] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-1.5 outline-none focus:border-[#3b82f6]"
         >
           <option value="All">All Properties</option>
-          {farmsteadProperties.map((p) => (
+          {properties.map((p: any) => (
             <option key={p.id} value={p.id}>{p.name}</option>
           ))}
         </select>
@@ -87,7 +98,7 @@ export default function TasksPage() {
 
       {/* Kanban */}
       <div className="grid grid-cols-4 gap-4">
-        {columns.map((col) => {
+        {columns.map((col: any) => {
           const tasks = byStatus(col.key);
           return (
             <div key={col.key} className="flex flex-col gap-3">
@@ -110,7 +121,7 @@ export default function TasksPage() {
               </div>
 
               {/* Task Cards */}
-              {tasks.map((task) => (
+              {tasks.map((task: any) => (
                 <div
                   key={task.id}
                   className={`bg-[#111318] border rounded-lg p-3 cursor-pointer hover:border-[#2d3142] transition-colors ${
@@ -130,7 +141,7 @@ export default function TasksPage() {
                     <p className="text-xs font-medium text-[#f1f5f9] leading-relaxed">{task.title}</p>
                   </div>
                   <div className="text-[10px] text-[#64748b] mb-2">
-                    {farmsteadProperties.find((p) => p.id === task.property_id)?.name}
+                    {properties.find((p: any) => p.id === task.property_id)?.name}
                   </div>
                   <div className="flex items-center justify-between">
                     <StatusBadge status={task.priority} />

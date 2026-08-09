@@ -1,11 +1,11 @@
+'use client';
+import { useState, useEffect } from 'react';
 import { MetricTile } from '@/components/ui/metric-tile';
 import { StatusBadge } from '@/components/ui/status-badge';
-import {
-  mockMetrics,
-  mockBookings,
-  mockTasks,
-  farmsteadProperties,
-} from '@/lib/mock-data';
+import { mockMetrics } from '@/lib/mock-data';
+import { listBookings } from '@/lib/queries/bookings';
+import { listTasks } from '@/lib/queries/tasks';
+import { listProperties } from '@/lib/queries/properties';
 import {
   AlertTriangle,
   ArrowRight,
@@ -14,13 +14,26 @@ import {
   Bot,
 } from 'lucide-react';
 
+const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 export default function DashboardPage() {
+  const [bookings, setBookings] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [properties, setProperties] = useState<any[]>([]);
+  const [dataSource, setDataSource] = useState<'live' | 'demo'>('demo');
+
+  useEffect(() => {
+    Promise.all([listBookings(ORG_ID), listTasks(ORG_ID), listProperties(ORG_ID)])
+      .then(([b, t, p]) => { setBookings(b.rows); setTasks(t.rows); setProperties(p.rows); setDataSource(b.source); })
+      .catch(console.error);
+  }, []);
+
   const today = new Date().toISOString().split('T')[0];
-  const arrivalsToday = mockBookings.filter((b) => b.check_in === today);
-  const departuresToday = mockBookings.filter((b) => b.check_out === today);
-  const overdueTasks = mockTasks.filter((t) => t.status === 'overdue');
-  const openTasks = mockTasks.filter(
-    (t) => t.status === 'open' || t.status === 'in_progress'
+  const arrivalsToday = bookings.filter((b: any) => (b.check_in_date ?? b.check_in) === today);
+  const departuresToday = bookings.filter((b: any) => (b.check_out_date ?? b.check_out) === today);
+  const overdueTasks = tasks.filter((t: any) => t.status === 'overdue');
+  const openTasks = tasks.filter(
+    (t: any) => t.status === 'open' || t.status === 'in_progress'
   );
 
   return (
@@ -57,17 +70,6 @@ export default function DashboardPage() {
           subValue="avg daily rate"
         />
         <MetricTile
-          label="RevPAR"
-          value={`R${mockMetrics.revpar.toLocaleString()}`}
-          subValue="revenue per room"
-        />
-        <MetricTile
-          label="Avg Rating"
-          value={mockMetrics.avg_rating}
-          unit="/ 5"
-          variant="success"
-        />
-        <MetricTile
           label="Open Tasks"
           value={openTasks.length}
           variant={openTasks.length > 5 ? 'warning' : 'default'}
@@ -78,9 +80,20 @@ export default function DashboardPage() {
           variant={overdueTasks.length > 0 ? 'critical' : 'default'}
         />
         <MetricTile
+          label="Avg Rating"
+          value={mockMetrics.avg_rating}
+          unit="/ 5"
+          variant="success"
+        />
+        <MetricTile
           label="Arrivals Today"
-          value={mockMetrics.arrivals_today}
+          value={arrivalsToday.length}
           subValue="properties"
+        />
+        <MetricTile
+          label="Active Bookings"
+          value={bookings.filter((b: any) => b.status === 'checked_in' || b.status === 'confirmed').length}
+          subValue={dataSource === 'live' ? '● live' : '⬛ demo'}
         />
         <MetricTile
           label="Rev This Month"
@@ -100,18 +113,18 @@ export default function DashboardPage() {
             <span className="text-xs text-[#64748b]">4 active</span>
           </div>
           <div className="divide-y divide-[#1e2028]">
-            {farmsteadProperties.map((p) => {
-              const pBookings = mockBookings.filter(
-                (b) => b.property_id === p.id
+            {properties.map((p: any) => {
+              const pBookings = bookings.filter(
+                (b: any) => b.property_id === p.id
               );
               const currentBooking = pBookings.find(
-                (b) => b.status === 'checked_in'
+                (b: any) => b.status === 'checked_in'
               );
               const nextBooking = pBookings
-                .filter((b) => b.status === 'confirmed')
-                .sort((a, b) => a.check_in.localeCompare(b.check_in))[0];
-              const pTasks = mockTasks.filter(
-                (t) => t.property_id === p.id && t.status !== 'completed'
+                .filter((b: any) => b.status === 'confirmed')
+                .sort((a: any, b: any) => (a.check_in_date ?? a.check_in).localeCompare(b.check_in_date ?? b.check_in))[0];
+              const pTasks = tasks.filter(
+                (t: any) => t.property_id === p.id && t.status !== 'completed'
               );
               const hasOverdue = pTasks.some((t) => t.status === 'overdue');
               return (
@@ -127,15 +140,15 @@ export default function DashboardPage() {
                     </div>
                     <div className="text-xs text-[#64748b] mt-0.5">
                       {currentBooking
-                        ? `${currentBooking.guest_name} · until ${new Date(
-                            currentBooking.check_out
+                        ? `${currentBooking.guest_name ?? (currentBooking.guests ? `${currentBooking.guests.first_name} ${currentBooking.guests.last_name}` : 'Guest')} · until ${new Date(
+                            currentBooking.check_out_date ?? currentBooking.check_out
                           ).toLocaleDateString('en-ZA', {
                             day: 'numeric',
                             month: 'short',
                           })}`
                         : nextBooking
-                        ? `Next: ${nextBooking.guest_name} · ${new Date(
-                            nextBooking.check_in
+                        ? `Next: ${nextBooking.guest_name ?? (nextBooking.guests ? `${nextBooking.guests.first_name} ${nextBooking.guests.last_name}` : 'Guest')} · ${new Date(
+                            nextBooking.check_in_date ?? nextBooking.check_in
                           ).toLocaleDateString('en-ZA', {
                             day: 'numeric',
                             month: 'short',
@@ -234,8 +247,8 @@ export default function DashboardPage() {
             </h2>
           </div>
           {[
-            ...arrivalsToday.map((b) => ({ ...b, movType: 'ARRIVAL' })),
-            ...departuresToday.map((b) => ({ ...b, movType: 'DEPARTURE' })),
+            ...arrivalsToday.map((b: any) => ({ ...b, movType: 'ARRIVAL' })),
+            ...departuresToday.map((b: any) => ({ ...b, movType: 'DEPARTURE' })),
           ].length === 0 ? (
             <div className="px-4 py-6 text-center text-sm text-[#64748b]">
               No arrivals or departures today
@@ -243,12 +256,12 @@ export default function DashboardPage() {
           ) : (
             <div className="divide-y divide-[#1e2028]">
               {[
-                ...arrivalsToday.map((b) => ({ ...b, movType: 'ARRIVAL' })),
-                ...departuresToday.map((b) => ({
+                ...arrivalsToday.map((b: any) => ({ ...b, movType: 'ARRIVAL' })),
+                ...departuresToday.map((b: any) => ({
                   ...b,
                   movType: 'DEPARTURE',
                 })),
-              ].map((b) => (
+              ].map((b: any) => (
                 <div
                   key={b.id + b.movType}
                   className="px-4 py-3 flex items-center gap-3"
@@ -264,10 +277,10 @@ export default function DashboardPage() {
                   </span>
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium text-[#f1f5f9] truncate">
-                      {b.guest_name ?? 'Guest'}
+                      {b.guest_name ?? (b.guests ? `${b.guests.first_name} ${b.guests.last_name}` : 'Guest')}
                     </div>
                     <div className="text-xs text-[#64748b]">
-                      {farmsteadProperties.find((p) => p.id === b.property_id)
+                      {properties.find((p: any) => p.id === b.property_id)
                         ?.name}
                     </div>
                   </div>
@@ -286,10 +299,10 @@ export default function DashboardPage() {
             </h2>
           </div>
           <div className="divide-y divide-[#1e2028]">
-            {mockTasks
-              .filter((t) => t.status !== 'completed')
+            {tasks
+              .filter((t: any) => t.status !== 'completed')
               .slice(0, 5)
-              .map((task) => (
+              .map((task: any) => (
                 <div key={task.id} className="px-4 py-3 flex items-center gap-3">
                   <div
                     className={`w-1 h-8 rounded-full flex-shrink-0 ${
@@ -306,8 +319,8 @@ export default function DashboardPage() {
                     </div>
                     <div className="text-[10px] text-[#64748b] mt-0.5">
                       {
-                        farmsteadProperties.find(
-                          (p) => p.id === task.property_id
+                        properties.find(
+                          (p: any) => p.id === task.property_id
                         )?.name
                       }
                     </div>

@@ -1,25 +1,45 @@
+'use client';
+import { useEffect, useState } from 'react';
 import { notFound } from 'next/navigation';
-import { brainEntries, farmsteadProperties, mockBookings, mockReviews, mockTasks } from '@/lib/mock-data';
+import { getPropertyWithStats } from '@/lib/queries/properties';
+import { listReviews } from '@/lib/queries/reviews';
+import { listBrainEntries } from '@/lib/queries/brain';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { BookOpen, CalendarDays, ClipboardCheck, Wrench } from 'lucide-react';
 
-export default async function PropertyDetailPage({
+export default function PropertyDetailPage({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }) {
-  const { id } = await params;
-  const property = farmsteadProperties.find((item) => item.id === id);
+  const id = params.id;
+  const [property, setProperty] = useState<any>(null);
+  const [bookings, setBookings] = useState<any[]>([]);
+  const [tasks, setTasks] = useState<any[]>([]);
+  const [reviews, setReviews] = useState<any[]>([]);
+  const [entries, setEntries] = useState<any[]>([]);
+  const [source, setSource] = useState<'live' | 'demo'>('demo');
+
+  useEffect(() => {
+    Promise.all([
+      getPropertyWithStats(id),
+      listReviews('a1b2c3d4-0001-0001-0001-000000000001'),
+      listBrainEntries('a1b2c3d4-0001-0001-0001-000000000001', id),
+    ]).then(([ps, rv, br]) => {
+      setProperty(ps.property);
+      setBookings(ps.bookings);
+      setTasks(ps.tasks);
+      setReviews(rv.rows.filter((r: any) => r.property_id === id));
+      setEntries(br.rows);
+      setSource(ps.source);
+    }).catch(console.error);
+  }, [id]);
 
   if (!property) {
-    notFound();
+    return <div className="p-6 text-[#617089] text-sm">Loading…</div>;
   }
 
-  const bookings = mockBookings.filter((booking) => booking.property_id === property.id);
-  const tasks = mockTasks.filter((task) => task.property_id === property.id);
-  const reviews = mockReviews.filter((review) => review.property_id === property.id);
-  const entries = brainEntries.filter((entry) => entry.property_id === property.id);
-  const revenue = bookings.reduce((sum, booking) => sum + (booking.total_amount ?? 0), 0);
+  const revenue = bookings.reduce((sum: number, b: any) => sum + (b.total_amount ?? 0), 0);
 
   return (
     <div className="space-y-6">
@@ -55,7 +75,7 @@ export default async function PropertyDetailPage({
             Operations
           </div>
           <div className="divide-y divide-white/10">
-            {tasks.map((task) => (
+            {tasks.map((task: any) => (
               <div key={task.id} className="flex items-center justify-between gap-3 px-4 py-3">
                 <div>
                   <div className="text-sm text-[#E6EDF5]">{task.title}</div>
@@ -72,7 +92,7 @@ export default async function PropertyDetailPage({
             Guest Experience
           </div>
           <div className="divide-y divide-white/10">
-            {reviews.map((review) => (
+            {reviews.map((review: any) => (
               <div key={review.id} className="px-4 py-3">
                 <div className="flex items-center justify-between">
                   <div className="font-mono text-sm text-[#E6EDF5]">{review.rating}/5</div>
@@ -94,15 +114,15 @@ export default async function PropertyDetailPage({
           <div>
             <div className="text-xs font-semibold text-[#E6EDF5]">Booking Sources</div>
             <div className="mt-3 flex flex-wrap gap-2">
-              {[...new Set(bookings.map((booking) => booking.source))].map((source) => (
-                <StatusBadge key={source} status={source} />
+              {[...new Set(bookings.map((booking: any) => booking.source))].map((src) => (
+                <StatusBadge key={src as string} status={src as string} />
               ))}
             </div>
           </div>
           <div>
             <div className="text-xs font-semibold text-[#E6EDF5]">Brain Entries</div>
             <div className="mt-3 space-y-2">
-              {entries.map((entry) => (
+              {entries.map((entry: any) => (
                 <div key={entry.id} className="rounded border border-white/10 bg-[#020912] px-3 py-2">
                   <div className="text-xs text-[#E6EDF5]">{entry.title}</div>
                   <div className="mt-1 text-[10px] uppercase tracking-widest text-[#617089]">

@@ -1,8 +1,11 @@
 'use client';
-import { useState } from 'react';
-import { mockGuests, mockBookings, farmsteadProperties } from '@/lib/mock-data';
+import { useState, useEffect } from 'react';
+import { listGuests } from '@/lib/queries/guests';
+import { listProperties } from '@/lib/queries/properties';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Users, Search } from 'lucide-react';
+
+const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
 
 function formatDate(d?: string) {
   if (!d) return '—';
@@ -11,8 +14,14 @@ function formatDate(d?: string) {
 
 export default function GuestsPage() {
   const [search, setSearch] = useState('');
+  const [guests, setGuests] = useState<any[]>([]);
+  const [source, setSource] = useState<'live' | 'demo'>('demo');
 
-  const filtered = mockGuests.filter((g) => {
+  useEffect(() => {
+    listGuests(ORG_ID).then(r => { setGuests(r.rows); setSource(r.source); }).catch(console.error);
+  }, []);
+
+  const filtered = guests.filter((g: any) => {
     const q = search.toLowerCase();
     return (
       !q ||
@@ -28,7 +37,7 @@ export default function GuestsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-base font-semibold text-[#f1f5f9]">Guest CRM</h2>
-          <p className="text-xs text-[#64748b] mt-0.5">{mockGuests.length} guest profiles</p>
+          <p className="text-xs text-[#64748b] mt-0.5">{guests.length} guest profiles</p>
         </div>
         <div className="flex items-center gap-2 bg-[#111318] border border-[#1e2028] rounded px-3 py-1.5">
           <Search className="w-3 h-3 text-[#64748b]" />
@@ -56,16 +65,8 @@ export default function GuestsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-[#1e2028]">
-            {filtered.map((g) => {
-              const guestBookings = mockBookings.filter(
-                (b) =>
-                  b.guest_name?.toLowerCase().includes((g.first_name ?? '').toLowerCase())
-              );
-              const preferredPropertyId =
-                guestBookings.length > 0 ? guestBookings[0].property_id : undefined;
-              const preferredProperty = farmsteadProperties.find(
-                (p) => p.id === preferredPropertyId
-              );
+            {filtered.map((g: any) => {
+              const preferredProperty = undefined;
 
               return (
                 <tr key={g.id} className="hover:bg-[#161b22] transition-colors cursor-pointer">
