@@ -112,7 +112,7 @@ export default function ReviewsPage() {
 
                   {review.topics && review.topics.length > 0 && (
                     <div className="flex flex-wrap gap-1 mt-2">
-                      {review.topics.map((t) => (
+                      {review.topics.map((t: string) => (
                         <span
                           key={t}
                           className="text-[10px] bg-[#161b22] border border-[#1e2028] text-[#64748b] px-2 py-0.5 rounded"

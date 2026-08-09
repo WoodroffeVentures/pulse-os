@@ -66,8 +66,6 @@ export default function GuestsPage() {
           </thead>
           <tbody className="divide-y divide-[#1e2028]">
             {filtered.map((g: any) => {
-              const preferredProperty = undefined;
-
               return (
                 <tr key={g.id} className="hover:bg-[#161b22] transition-colors cursor-pointer">
                   <td className="px-4 py-3">
@@ -103,7 +101,7 @@ export default function GuestsPage() {
                     {formatDate(g.last_stay_at)}
                   </td>
                   <td className="px-4 py-3 text-xs text-[#94a3b8]">
-                    {preferredProperty?.name ?? '—'}
+                    {(g.preferred_property_name as string | undefined) ?? '—'}
                   </td>
                   <td className="px-4 py-3 text-xs text-[#64748b] max-w-xs truncate">
                     {g.notes ?? '—'}
