@@ -2,7 +2,7 @@
   "framework": "nextjs",
   "buildCommand": "pnpm build",
   "devCommand": "pnpm dev",
-  "installCommand": "rm -f ../../pnpm-lock.yaml && pnpm install --no-frozen-lockfile",
+  "installCommand": "pnpm install --frozen-lockfile",
   "outputDirectory": ".next",
   "regions": ["lhr1"],
   "headers": [
