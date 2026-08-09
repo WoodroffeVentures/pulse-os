@@ -1,6 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
-import { notFound } from 'next/navigation';
+import { use, useEffect, useState } from 'react';
 import { getPropertyWithStats } from '@/lib/queries/properties';
 import { listReviews } from '@/lib/queries/reviews';
 import { listBrainEntries } from '@/lib/queries/brain';
@@ -10,9 +9,9 @@ import { BookOpen, CalendarDays, ClipboardCheck, Wrench } from 'lucide-react';
 export default function PropertyDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const id = params.id;
+  const { id } = use(params);
   const [property, setProperty] = useState<any>(null);
   const [bookings, setBookings] = useState<any[]>([]);
   const [tasks, setTasks] = useState<any[]>([]);
