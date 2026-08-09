@@ -32,6 +32,20 @@ export function isSupabaseConfigured(): boolean {
   return !!(url && key && !url.includes(PLACEHOLDER) && !key.includes(PLACEHOLDER));
 }
 
+// Returns the configured Supabase project ref (host subdomain), or null.
+export function getSupabaseProjectRef(): string | null {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  if (!url || url.includes(PLACEHOLDER)) return null;
+  try { return new URL(url).hostname.split('.')[0]; } catch { return null; }
+}
+
+// The permanent production project ref. Any other ref is staging/dev.
+export const PRODUCTION_PROJECT_REF = 'aqsegdzptwbyrasblrch';
+
+export function isProductionProject(): boolean {
+  return getSupabaseProjectRef() === PRODUCTION_PROJECT_REF;
+}
+
 // Google Places API key — server-only, never NEXT_PUBLIC_.
 // Returns undefined if not configured; callers must handle demo fallback.
 export function getGooglePlacesKey(): string | undefined {
