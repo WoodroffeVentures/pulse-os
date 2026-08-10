@@ -4,6 +4,7 @@
 -- Forward-only, idempotent via IF NOT EXISTS / DO $$ blocks
 -- =============================================================================
 
+
 -- ─── ENUMS ───────────────────────────────────────────────────────────────────
 
 DO $$ BEGIN
@@ -658,7 +659,7 @@ CREATE TABLE IF NOT EXISTS online_checkins (
   id                uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   reservation_id    uuid REFERENCES reservations(id) ON DELETE CASCADE NOT NULL UNIQUE,
   guest_id          uuid REFERENCES guests(id),
-  token             text UNIQUE DEFAULT encode(gen_random_bytes(24), 'hex'),
+  token             text UNIQUE DEFAULT replace(gen_random_uuid()::text || gen_random_uuid()::text, '-', ''),
   token_expires_at  timestamptz DEFAULT now() + interval '7 days',
   submitted_at      timestamptz,
   verified_at       timestamptz,

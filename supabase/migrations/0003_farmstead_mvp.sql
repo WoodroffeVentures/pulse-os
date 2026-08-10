@@ -48,9 +48,7 @@ create table if not exists brain_entries (
   tags text[] not null default '{}',
   guest_visible boolean not null default false,
   source text not null default 'manual',
-  search_vector tsvector generated always as (
-    to_tsvector('english', coalesce(title,'') || ' ' || coalesce(content,'') || ' ' || array_to_string(tags, ' '))
-  ) stored,
+  search_vector tsvector,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
@@ -212,6 +210,25 @@ end $$;
 
 create index if not exists idx_ical_feeds_property on ical_feeds(property_id, provider, enabled);
 create index if not exists idx_work_items_property_status on work_items(property_id, status, priority);
+-- Trigger-maintained tsvector (generated column not usable: to_tsvector is STABLE not IMMUTABLE)
+create or replace function update_brain_entries_search_vector()
+  returns trigger language plpgsql set search_path = '' as $$
+begin
+  new.search_vector := to_tsvector('english',
+    coalesce(new.title,'') || ' ' ||
+    coalesce(new.content,'') || ' ' ||
+    array_to_string(new.tags, ' ')
+  );
+  return new;
+end;
+$$;
+
+drop trigger if exists trg_brain_entries_search on brain_entries;
+create trigger trg_brain_entries_search
+  before insert or update of title, content, tags
+  on brain_entries
+  for each row execute function update_brain_entries_search_vector();
+
 create index if not exists idx_brain_entries_search on brain_entries using gin(search_vector);
 create index if not exists idx_guest_communications_guest on guest_communications(guest_id, created_at desc);
 create index if not exists idx_guest_notes_guest on guest_notes(guest_id, created_at desc);
