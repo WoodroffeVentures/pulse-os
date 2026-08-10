@@ -8,12 +8,13 @@
 
 | Component | Value |
 |-----------|-------|
-| Production URL | https://pulse-os-web-wine.vercel.app |
-| Vercel project | `prj_kxZlZOrHXEOMOMFocYcDlE54wlh6` |
+| Production URL | https://pulse-os-steel.vercel.app |
+| Vercel project | `pulse-os` (prj_08iVFhvGpXcxoqA8xh0AvVUrqE0c, 1pulse.os@gmail.com) |
 | Production Supabase project | `aqsegdzptwbyrasblrch` (1pulse.os@gmail.com) |
+| Rollback URL | https://pulse-os-web-wine.vercel.app (Woodroffe Ventures account — untouched) |
 | Rollback Supabase project | `mrqgapyzsfgiolfqxyqk` (woodroffe.ventures@gmail.com) |
 | GitHub repo | https://github.com/WoodroffeVentures/pulse-os |
-| Release branch | `pilot/release-1` at commit `1813f82` |
+| GitHub release | `v1.0.0-pilot` at commit `a824fcd` |
 | Production branch | `main` |
 
 ---
@@ -24,7 +25,7 @@
 
 If a bad deployment reaches production:
 
-1. Open Vercel dashboard → pulse-os-web → Deployments
+1. Open Vercel dashboard (1pulse.os@gmail.com) → pulse-os → Deployments
 2. Find the last known-good deployment (note its commit SHA)
 3. Click "..." → "Promote to Production"
 4. Confirm — takes ~30 seconds, no downtime
@@ -72,6 +73,7 @@ The following credentials from prior sessions are known-compromised and must be 
 
 1. **GitHub PAT (prefix: ghp_uRmvk5K…)** — revoke at https://github.com/settings/tokens — value not repeated here
 2. **Service role key exposed in prior conversation** — rotate at Supabase dashboard → Settings → API → Reset service_role key (old project `mrqgapyzsfgiolfqxyqk`)
+3. **Supabase PAT (PULSE CLI token, sbp_98e8dc…)** — appeared in chat during this session; revoke manually at https://supabase.com/dashboard/account/tokens (sign in as `1pulse.os@gmail.com`) — value not repeated here
 
 The new project `aqsegdzptwbyrasblrch` service role key must never appear in any conversation, commit, log, or client bundle.
 
