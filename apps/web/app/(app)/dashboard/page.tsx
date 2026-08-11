@@ -13,20 +13,21 @@ import {
   ClipboardList,
   Bot,
 } from 'lucide-react';
-
-const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+import { useOrg } from '@/lib/context/org-context';
 
 export default function DashboardPage() {
+  const { orgId } = useOrg();
   const [bookings, setBookings] = useState<any[]>([]);
   const [tasks, setTasks] = useState<any[]>([]);
   const [properties, setProperties] = useState<any[]>([]);
   const [dataSource, setDataSource] = useState<'live' | 'demo'>('demo');
 
   useEffect(() => {
-    Promise.all([listBookings(ORG_ID), listTasks(ORG_ID), listProperties(ORG_ID)])
+    if (!orgId) return;
+    Promise.all([listBookings(orgId), listTasks(orgId), listProperties(orgId)])
       .then(([b, t, p]) => { setBookings(b.rows); setTasks(t.rows); setProperties(p.rows); setDataSource(b.source); })
       .catch(console.error);
-  }, []);
+  }, [orgId]);
 
   const today = new Date().toISOString().split('T')[0];
   const arrivalsToday = bookings.filter((b: any) => (b.check_in_date ?? b.check_in) === today);

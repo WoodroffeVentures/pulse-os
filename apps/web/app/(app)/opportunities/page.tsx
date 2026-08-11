@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import { listOpportunities, type OpportunityRow } from '@/lib/queries/opportunities';
 import { isSupabaseConfigured } from '@/lib/env';
+import { useOrg } from '@/lib/context/org-context';
 
 const STATUS_COLORS: Record<string, string> = {
   open: '#2BB8A5',
@@ -34,6 +35,7 @@ function StatusPill({ status }: { status: string }) {
 }
 
 export default function OpportunitiesPage() {
+  const { orgId } = useOrg();
   const [opps, setOpps] = useState<OpportunityRow[]>([]);
   const [source, setSource] = useState<'live' | 'demo'>('demo');
   const [loading, setLoading] = useState(true);
@@ -43,12 +45,12 @@ export default function OpportunitiesPage() {
   const [pitchResult, setPitchResult] = useState<string>('');
 
   useEffect(() => {
-    listOpportunities().then(({ rows, source }) => {
+    listOpportunities(orgId ?? undefined).then(({ rows, source }) => {
       setOpps(rows);
       setSource(source);
       setLoading(false);
     }).catch(() => setLoading(false));
-  }, []);
+  }, [orgId]);
 
   async function submitPitch(e: React.FormEvent) {
     e.preventDefault();
@@ -67,7 +69,7 @@ export default function OpportunitiesPage() {
       if (res.ok) {
         setPitchResult(`Pitch submitted. Viability score: ${data.viability?.score ?? '—'}`);
         setShowPitchForm(false);
-        listOpportunities().then(({ rows, source }) => { setOpps(rows); setSource(source); });
+        listOpportunities(orgId ?? undefined).then(({ rows, source }) => { setOpps(rows); setSource(source); });
       } else {
         setPitchResult(data.error ?? 'Submission failed.');
       }
