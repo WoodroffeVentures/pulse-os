@@ -2,6 +2,7 @@
 -- Without this, no authenticated user can add property staff even with org_owner role.
 -- Org owners and group managers may add users to properties within their organisation.
 
+DROP POLICY IF EXISTS property_users_insert ON property_users;
 CREATE POLICY property_users_insert ON property_users
   FOR INSERT
   WITH CHECK (
