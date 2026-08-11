@@ -4,9 +4,10 @@ import { listReviews } from '@/lib/queries/reviews';
 import { listProperties } from '@/lib/queries/properties';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { MetricTile } from '@/components/ui/metric-tile';
+import { useOrg } from '@/lib/context/org-context';
 import { Star, ChevronDown, ChevronUp, Bot } from 'lucide-react';
 
-const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -25,16 +26,18 @@ function StarRating({ rating }: { rating: number }) {
 }
 
 export default function ReviewsPage() {
+  const { orgId } = useOrg();
   const [expandedDraft, setExpandedDraft] = useState<string | null>(null);
   const [reviews, setReviews] = useState<any[]>([]);
   const [properties, setProperties] = useState<any[]>([]);
   const [source, setSource] = useState<'live' | 'demo'>('demo');
 
   useEffect(() => {
-    Promise.all([listReviews(ORG_ID), listProperties(ORG_ID)])
+    if (!orgId) return;
+    Promise.all([listReviews(orgId), listProperties(orgId)])
       .then(([r, p]) => { setReviews(r.rows); setProperties(p.rows); setSource(r.source); })
       .catch(console.error);
-  }, []);
+  }, [orgId]);
 
   const avgRating = reviews.length
     ? reviews.reduce((sum: number, r: any) => sum + r.rating, 0) / reviews.length

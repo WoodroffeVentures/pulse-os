@@ -5,26 +5,43 @@ import { StatusBadge } from '@/components/ui/status-badge';
 import { listBookings } from '@/lib/queries/bookings';
 import { listTasks } from '@/lib/queries/tasks';
 import { listProperties } from '@/lib/queries/properties';
-import { AlertTriangle, ArrowRight, Calendar, ClipboardList, Building2 } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import { AlertTriangle, ArrowRight, Calendar, ClipboardList, Building2, CheckCircle2, Circle } from 'lucide-react';
 import { useOrg } from '@/lib/context/org-context';
 
 export default function DashboardPage() {
   const { orgId, orgName, loading: orgLoading } = useOrg();
+  const supabase = createClient();
   const [bookings, setBookings] = useState<any[]>([]);
   const [tasks, setTasks] = useState<any[]>([]);
   const [properties, setProperties] = useState<any[]>([]);
+  const [pulse, setPulse] = useState({ businesses: 0, opportunities: 0, viability: 0, participation: 0, outcomes: 0 });
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     if (!orgId) return;
-    Promise.all([listBookings(orgId), listTasks(orgId), listProperties(orgId)])
-      .then(([b, t, p]) => {
-        setBookings(b.rows);
-        setTasks(t.rows);
-        setProperties(p.rows);
-        setLoaded(true);
-      })
-      .catch(console.error);
+    Promise.all([
+      listBookings(orgId),
+      listTasks(orgId),
+      listProperties(orgId),
+      supabase.from('business_profiles').select('id', { count: 'exact', head: true }).eq('organization_id', orgId),
+      supabase.from('opportunities').select('id', { count: 'exact', head: true }).eq('organization_id', orgId),
+      supabase.from('viability_analyses').select('id', { count: 'exact', head: true }).eq('organization_id', orgId),
+      supabase.from('participation_records').select('id,evidence', { count: 'exact' }).eq('organization_id', orgId),
+    ]).then(([b, t, p, bizRes, oppRes, vaRes, partRes]) => {
+      setBookings(b.rows);
+      setTasks(t.rows);
+      setProperties(p.rows);
+      const allOutcomes = (partRes.data ?? []).flatMap((r: any) => r.evidence?.outcomes ?? []);
+      setPulse({
+        businesses: bizRes.count ?? 0,
+        opportunities: oppRes.count ?? 0,
+        viability: vaRes.count ?? 0,
+        participation: partRes.count ?? 0,
+        outcomes: allOutcomes.length,
+      });
+      setLoaded(true);
+    }).catch(console.error);
   }, [orgId]);
 
   if (orgLoading) return <div className="p-6 text-[#617089] text-sm">Loading…</div>;
@@ -199,6 +216,35 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+
+      {/* Onboarding Progress */}
+      {loaded && (
+        <div className="bg-[#08111f] border border-white/10 rounded-xl p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <ClipboardList className="w-3.5 h-3.5 text-[#C6A66B]" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#C6A66B]">Pilot Readiness</span>
+          </div>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+            {[
+              { label: 'Properties', done: properties.length > 0, href: '/properties' },
+              { label: 'Business Profile', done: pulse.businesses > 0, href: '/businesses' },
+              { label: 'Opportunity', done: pulse.opportunities > 0, href: '/opportunities' },
+              { label: 'Viability Assessment', done: pulse.viability > 0, href: '/viability' },
+              { label: 'Participation Record', done: pulse.participation > 0, href: '/participation' },
+              { label: 'Outcome Recorded', done: pulse.outcomes > 0, href: '/outcomes' },
+            ].map(step => (
+              <a key={step.label} href={step.href}
+                className={`flex flex-col items-center gap-1.5 p-3 rounded-lg border text-center transition-colors ${step.done ? 'border-emerald-500/20 bg-emerald-500/5' : 'border-white/10 hover:border-[#C6A66B]/30'}`}>
+                {step.done
+                  ? <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  : <Circle className="w-4 h-4 text-[#374151]" />
+                }
+                <span className={`text-[10px] font-medium leading-tight ${step.done ? 'text-emerald-400' : 'text-[#617089]'}`}>{step.label}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="text-[9px] text-[#374151] text-center tracking-widest py-2">
         ALL METRICS FROM {orgName?.toUpperCase() ?? 'YOUR'} PRODUCTION DATABASE · HUMANS GOVERN · EVIDENCE DECIDES

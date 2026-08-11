@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react';
 import { listGuests } from '@/lib/queries/guests';
 import { listProperties } from '@/lib/queries/properties';
 import { StatusBadge } from '@/components/ui/status-badge';
+import { useOrg } from '@/lib/context/org-context';
 import { Users, Search } from 'lucide-react';
 
-const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 
 function formatDate(d?: string) {
   if (!d) return '—';
@@ -13,12 +14,13 @@ function formatDate(d?: string) {
 }
 
 export default function GuestsPage() {
+  const { orgId } = useOrg();
   const [search, setSearch] = useState('');
   const [guests, setGuests] = useState<any[]>([]);
   const [source, setSource] = useState<'live' | 'demo'>('demo');
 
   useEffect(() => {
-    listGuests(ORG_ID).then(r => { setGuests(r.rows); setSource(r.source); }).catch(console.error);
+    listGuests(orgId ?? '').then(r => { setGuests(r.rows); setSource(r.source); }).catch(console.error);
   }, []);
 
   const filtered = guests.filter((g: any) => {

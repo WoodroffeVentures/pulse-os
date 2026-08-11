@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react';
 import { listBookings } from '@/lib/queries/bookings';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Calendar, Plus, RefreshCw, CheckCircle2, AlertCircle, Clock } from 'lucide-react';
+import { useOrg } from '@/lib/context/org-context';
 
-const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 
 const icalSources = [
   {
@@ -47,6 +48,7 @@ function formatDate(d: string) {
 }
 
 export default function BookingsPage() {
+  const { orgId } = useOrg();
   const [statusFilter, setStatusFilter] = useState('All');
   const [sourceFilter, setSourceFilter] = useState('All');
   const [propertyFilter, setPropertyFilter] = useState('All');
@@ -55,7 +57,7 @@ export default function BookingsPage() {
   const [source, setSource] = useState<'live' | 'demo'>('demo');
 
   useEffect(() => {
-    listBookings(ORG_ID).then(r => { setAllBookings(r.rows); setProperties(r.properties as any[]); setSource(r.source); }).catch(console.error);
+    listBookings(orgId ?? '').then(r => { setAllBookings(r.rows); setProperties(r.properties as any[]); setSource(r.source); }).catch(console.error);
   }, []);
 
   const filtered = allBookings.filter((b: any) => {

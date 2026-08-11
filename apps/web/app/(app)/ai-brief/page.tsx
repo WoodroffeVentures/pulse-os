@@ -6,16 +6,18 @@ import { listTasks } from '@/lib/queries/tasks';
 import { listReviews } from '@/lib/queries/reviews';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Bot, ShieldAlert } from 'lucide-react';
+import { useOrg } from '@/lib/context/org-context';
 
-const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 
 export default function AiBriefPage() {
+  const { orgId } = useOrg();
   const [bookings, setBookings] = useState<any[]>([]);
   const [tasks, setTasks] = useState<any[]>([]);
   const [reviews, setReviews] = useState<any[]>([]);
 
   useEffect(() => {
-    Promise.all([listBookings(ORG_ID), listTasks(ORG_ID), listReviews(ORG_ID)])
+    Promise.all([listBookings(orgId ?? ''), listTasks(orgId ?? ''), listReviews(orgId ?? '')])
       .then(([b, t, r]) => { setBookings(b.rows); setTasks(t.rows); setReviews(r.rows); })
       .catch(console.error);
   }, []);

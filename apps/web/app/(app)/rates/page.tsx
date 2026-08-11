@@ -4,9 +4,8 @@ import { listProperties } from '@/lib/queries/properties';
 import { listRoomTypes, listRatePlans, type RoomType, type RatePlan } from '@/lib/queries/reservations';
 import { createClient } from '@/lib/supabase/client';
 import { isSupabaseConfigured } from '@/lib/env';
+import { useOrg } from '@/lib/context/org-context';
 import { ChevronLeft, ChevronRight, Save, Lock, Unlock, TrendingUp } from 'lucide-react';
-
-const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
 
 function fmt(d: Date) { return d.toISOString().split('T')[0]; }
 function addDays(d: Date, n: number) { const r = new Date(d); r.setDate(r.getDate() + n); return r; }
@@ -24,6 +23,7 @@ function buildDemoRates(roomTypeId: string, ratePlanId: string, days: Date[]) {
 }
 
 export default function RatesPage() {
+  const { orgId } = useOrg();
   const [properties, setProperties] = useState<any[]>([]);
   const [selectedProperty, setSelectedProperty] = useState<string>('');
   const [roomTypes, setRoomTypes] = useState<RoomType[]>([]);
@@ -41,7 +41,8 @@ export default function RatesPage() {
   const dateColumns = Array.from({ length: viewDays }, (_, i) => addDays(viewStart, i));
 
   useEffect(() => {
-    listProperties(ORG_ID).then((r) => {
+    if (!orgId) return;
+    listProperties(orgId).then((r) => {
       setProperties(r.rows);
       if (r.rows.length > 0) setSelectedProperty(r.rows[0].id);
     }).catch(console.error);

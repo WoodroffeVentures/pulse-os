@@ -126,6 +126,29 @@ export async function createReservation(payload: Partial<Reservation>) {
     throw new Error('Supabase not configured — cannot create reservation in demo mode');
   }
   const supabase = createClient();
+
+  // Overlap check: reject if a confirmed/checked-in reservation already exists for
+  // the same property and unit (if provided) within the requested date range.
+  if (payload.property_id && payload.check_in_date && payload.check_out_date) {
+    let overlapQ = supabase
+      .from('reservations')
+      .select('id', { count: 'exact', head: true })
+      .eq('property_id', payload.property_id)
+      .in('status', ['confirmed', 'deposit_paid', 'fully_paid', 'checked_in'])
+      .lt('check_in_date', payload.check_out_date)
+      .gt('check_out_date', payload.check_in_date);
+    if (payload.unit_id) overlapQ = overlapQ.eq('unit_id', payload.unit_id);
+    const { count, error: overlapErr } = await overlapQ;
+    if (overlapErr) throw new Error(overlapErr.message);
+    if ((count ?? 0) > 0) {
+      throw new Error(
+        'Booking conflict: a confirmed reservation already exists for this property' +
+        (payload.unit_id ? '/unit' : '') +
+        ' within the selected dates. Adjust dates or select a different unit.'
+      );
+    }
+  }
+
   const nights = Math.max(1,
     (new Date(payload.check_out_date!).getTime() - new Date(payload.check_in_date!).getTime())
     / 86400000

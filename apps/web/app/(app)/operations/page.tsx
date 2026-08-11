@@ -5,9 +5,10 @@ import { listBookings } from '@/lib/queries/bookings';
 import { listProperties } from '@/lib/queries/properties';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { MetricTile } from '@/components/ui/metric-tile';
+import { useOrg } from '@/lib/context/org-context';
 import { AlertTriangle, Wrench, Home, Star, Search, CalendarCheck } from 'lucide-react';
 
-const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 
 const categoryIcons: Record<string, React.ReactNode> = {
   housekeeping: <Home className="w-4 h-4" />,
@@ -26,12 +27,13 @@ const categoryColors: Record<string, string> = {
 };
 
 export default function OperationsPage() {
+  const { orgId } = useOrg();
   const [allTasks, setAllTasks] = useState<any[]>([]);
   const [allBookings, setAllBookings] = useState<any[]>([]);
   const [properties, setProperties] = useState<any[]>([]);
 
   useEffect(() => {
-    Promise.all([listTasks(ORG_ID), listBookings(ORG_ID), listProperties(ORG_ID)])
+    Promise.all([listTasks(orgId ?? ''), listBookings(orgId ?? ''), listProperties(orgId ?? '')])
       .then(([t, b, p]) => { setAllTasks(t.rows); setAllBookings(b.rows); setProperties(p.rows); })
       .catch(console.error);
   }, []);

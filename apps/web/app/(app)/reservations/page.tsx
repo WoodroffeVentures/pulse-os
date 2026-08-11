@@ -2,9 +2,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { listReservations, listRoomTypes, type Reservation, type RoomType } from '@/lib/queries/reservations';
 import { listProperties } from '@/lib/queries/properties';
+import { useOrg } from '@/lib/context/org-context';
 import { ChevronLeft, ChevronRight, Plus, X, Calendar, Users, DollarSign, Clock } from 'lucide-react';
-
-const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
 
 const STATUS_COLORS: Record<string, string> = {
   confirmed:    'bg-blue-500/80 border-blue-400/50 text-white',
@@ -43,6 +42,7 @@ function nightCount(ci: string, co: string) {
 }
 
 export default function ReservationCalendarPage() {
+  const { orgId } = useOrg();
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [roomTypes, setRoomTypes] = useState<RoomType[]>([]);
   const [properties, setProperties] = useState<any[]>([]);
@@ -56,7 +56,8 @@ export default function ReservationCalendarPage() {
   const [isNewOpen, setIsNewOpen] = useState(false);
 
   useEffect(() => {
-    Promise.all([listReservations(), listProperties(ORG_ID)])
+    if (!orgId) return;
+    Promise.all([listReservations(), listProperties(orgId)])
       .then(([res, props]) => {
         setReservations(res.rows as Reservation[]);
         setSource(res.source);

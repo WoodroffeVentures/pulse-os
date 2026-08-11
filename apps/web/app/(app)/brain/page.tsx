@@ -5,17 +5,19 @@ import { listBrainEntries } from '@/lib/queries/brain';
 import { listProperties } from '@/lib/queries/properties';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { Search } from 'lucide-react';
+import { useOrg } from '@/lib/context/org-context';
 
-const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 
 export default function BrainPage() {
+  const { orgId } = useOrg();
   const [query, setQuery] = useState('');
   const [entries, setEntries] = useState<any[]>([]);
   const [properties, setProperties] = useState<any[]>([]);
   const [source, setSource] = useState<'live' | 'demo'>('demo');
 
   useEffect(() => {
-    Promise.all([listBrainEntries(ORG_ID), listProperties(ORG_ID)])
+    Promise.all([listBrainEntries(orgId ?? ''), listProperties(orgId ?? '')])
       .then(([b, p]) => { setEntries(b.rows); setProperties(p.rows); setSource(b.source); })
       .catch(console.error);
   }, []);

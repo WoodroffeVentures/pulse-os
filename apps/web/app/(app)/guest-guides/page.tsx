@@ -2,20 +2,21 @@
 import { useState, useEffect } from 'react';
 import { listBrainEntries } from '@/lib/queries/brain';
 import { listProperties } from '@/lib/queries/properties';
+import { useOrg } from '@/lib/context/org-context';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { BookOpen } from 'lucide-react';
 
-const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
-
 export default function GuestGuidesPage() {
+  const { orgId } = useOrg();
   const [brainEntries, setBrainEntries] = useState<any[]>([]);
   const [properties, setProperties] = useState<any[]>([]);
 
   useEffect(() => {
-    Promise.all([listBrainEntries(ORG_ID), listProperties(ORG_ID)])
+    if (!orgId) return;
+    Promise.all([listBrainEntries(orgId), listProperties(orgId)])
       .then(([b, p]) => { setBrainEntries(b.rows); setProperties(p.rows); })
       .catch(console.error);
-  }, []);
+  }, [orgId]);
 
   return (
     <div className="space-y-6">

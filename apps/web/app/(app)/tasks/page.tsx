@@ -3,9 +3,10 @@ import { useState, useEffect } from 'react';
 import { listTasks } from '@/lib/queries/tasks';
 import { listProperties } from '@/lib/queries/properties';
 import { StatusBadge } from '@/components/ui/status-badge';
+import { useOrg } from '@/lib/context/org-context';
 import { Plus, Wrench, Home, Star, DollarSign, CheckCircle, Search } from 'lucide-react';
 
-const ORG_ID = 'a1b2c3d4-0001-0001-0001-000000000001';
+
 
 const categoryIcons: Record<string, React.ReactNode> = {
   housekeeping: <Home className="w-3 h-3" />,
@@ -35,6 +36,7 @@ function formatDue(due?: string) {
 }
 
 export default function TasksPage() {
+  const { orgId } = useOrg();
   const [propertyFilter, setPropertyFilter] = useState('All');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [allTasks, setAllTasks] = useState<any[]>([]);
@@ -42,7 +44,7 @@ export default function TasksPage() {
   const [source, setSource] = useState<'live' | 'demo'>('demo');
 
   useEffect(() => {
-    Promise.all([listTasks(ORG_ID), listProperties(ORG_ID)])
+    Promise.all([listTasks(orgId ?? ''), listProperties(orgId ?? '')])
       .then(([t, p]) => { setAllTasks(t.rows); setProperties(p.rows); setSource(t.source); })
       .catch(console.error);
   }, []);

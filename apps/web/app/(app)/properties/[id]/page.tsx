@@ -3,6 +3,7 @@ import { use, useEffect, useState } from 'react';
 import { getPropertyWithStats } from '@/lib/queries/properties';
 import { listReviews } from '@/lib/queries/reviews';
 import { listBrainEntries } from '@/lib/queries/brain';
+import { useOrg } from '@/lib/context/org-context';
 import { StatusBadge } from '@/components/ui/status-badge';
 import { BookOpen, CalendarDays, ClipboardCheck, Wrench } from 'lucide-react';
 
@@ -12,6 +13,7 @@ export default function PropertyDetailPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
+  const { orgId } = useOrg();
   const [property, setProperty] = useState<any>(null);
   const [bookings, setBookings] = useState<any[]>([]);
   const [tasks, setTasks] = useState<any[]>([]);
@@ -22,8 +24,8 @@ export default function PropertyDetailPage({
   useEffect(() => {
     Promise.all([
       getPropertyWithStats(id),
-      listReviews('a1b2c3d4-0001-0001-0001-000000000001'),
-      listBrainEntries('a1b2c3d4-0001-0001-0001-000000000001', id),
+      listReviews(orgId ?? ''),
+      listBrainEntries(orgId ?? '', id),
     ]).then(([ps, rv, br]) => {
       setProperty(ps.property);
       setBookings(ps.bookings);
