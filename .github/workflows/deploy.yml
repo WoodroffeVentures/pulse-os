@@ -26,11 +26,8 @@ jobs:
         working-directory: apps/web
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: |
           npx vercel --token "$VERCEL_TOKEN" \
-            --scope "$VERCEL_ORG_ID" \
             --prod \
             --yes \
             --build-env NEXT_PUBLIC_GIT_SHA=${{ github.sha }}
