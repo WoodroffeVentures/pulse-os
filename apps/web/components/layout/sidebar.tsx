@@ -41,7 +41,7 @@ const operationsNav = [
 
 const pulseNav = [
   { href: '/businesses',   icon: Network,          label: 'Businesses' },
-  { href: '/opportunities',icon: Target,           label: 'Opportunities' },
+  { href: '/opportunities',icon: Target,           label: 'Opportunity Radar' },
   { href: '/viability',    icon: Zap,              label: 'Viability' },
   { href: '/participation',icon: Handshake,        label: 'Participation & JVs' },
   { href: '/outcomes',     icon: TrendingUp,       label: 'Outcomes' },

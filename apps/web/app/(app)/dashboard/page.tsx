@@ -6,7 +6,7 @@ import { listBookings } from '@/lib/queries/bookings';
 import { listTasks } from '@/lib/queries/tasks';
 import { listProperties } from '@/lib/queries/properties';
 import { createClient } from '@/lib/supabase/client';
-import { AlertTriangle, ArrowRight, Calendar, ClipboardList, Building2, CheckCircle2, Circle } from 'lucide-react';
+import { AlertTriangle, ArrowRight, Calendar, ClipboardList, Building2, CheckCircle2, Circle, Target, Zap, AlertCircle } from 'lucide-react';
 import { useOrg } from '@/lib/context/org-context';
 
 export default function DashboardPage() {
@@ -16,6 +16,8 @@ export default function DashboardPage() {
   const [tasks, setTasks] = useState<any[]>([]);
   const [properties, setProperties] = useState<any[]>([]);
   const [pulse, setPulse] = useState({ businesses: 0, opportunities: 0, viability: 0, participation: 0, outcomes: 0 });
+  const [topOpps, setTopOpps] = useState<any[]>([]);
+  const [evidenceHealth, setEvidenceHealth] = useState({ selfEntered: 0, total: 0 });
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -28,11 +30,30 @@ export default function DashboardPage() {
       supabase.from('opportunities').select('id', { count: 'exact', head: true }).eq('organization_id', orgId),
       supabase.from('viability_analyses').select('id', { count: 'exact', head: true }).eq('organization_id', orgId),
       supabase.from('participation_records').select('id,evidence', { count: 'exact' }).eq('organization_id', orgId),
-    ]).then(([b, t, p, bizRes, oppRes, vaRes, partRes]) => {
+      supabase.from('opportunities').select('id,title,status,urgency,next_decision,readiness_score').eq('organization_id', orgId).order('created_at', { ascending: false }).limit(10),
+      supabase.from('business_profiles').select('id,business_name,verified_signals').eq('organization_id', orgId),
+    ]).then(([b, t, p, bizRes, oppRes, vaRes, partRes, oppsData, bizProfiles]) => {
       setBookings(b.rows);
       setTasks(t.rows);
       setProperties(p.rows);
       const allOutcomes = (partRes.data ?? []).flatMap((r: any) => r.evidence?.outcomes ?? []);
+
+      // Top opportunities: sort by urgency then recency
+      const urgencyOrder: Record<string, number> = { critical: 0, high: 1, normal: 2, low: 3 };
+      const sortedOpps = [...(oppsData.data ?? [])].sort((a: any, b: any) => {
+        const ua = urgencyOrder[a.urgency ?? 'normal'] ?? 2;
+        const ub = urgencyOrder[b.urgency ?? 'normal'] ?? 2;
+        return ua !== ub ? ua - ub : 0;
+      });
+      setTopOpps(sortedOpps.slice(0, 3));
+
+      // Evidence health: count businesses by evidence state
+      const profiles = bizProfiles.data ?? [];
+      const selfEntered = profiles.filter((bp: any) =>
+        (bp.verified_signals?.evidence_state ?? 'Self-entered') === 'Self-entered'
+      ).length;
+      setEvidenceHealth({ selfEntered, total: profiles.length });
+
       setPulse({
         businesses: bizRes.count ?? 0,
         opportunities: oppRes.count ?? 0,
@@ -216,6 +237,84 @@ export default function DashboardPage() {
           </div>
         )}
       </div>
+
+      {/* Top Opportunities */}
+      {loaded && pulse.opportunities > 0 && (
+        <div className="bg-[#111318] border border-[#1e2028] rounded-lg">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[#1e2028]">
+            <div className="flex items-center gap-2">
+              <Target className="w-3.5 h-3.5 text-[#C6A66B]" />
+              <h2 className="text-xs font-semibold text-[#f1f5f9] tracking-widest uppercase">Top Opportunities</h2>
+            </div>
+            <a href="/opportunities" className="text-[10px] text-[#617089] hover:text-[#C6A66B] flex items-center gap-1">
+              Radar <ArrowRight className="w-3 h-3" />
+            </a>
+          </div>
+          <div className="divide-y divide-[#1e2028]">
+            {topOpps.map((o: any) => {
+              const urgencyColor = o.urgency === 'critical' ? 'text-red-400' : o.urgency === 'high' ? 'text-amber-400' : 'text-[#617089]';
+              return (
+                <a key={o.id} href={`/opportunities/${o.id}`} className="flex items-center gap-3 px-4 py-3 hover:bg-[#0a1425] transition-colors">
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-medium text-[#f1f5f9] truncate">{o.title}</div>
+                    <div className="flex items-center gap-2 mt-0.5">
+                      <span className="text-[10px] text-[#617089]">{(o.status ?? 'draft').replace(/_/g, ' ')}</span>
+                      {o.urgency && o.urgency !== 'normal' && (
+                        <span className={`text-[10px] font-semibold uppercase ${urgencyColor}`}>▲ {o.urgency}</span>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 flex-shrink-0">
+                    {o.next_decision && (
+                      <AlertCircle className="w-3.5 h-3.5 text-amber-400" />
+                    )}
+                    {o.readiness_score !== null && (
+                      <span className="text-xs font-bold text-[#C6A66B]">{Math.round(o.readiness_score)}</span>
+                    )}
+                    <ArrowRight className="w-3 h-3 text-[#374151]" />
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* Evidence Health */}
+      {loaded && evidenceHealth.total > 0 && (
+        <div className="bg-[#111318] border border-[#1e2028] rounded-lg">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-[#1e2028]">
+            <div className="flex items-center gap-2">
+              <Zap className="w-3.5 h-3.5 text-[#9BA7B8]" />
+              <h2 className="text-xs font-semibold text-[#f1f5f9] tracking-widest uppercase">Evidence Health</h2>
+            </div>
+            <a href="/businesses" className="text-[10px] text-[#617089] hover:text-[#C6A66B] flex items-center gap-1">
+              Businesses <ArrowRight className="w-3 h-3" />
+            </a>
+          </div>
+          <div className="px-4 py-3 space-y-2">
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-[#9BA7B8]">Business profiles</span>
+              <span className="text-[#f1f5f9] font-medium">{evidenceHealth.total}</span>
+            </div>
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-amber-400">Self-entered (Low confidence)</span>
+              <span className="text-amber-400 font-medium">{evidenceHealth.selfEntered}</span>
+            </div>
+            {evidenceHealth.total - evidenceHealth.selfEntered > 0 && (
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-emerald-400">Reviewed or verified</span>
+                <span className="text-emerald-400 font-medium">{evidenceHealth.total - evidenceHealth.selfEntered}</span>
+              </div>
+            )}
+            {evidenceHealth.selfEntered > 0 && (
+              <p className="text-[10px] text-[#617089] pt-1 border-t border-white/5">
+                Submit evidence for human review to raise confidence above Low.
+              </p>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Onboarding Progress */}
       {loaded && (
