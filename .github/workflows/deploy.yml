@@ -23,12 +23,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Deploy to Vercel
-        working-directory: apps/web
+      - name: Build
+        run: npx vercel build --token "$VERCEL_TOKEN" --prod --yes
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        run: |
-          npx vercel --token "$VERCEL_TOKEN" \
-            --prod \
-            --yes \
-            --build-env NEXT_PUBLIC_GIT_SHA=${{ github.sha }}
+          NEXT_PUBLIC_GIT_SHA: ${{ github.sha }}
+
+      - name: Deploy prebuilt output
+        run: npx vercel deploy --prebuilt --token "$VERCEL_TOKEN" --prod --yes
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
