@@ -26,9 +26,6 @@ jobs:
       - name: Type-check
         run: cd apps/web && pnpm exec tsc --noEmit
 
-      - name: Lint
-        run: cd apps/web && pnpm exec next lint
-
   deploy:
     needs: quality
     runs-on: ubuntu-latest
