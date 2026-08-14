@@ -81,6 +81,14 @@ jobs:
       - name: Install Playwright browsers
         run: cd apps/web && npx playwright install chromium --with-deps
 
+      - name: Run schema + RLS verification (pgTAP substitute)
+        run: cd apps/web && npx playwright test tests/schema.spec.ts --project=chromium
+        env:
+          PLAYWRIGHT_BASE_URL: https://pulse-os-steel.vercel.app
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
       - name: Run public smoke tests
         run: cd apps/web && npx playwright test tests/public.spec.ts --project=chromium
         env:
