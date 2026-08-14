@@ -68,10 +68,13 @@ export default function AiBriefPage() {
         </div>
       </section>
 
-      <section className="rounded-lg border border-white/10 bg-[#08111f]">
-        <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
-          <ShieldAlert className="h-4 w-4 text-[#2BB8A5]" />
-          <span className="text-xs font-semibold uppercase tracking-widest text-[#E6EDF5]">AI Recommendations</span>
+      <section className="rounded-lg border border-[#C6A66B]/30 bg-[#08111f]">
+        <div className="flex items-center justify-between gap-2 border-b border-white/10 px-4 py-3">
+          <div className="flex items-center gap-2">
+            <ShieldAlert className="h-4 w-4 text-[#2BB8A5]" />
+            <span className="text-xs font-semibold uppercase tracking-widest text-[#E6EDF5]">AI Recommendations</span>
+          </div>
+          <span className="rounded bg-[#C6A66B]/10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-widest text-[#C6A66B] border border-[#C6A66B]/30">Demo data — not live</span>
         </div>
         <div className="divide-y divide-white/10">
           {aiRecommendations.map((item) => (

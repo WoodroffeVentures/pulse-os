@@ -2,11 +2,13 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 const PUBLIC_PATHS = [
+  '/',
   '/login',
   '/auth/callback',
   '/auth/confirm',
-  '/board-demo',   // public board presentation — no auth required
-  '/api/ai/viability', // deterministic API — no auth required
+  '/api/pilot-interest',
+  '/board-demo',
+  '/api/ai/viability',
 ];
 
 export async function middleware(request: NextRequest) {
