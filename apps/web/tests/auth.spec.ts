@@ -9,6 +9,7 @@ test.describe('Authentication', () => {
 
   test('login → dashboard → org context resolves', async ({ page }) => {
     await page.goto('/login');
+    await page.getByRole('button', { name: 'Password' }).click();
     await page.fill('input[type="email"]', EMAIL);
     await page.fill('input[type="password"]', PASSWORD);
     await page.click('button[type="submit"]');
@@ -22,6 +23,7 @@ test.describe('Authentication', () => {
 
   test('session persists after refresh', async ({ page }) => {
     await page.goto('/login');
+    await page.getByRole('button', { name: 'Password' }).click();
     await page.fill('input[type="email"]', EMAIL);
     await page.fill('input[type="password"]', PASSWORD);
     await page.click('button[type="submit"]');
@@ -33,6 +35,7 @@ test.describe('Authentication', () => {
 
   test('logout redirects to login', async ({ page }) => {
     await page.goto('/login');
+    await page.getByRole('button', { name: 'Password' }).click();
     await page.fill('input[type="email"]', EMAIL);
     await page.fill('input[type="password"]', PASSWORD);
     await page.click('button[type="submit"]');
