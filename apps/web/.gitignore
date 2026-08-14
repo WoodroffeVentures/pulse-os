@@ -1,0 +1,5 @@
+.vercel
+.env*
+playwright-report/
+test-results/
+

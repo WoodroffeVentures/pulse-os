@@ -6,8 +6,34 @@ on:
   workflow_dispatch:
 
 jobs:
-  deploy:
+  quality:
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type-check
+        run: cd apps/web && pnpm exec tsc --noEmit
+
+      - name: Lint
+        run: cd apps/web && pnpm exec next lint
+
+  deploy:
+    needs: quality
+    runs-on: ubuntu-latest
+    outputs:
+      deploy_url: ${{ steps.deploy.outputs.deploy_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -30,6 +56,58 @@ jobs:
           NEXT_PUBLIC_GIT_SHA: ${{ github.sha }}
 
       - name: Deploy prebuilt output
-        run: npx vercel deploy --prebuilt --token "$VERCEL_TOKEN" --prod --yes
+        id: deploy
+        run: |
+          URL=$(npx vercel deploy --prebuilt --token "$VERCEL_TOKEN" --prod --yes)
+          echo "deploy_url=$URL" >> $GITHUB_OUTPUT
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+  smoke:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: cd apps/web && npx playwright install chromium --with-deps
+
+      - name: Run public + RLS smoke tests
+        run: cd apps/web && npx playwright test tests/public.spec.ts tests/rls.spec.ts --project=chromium
+        env:
+          PLAYWRIGHT_BASE_URL: https://pulse-os-steel.vercel.app
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          TEST_USER_B_EMAIL: ${{ secrets.TEST_USER_B_EMAIL }}
+          TEST_USER_B_PASSWORD: ${{ secrets.TEST_USER_B_PASSWORD }}
+
+      - name: Run accessibility smoke
+        run: cd apps/web && npx playwright test tests/accessibility.spec.ts --project=chromium
+        env:
+          PLAYWRIGHT_BASE_URL: https://pulse-os-steel.vercel.app
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: apps/web/playwright-report/
+          retention-days: 14
