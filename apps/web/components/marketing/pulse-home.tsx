@@ -19,7 +19,7 @@ function CapBadge({ label, state }: { label: string; state: 'live' | 'manual' | 
   const cfg = {
     live:    { bg: 'rgba(43,184,165,0.12)', color: '#2BB8A5', border: 'rgba(43,184,165,0.3)',  text: 'Live' },
     manual:  { bg: 'rgba(198,166,107,0.12)', color: '#C6A66B', border: 'rgba(198,166,107,0.3)', text: 'Manual Evidence Only' },
-    planned: { bg: 'rgba(97,112,137,0.12)',  color: '#617089', border: 'rgba(97,112,137,0.3)',  text: 'Planned' },
+    planned: { bg: 'rgba(97,112,137,0.12)',  color: '#9BA7B8', border: 'rgba(97,112,137,0.3)',  text: 'Planned' },
   }[state];
   return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '8px 0', borderBottom: `1px solid ${C.line}` }}>
@@ -78,7 +78,7 @@ function PilotForm() {
   const labelStyle: React.CSSProperties = {
     display: 'block', fontSize: 11, fontWeight: 600,
     textTransform: 'uppercase', letterSpacing: '.12em',
-    color: C.dim, marginBottom: 6,
+    color: C.muted, marginBottom: 6,
   };
 
   return (
@@ -115,7 +115,7 @@ function PilotForm() {
         </div>
         <div>
           <label style={labelStyle}>Interest Type</label>
-          <select style={{ ...inputStyle, cursor: 'pointer' }} value={form.interest_type} onChange={e => set('interest_type', e.target.value)}>
+          <select aria-label="Interest Type" style={{ ...inputStyle, cursor: 'pointer' }} value={form.interest_type} onChange={e => set('interest_type', e.target.value)}>
             <option value="general">General Interest</option>
             <option value="hospitality">Hospitality Operator</option>
             <option value="destination">Destination / Tourism Board</option>
@@ -131,7 +131,7 @@ function PilotForm() {
         <textarea style={{ ...inputStyle, resize: 'none', minHeight: 80 }} value={form.message} onChange={e => set('message', e.target.value)}
           placeholder="Tell us about your context and what you're hoping to achieve…" />
       </div>
-      <div style={{ fontSize: 11, color: C.dim, lineHeight: 1.6 }}>
+      <div style={{ fontSize: 11, color: C.muted, lineHeight: 1.6 }}>
         By submitting, you consent to PULSE OS storing your enquiry details for the purpose of responding to your pilot interest.
         Your data is not shared with third parties. This is not a subscription or binding commitment.
       </div>
@@ -201,7 +201,7 @@ export function PulseHome() {
           </div>
           <div>
             <div style={{ fontSize: 13, fontWeight: 800, letterSpacing: '.15em', color: C.text }}>PULSE</div>
-            <div style={{ fontSize: 9, color: C.dim, letterSpacing: '.2em' }}>OPPORTUNITY OS</div>
+            <div style={{ fontSize: 9, color: C.muted, letterSpacing: '.2em' }}>OPPORTUNITY OS</div>
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
@@ -364,7 +364,7 @@ export function PulseHome() {
           <div style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: 16, padding: '36px 40px' }}>
             <PilotForm />
           </div>
-          <p style={{ fontSize: 11, color: C.dim, textAlign: 'center', marginTop: 20, lineHeight: 1.6 }}>
+          <p style={{ fontSize: 11, color: C.muted, textAlign: 'center', marginTop: 20, lineHeight: 1.6 }}>
             This form does not create an account or commit you to anything.
             Submissions are reviewed manually. No automated marketing follows.
           </p>
@@ -384,7 +384,7 @@ export function PulseHome() {
           ].map(([title, body]) => (
             <details key={title as string} style={{ background: C.panel, border: `1px solid ${C.line}`, borderRadius: 10 }}>
               <summary style={{ padding: '14px 20px', cursor: 'pointer', fontWeight: 600, fontSize: 13, color: C.muted }}>{title}</summary>
-              <div style={{ padding: '0 20px 16px', fontSize: 12, color: C.dim, lineHeight: 1.8 }}>{body}</div>
+              <div style={{ padding: '0 20px 16px', fontSize: 12, color: C.muted, lineHeight: 1.8 }}>{body}</div>
             </details>
           ))}
         </div>
@@ -397,15 +397,15 @@ export function PulseHome() {
             <div style={{ width: 8, height: 8, background: C.bg, borderRadius: '50%' }} />
           </div>
           <span style={{ fontSize: 13, fontWeight: 700, letterSpacing: '.15em', color: C.text }}>PULSE OS</span>
-          <span style={{ fontSize: 11, color: C.dim, letterSpacing: '.12em' }}>OPPORTUNITY OS</span>
+          <span style={{ fontSize: 11, color: C.muted, letterSpacing: '.12em' }}>OPPORTUNITY OS</span>
         </div>
-        <p style={{ fontSize: 12, color: C.dim, margin: '0 0 16px' }}>
+        <p style={{ fontSize: 12, color: C.muted, margin: '0 0 16px' }}>
           Farmstead Hospitality · Southern Drakensberg · Controlled Pilot · 2025–2026
         </p>
         <a href="/login" style={{ fontSize: 13, color: C.gold, textDecoration: 'none', fontWeight: 600 }}>
           Owner Login →
         </a>
-        <p style={{ fontSize: 11, color: C.dim, marginTop: 24 }}>
+        <p style={{ fontSize: 11, color: C.muted, marginTop: 24 }}>
           © Woodroffe Ventures. All pilot data under RLS tenant isolation. No fabricated metrics.
         </p>
       </footer>
