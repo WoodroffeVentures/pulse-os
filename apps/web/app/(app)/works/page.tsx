@@ -24,7 +24,10 @@ export default function WorksPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-semibold text-[#E6EDF5]">Works Register</h1>
+        <div className="flex items-center gap-3">
+          <h1 className="text-xl font-semibold text-[#E6EDF5]">Works Register</h1>
+          <span className="rounded bg-[#C6A66B]/10 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-widest text-[#C6A66B] border border-[#C6A66B]/30">Demo data</span>
+        </div>
         <p className="mt-1 text-sm text-[#9BA7B8]">Durable maintenance, improvements, spend and lessons learned.</p>
       </div>
 
