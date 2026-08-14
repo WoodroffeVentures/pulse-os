@@ -22,10 +22,8 @@ SELECT lives_ok(
   'RLS enabled on participation_records'
 );
 
-SELECT lives_ok(
-  $$ SELECT relrowsecurity FROM pg_class WHERE relname = 'outcomes' AND relrowsecurity = true $$,
-  'RLS enabled on outcomes'
-);
+-- Note: outcomes data is stored in participation_records (no separate outcomes table)
+SELECT has_table('public', 'participation_records', 'participation_records table exists (stores outcome milestones)');
 
 -- 2. Migration history: all 15 migrations applied
 SELECT ok(

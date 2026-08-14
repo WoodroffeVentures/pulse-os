@@ -31,7 +31,7 @@ test.describe('Schema verification (pgTAP substitute)', () => {
 
   const requiredTables = [
     'opportunities', 'organizations', 'organization_members',
-    'business_profiles', 'participation_records', 'outcomes',
+    'business_profiles', 'participation_records',
     'pilot_interest', 'properties', 'bookings', 'guests',
   ];
 
@@ -90,7 +90,7 @@ test.describe('Schema verification (pgTAP substitute)', () => {
 test.describe('RLS enforcement (pgTAP substitute)', () => {
   test.skip(!URL || !ANON, 'Supabase env vars not set');
 
-  const rlsTables = ['opportunities', 'business_profiles', 'participation_records', 'outcomes'];
+  const rlsTables = ['opportunities', 'business_profiles', 'participation_records'];
 
   for (const table of rlsTables) {
     test(`anon cannot SELECT from ${table}`, async () => {

@@ -39,7 +39,7 @@ async function authedClient(email: string, password: string) {
 test.describe('Anonymous RLS', () => {
   test.skip(!HAS_SUPABASE, 'Supabase env vars not set');
 
-  const tables = ['opportunities', 'business_profiles', 'participation_records', 'outcomes'];
+  const tables = ['opportunities', 'business_profiles', 'participation_records'];
 
   for (const table of tables) {
     test(`anonymous cannot SELECT from ${table}`, async () => {
