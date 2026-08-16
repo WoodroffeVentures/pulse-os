@@ -117,7 +117,7 @@ function SidebarContent({ onNav }: { onNav?: () => void }) {
       <nav className="flex-1 px-2 py-3 overflow-y-auto">
         <div className="mb-4">
           <div className="px-2 mb-1">
-            <span className="text-[9px] font-semibold text-[#374151] tracking-widest">OPERATIONS</span>
+            <span className="text-[9px] font-semibold text-[#9BA7B8] tracking-widest">OPERATIONS</span>
           </div>
           {operationsNav.map(item => <NavItem key={item.href} {...item} onNav={onNav} />)}
         </div>
@@ -132,7 +132,7 @@ function SidebarContent({ onNav }: { onNav?: () => void }) {
 
         <div className="mb-4">
           <div className="px-2 mb-1">
-            <span className="text-[9px] font-semibold text-[#374151] tracking-widest">PLATFORM</span>
+            <span className="text-[9px] font-semibold text-[#9BA7B8] tracking-widest">PLATFORM</span>
           </div>
           {platformNav.map(item => <NavItem key={item.href} {...item} onNav={onNav} />)}
         </div>
@@ -142,7 +142,7 @@ function SidebarContent({ onNav }: { onNav?: () => void }) {
       <div className="p-3 border-t border-white/10 flex-shrink-0">
         <button
           onClick={signOut}
-          className="w-full flex items-center gap-2 px-2 py-1.5 rounded text-xs text-[#617089] hover:text-[#ef4444] hover:bg-[#08111f] transition-colors"
+          className="w-full flex items-center gap-2 px-2 py-1.5 rounded text-xs text-[#9BA7B8] hover:text-[#ef4444] hover:bg-[#08111f] transition-colors"
         >
           <LogOut className="w-3.5 h-3.5" />
           <span>Sign out · {user?.email?.split('@')[0] ?? ''}</span>

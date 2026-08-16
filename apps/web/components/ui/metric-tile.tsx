@@ -35,7 +35,7 @@ export function MetricTile({
         className
       )}
     >
-      <div className="text-xs font-medium text-[#64748b] tracking-widest uppercase">
+      <div className="text-xs font-medium text-[#9BA7B8] tracking-widest uppercase">
         {label}
       </div>
       <div className="flex items-baseline gap-1">
@@ -47,7 +47,7 @@ export function MetricTile({
         >
           {value}
         </span>
-        {unit && <span className="text-sm text-[#64748b]">{unit}</span>}
+        {unit && <span className="text-sm text-[#9BA7B8]">{unit}</span>}
       </div>
       <div className="flex items-center gap-2">
         {trend !== undefined && (
@@ -58,7 +58,7 @@ export function MetricTile({
                 ? 'text-green-400'
                 : isNegative
                 ? 'text-red-400'
-                : 'text-[#64748b]'
+                : 'text-[#9BA7B8]'
             )}
           >
             {isPositive ? (
@@ -72,9 +72,9 @@ export function MetricTile({
           </span>
         )}
         {trendLabel && (
-          <span className="text-xs text-[#64748b]">{trendLabel}</span>
+          <span className="text-xs text-[#9BA7B8]">{trendLabel}</span>
         )}
-        {subValue && <span className="text-xs text-[#64748b]">{subValue}</span>}
+        {subValue && <span className="text-xs text-[#9BA7B8]">{subValue}</span>}
       </div>
     </div>
   );

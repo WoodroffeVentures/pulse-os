@@ -65,7 +65,7 @@ export default function DashboardPage() {
     }).catch(console.error);
   }, [orgId]);
 
-  if (orgLoading) return <div className="p-6 text-[#617089] text-sm">Loading…</div>;
+  if (orgLoading) return <div className="p-6 text-[#9BA7B8] text-sm">Loading…</div>;
 
   const today = new Date().toISOString().split('T')[0];
   const arrivalsToday = bookings.filter((b: any) => (b.check_in_date ?? b.check_in) === today);
@@ -90,9 +90,9 @@ export default function DashboardPage() {
 
       {loaded && properties.length === 0 && (
         <div className="rounded-xl border border-dashed border-white/10 p-6 text-center space-y-2">
-          <Building2 className="w-8 h-8 text-[#374151] mx-auto" />
+          <Building2 className="w-8 h-8 text-[#9BA7B8] mx-auto" />
           <p className="text-sm text-[#9BA7B8]">No properties yet</p>
-          <p className="text-xs text-[#617089]">Add your properties to see operational data here.</p>
+          <p className="text-xs text-[#9BA7B8]">Add your properties to see operational data here.</p>
           <a href="/properties" className="inline-block mt-2 text-xs text-[#C6A66B] border border-[#C6A66B]/30 rounded px-3 py-1.5 hover:bg-[#C6A66B]/10">
             Go to Properties →
           </a>
@@ -144,10 +144,10 @@ export default function DashboardPage() {
         <div className="col-span-2 bg-[#111318] border border-[#1e2028] rounded-lg">
           <div className="flex items-center justify-between px-4 py-3 border-b border-[#1e2028]">
             <h2 className="text-xs font-semibold text-[#f1f5f9] tracking-widest uppercase">Property Status</h2>
-            <span className="text-xs text-[#64748b]">{properties.length} propert{properties.length === 1 ? 'y' : 'ies'}</span>
+            <span className="text-xs text-[#9BA7B8]">{properties.length} propert{properties.length === 1 ? 'y' : 'ies'}</span>
           </div>
           {properties.length === 0 ? (
-            <div className="px-4 py-8 text-center text-sm text-[#64748b]">No properties yet</div>
+            <div className="px-4 py-8 text-center text-sm text-[#9BA7B8]">No properties yet</div>
           ) : (
             <div className="divide-y divide-[#1e2028]">
               {properties.map((p: any) => {
@@ -163,7 +163,7 @@ export default function DashboardPage() {
                     <div className={`w-2 h-2 rounded-full flex-shrink-0 ${currentBooking ? 'bg-green-400' : 'bg-[#374151]'}`} />
                     <div className="flex-1 min-w-0">
                       <div className="text-sm font-medium text-[#f1f5f9]">{p.name}</div>
-                      <div className="text-xs text-[#64748b] mt-0.5">
+                      <div className="text-xs text-[#9BA7B8] mt-0.5">
                         {currentBooking
                           ? `Occupied · checkout ${new Date(currentBooking.check_out_date ?? currentBooking.check_out).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' })}`
                           : nextBooking
@@ -174,7 +174,7 @@ export default function DashboardPage() {
                     <div className="flex items-center gap-2">
                       {hasOverdue && <StatusBadge status="overdue" />}
                       {pTasks.length > 0 && !hasOverdue && (
-                        <span className="text-xs text-[#64748b]">{pTasks.length} task{pTasks.length > 1 ? 's' : ''}</span>
+                        <span className="text-xs text-[#9BA7B8]">{pTasks.length} task{pTasks.length > 1 ? 's' : ''}</span>
                       )}
                       <StatusBadge status={currentBooking ? 'checked_in' : nextBooking ? 'confirmed' : 'active'} />
                     </div>
@@ -191,7 +191,7 @@ export default function DashboardPage() {
             <h2 className="text-xs font-semibold text-[#f1f5f9] tracking-widest uppercase">Priority Tasks</h2>
           </div>
           {tasks.filter((t: any) => t.status !== 'completed').length === 0 ? (
-            <div className="px-4 py-8 text-center text-sm text-[#64748b]">No open tasks</div>
+            <div className="px-4 py-8 text-center text-sm text-[#9BA7B8]">No open tasks</div>
           ) : (
             <div className="divide-y divide-[#1e2028]">
               {tasks.filter((t: any) => t.status !== 'completed').slice(0, 5).map((task: any) => (
@@ -199,7 +199,7 @@ export default function DashboardPage() {
                   <div className={`w-1 h-8 rounded-full flex-shrink-0 ${task.status === 'overdue' ? 'bg-red-500' : task.priority === 'high' || task.priority === 'critical' ? 'bg-amber-500' : 'bg-[#374151]'}`} />
                   <div className="flex-1 min-w-0">
                     <div className="text-xs font-medium text-[#f1f5f9] truncate">{task.title}</div>
-                    <div className="text-[10px] text-[#64748b] mt-0.5">{properties.find((p: any) => p.id === task.property_id)?.name}</div>
+                    <div className="text-[10px] text-[#9BA7B8] mt-0.5">{properties.find((p: any) => p.id === task.property_id)?.name}</div>
                   </div>
                   <StatusBadge status={task.status} />
                 </div>
@@ -215,7 +215,7 @@ export default function DashboardPage() {
           <h2 className="text-xs font-semibold text-[#f1f5f9] tracking-widest uppercase">Today's Arrivals & Departures</h2>
         </div>
         {arrivalsToday.length === 0 && departuresToday.length === 0 ? (
-          <div className="px-4 py-8 text-center text-sm text-[#64748b]">No arrivals or departures today</div>
+          <div className="px-4 py-8 text-center text-sm text-[#9BA7B8]">No arrivals or departures today</div>
         ) : (
           <div className="divide-y divide-[#1e2028]">
             {[
@@ -230,7 +230,7 @@ export default function DashboardPage() {
                   <div className="text-sm font-medium text-[#f1f5f9] truncate">
                     {b.guests ? `${b.guests.first_name} ${b.guests.last_name}` : 'Guest'}
                   </div>
-                  <div className="text-xs text-[#64748b]">{properties.find((p: any) => p.id === b.property_id)?.name}</div>
+                  <div className="text-xs text-[#9BA7B8]">{properties.find((p: any) => p.id === b.property_id)?.name}</div>
                 </div>
               </div>
             ))}
@@ -246,19 +246,19 @@ export default function DashboardPage() {
               <Target className="w-3.5 h-3.5 text-[#C6A66B]" />
               <h2 className="text-xs font-semibold text-[#f1f5f9] tracking-widest uppercase">Top Opportunities</h2>
             </div>
-            <a href="/opportunities" className="text-[10px] text-[#617089] hover:text-[#C6A66B] flex items-center gap-1">
+            <a href="/opportunities" className="text-[10px] text-[#9BA7B8] hover:text-[#C6A66B] flex items-center gap-1">
               Radar <ArrowRight className="w-3 h-3" />
             </a>
           </div>
           <div className="divide-y divide-[#1e2028]">
             {topOpps.map((o: any) => {
-              const urgencyColor = o.urgency === 'critical' ? 'text-red-400' : o.urgency === 'high' ? 'text-amber-400' : 'text-[#617089]';
+              const urgencyColor = o.urgency === 'critical' ? 'text-red-400' : o.urgency === 'high' ? 'text-amber-400' : 'text-[#9BA7B8]';
               return (
                 <a key={o.id} href={`/opportunities/${o.id}`} className="flex items-center gap-3 px-4 py-3 hover:bg-[#0a1425] transition-colors">
                   <div className="flex-1 min-w-0">
                     <div className="text-xs font-medium text-[#f1f5f9] truncate">{o.title}</div>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-[10px] text-[#617089]">{(o.status ?? 'draft').replace(/_/g, ' ')}</span>
+                      <span className="text-[10px] text-[#9BA7B8]">{(o.status ?? 'draft').replace(/_/g, ' ')}</span>
                       {o.urgency && o.urgency !== 'normal' && (
                         <span className={`text-[10px] font-semibold uppercase ${urgencyColor}`}>▲ {o.urgency}</span>
                       )}
@@ -288,7 +288,7 @@ export default function DashboardPage() {
               <Zap className="w-3.5 h-3.5 text-[#9BA7B8]" />
               <h2 className="text-xs font-semibold text-[#f1f5f9] tracking-widest uppercase">Evidence Health</h2>
             </div>
-            <a href="/businesses" className="text-[10px] text-[#617089] hover:text-[#C6A66B] flex items-center gap-1">
+            <a href="/businesses" className="text-[10px] text-[#9BA7B8] hover:text-[#C6A66B] flex items-center gap-1">
               Businesses <ArrowRight className="w-3 h-3" />
             </a>
           </div>
@@ -308,7 +308,7 @@ export default function DashboardPage() {
               </div>
             )}
             {evidenceHealth.selfEntered > 0 && (
-              <p className="text-[10px] text-[#617089] pt-1 border-t border-white/5">
+              <p className="text-[10px] text-[#9BA7B8] pt-1 border-t border-white/5">
                 Submit evidence for human review to raise confidence above Low.
               </p>
             )}
@@ -338,14 +338,14 @@ export default function DashboardPage() {
                   ? <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   : <Circle className="w-4 h-4 text-[#374151]" />
                 }
-                <span className={`text-[10px] font-medium leading-tight ${step.done ? 'text-emerald-400' : 'text-[#617089]'}`}>{step.label}</span>
+                <span className={`text-[10px] font-medium leading-tight ${step.done ? 'text-emerald-400' : 'text-[#9BA7B8]'}`}>{step.label}</span>
               </a>
             ))}
           </div>
         </div>
       )}
 
-      <div className="text-[9px] text-[#374151] text-center tracking-widest py-2">
+      <div className="text-[9px] text-[#9BA7B8] text-center tracking-widest py-2">
         ALL METRICS FROM {orgName?.toUpperCase() ?? 'YOUR'} PRODUCTION DATABASE · HUMANS GOVERN · EVIDENCE DECIDES
       </div>
     </div>
