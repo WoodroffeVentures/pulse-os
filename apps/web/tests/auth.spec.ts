@@ -17,8 +17,9 @@ test.describe('Authentication', () => {
     await page.waitForURL(/\/dashboard/, { timeout: 15000 });
     expect(page.url()).toContain('/dashboard');
 
-    // Org name appears in sidebar (not loading state)
-    await expect(page.locator('aside')).not.toContainText('…');
+    // Org name appears in desktop sidebar (not loading state)
+    // Two <aside> elements exist (desktop + mobile drawer) — target the visible desktop one
+    await expect(page.locator('aside.hidden.md\\:flex')).not.toContainText('…');
   });
 
   test('session persists after refresh', async ({ page }) => {
