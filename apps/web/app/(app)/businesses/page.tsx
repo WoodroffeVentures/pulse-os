@@ -99,7 +99,7 @@ function CreateBusinessModal({ orgId, onClose, onCreated }: {
       <div className="w-full max-w-xl bg-[#08111f] border border-white/10 rounded-xl shadow-2xl mb-10">
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
           <h2 className="text-sm font-semibold text-[#E6EDF5]">Add Business Profile</h2>
-          <button onClick={onClose} className="text-[#617089] hover:text-[#E6EDF5]"><X className="w-4 h-4" /></button>
+          <button onClick={onClose} className="text-[#9BA7B8] hover:text-[#E6EDF5]"><X className="w-4 h-4" /></button>
         </div>
 
         <div className="px-6 py-4 space-y-4">
@@ -111,14 +111,14 @@ function CreateBusinessModal({ orgId, onClose, onCreated }: {
 
           <div className="grid gap-4 md:grid-cols-2">
             <div className="md:col-span-2">
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Business Name *</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Business Name *</label>
               <input value={form.business_name} onChange={e => set('business_name', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="e.g. Farmstead Hospitality" />
             </div>
 
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Category</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Category</label>
               <select value={form.category} onChange={e => set('category', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40">
                 {BUSINESS_CATEGORIES.map(c => <option key={c}>{c}</option>)}
@@ -126,7 +126,7 @@ function CreateBusinessModal({ orgId, onClose, onCreated }: {
             </div>
 
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Evidence State</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Evidence State</label>
               <select value={form.evidence_state} onChange={e => set('evidence_state', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40">
                 {EVIDENCE_STATES.map(s => <option key={s}>{s}</option>)}
@@ -134,51 +134,51 @@ function CreateBusinessModal({ orgId, onClose, onCreated }: {
             </div>
 
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">District / Area</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">District / Area</label>
               <input value={form.district} onChange={e => set('district', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="e.g. Underberg" />
             </div>
 
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Province</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Province</label>
               <input value={form.province} onChange={e => set('province', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="KwaZulu-Natal" />
             </div>
 
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Phone</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Phone</label>
               <input value={form.phone} onChange={e => set('phone', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="+27 …" />
             </div>
 
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Email</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Email</label>
               <input value={form.email} onChange={e => set('email', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="hello@…" />
             </div>
 
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Website</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Website</label>
               <input value={form.website_url} onChange={e => set('website_url', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="https://" />
             </div>
 
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Google Maps URL</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Google Maps URL</label>
               <input value={form.google_maps_url} onChange={e => set('google_maps_url', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="https://maps.google.com/…" />
             </div>
 
             <div className="md:col-span-2">
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Google Place ID</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Google Place ID</label>
               <input value={form.google_place_id} onChange={e => set('google_place_id', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="ChIJ… (optional — used for place matching, not ownership proof)" />
             </div>
           </div>
@@ -223,7 +223,7 @@ function BusinessCard({ b }: { b: BusinessProfile }) {
           }
           <span className="text-[#9BA7B8]">Evidence: {evidenceState}</span>
         </div>
-        <button onClick={() => setExpanded(v => !v)} className="text-[#617089] hover:text-[#E6EDF5] flex items-center gap-1 text-[10px]">
+        <button onClick={() => setExpanded(v => !v)} className="text-[#9BA7B8] hover:text-[#E6EDF5] flex items-center gap-1 text-[10px]">
           {expanded ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
           {expanded ? 'Less' : 'Details'}
         </button>
@@ -231,12 +231,12 @@ function BusinessCard({ b }: { b: BusinessProfile }) {
 
       {expanded && (
         <div className="space-y-1.5 pt-2 border-t border-white/10">
-          {signals.district != null && <div className="text-xs text-[#617089]">📍 {signals.district as string}{signals.province != null ? `, ${signals.province as string}` : ''}</div>}
-          {b.website_url && <div className="text-xs text-[#617089]"><Globe className="w-3 h-3 inline mr-1" /><a href={b.website_url} target="_blank" rel="noreferrer" className="hover:text-[#C6A66B]">{b.website_url.replace(/^https?:\/\//, '')}</a></div>}
-          {signals.phone != null && <div className="text-xs text-[#617089]">📞 {signals.phone as string}</div>}
-          {signals.email != null && <div className="text-xs text-[#617089]">✉ {signals.email as string}</div>}
-          {signals.google_maps_url != null && <div className="text-xs text-[#617089]"><a href={signals.google_maps_url as string} target="_blank" rel="noreferrer" className="text-[#C6A66B] hover:underline">Google Maps →</a></div>}
-          {b.google_place_id && <div className="text-[10px] text-[#374151] font-mono">Place ID: {b.google_place_id}</div>}
+          {signals.district != null && <div className="text-xs text-[#9BA7B8]">📍 {signals.district as string}{signals.province != null ? `, ${signals.province as string}` : ''}</div>}
+          {b.website_url && <div className="text-xs text-[#9BA7B8]"><Globe className="w-3 h-3 inline mr-1" /><a href={b.website_url} target="_blank" rel="noreferrer" className="hover:text-[#C6A66B]">{b.website_url.replace(/^https?:\/\//, '')}</a></div>}
+          {signals.phone != null && <div className="text-xs text-[#9BA7B8]">📞 {signals.phone as string}</div>}
+          {signals.email != null && <div className="text-xs text-[#9BA7B8]">✉ {signals.email as string}</div>}
+          {signals.google_maps_url != null && <div className="text-xs text-[#9BA7B8]"><a href={signals.google_maps_url as string} target="_blank" rel="noreferrer" className="text-[#C6A66B] hover:underline">Google Maps →</a></div>}
+          {b.google_place_id && <div className="text-[10px] text-[#9BA7B8] font-mono">Place ID: {b.google_place_id}</div>}
           <div className="mt-2 p-2 rounded bg-amber-400/5 border border-amber-400/10 text-[10px] text-amber-500">
             Google integration: Manual Evidence Only
           </div>
@@ -262,7 +262,7 @@ export default function BusinessesPage() {
 
   useEffect(() => { if (orgId) load(orgId); }, [orgId, load]);
 
-  if (loading) return <div className="p-6 text-[#617089] text-sm">Loading…</div>;
+  if (loading) return <div className="p-6 text-[#9BA7B8] text-sm">Loading…</div>;
 
   return (
     <div className="space-y-6">
@@ -285,14 +285,14 @@ export default function BusinessesPage() {
         )}
       </div>
 
-      {fetching && <div className="text-[#617089] text-sm">Loading…</div>}
+      {fetching && <div className="text-[#9BA7B8] text-sm">Loading…</div>}
 
       {!fetching && businesses.length === 0 && (
         <div className="flex flex-col items-center justify-center h-48 gap-4 rounded-xl border border-dashed border-white/10">
-          <Network className="w-8 h-8 text-[#374151]" />
+          <Network className="w-8 h-8 text-[#9BA7B8]" />
           <div className="text-center">
             <p className="text-sm text-[#9BA7B8]">No business profiles yet</p>
-            <p className="text-xs text-[#617089] mt-1">Add your business to participate in opportunities and receive viability assessments</p>
+            <p className="text-xs text-[#9BA7B8] mt-1">Add your business to participate in opportunities and receive viability assessments</p>
           </div>
           {orgId && (
             <button onClick={() => setShowCreate(true)}

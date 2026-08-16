@@ -89,18 +89,18 @@ function CreateIssueModal({ orgId, properties, onClose, onSaved }: {
       <div className="w-full max-w-md bg-[#08111f] border border-white/10 rounded-xl shadow-2xl">
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
           <h2 className="text-sm font-semibold text-[#E6EDF5]">Log Maintenance Issue</h2>
-          <button onClick={onClose} className="text-[#617089] hover:text-[#E6EDF5]"><X className="w-4 h-4" /></button>
+          <button onClick={onClose} className="text-[#9BA7B8] hover:text-[#E6EDF5]"><X className="w-4 h-4" /></button>
         </div>
         <div className="px-5 py-4 space-y-3">
           {error && <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded px-3 py-2">{error}</p>}
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Issue Description *</label>
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Issue Description *</label>
             <input value={form.title} onChange={e => set('title', e.target.value)}
-              className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+              className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
               placeholder="e.g. Geyser not heating — Woody's Cottage" />
           </div>
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Property</label>
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Property</label>
             <select value={form.property_id} onChange={e => set('property_id', e.target.value)}
               className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40">
               <option value="">Not property-specific</option>
@@ -109,22 +109,22 @@ function CreateIssueModal({ orgId, properties, onClose, onSaved }: {
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Priority</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Priority</label>
               <select value={form.priority} onChange={e => set('priority', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40">
                 {PRIORITIES.map(p => <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Target Date</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Target Date</label>
               <input type="date" value={form.due_at} onChange={e => set('due_at', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40" />
             </div>
           </div>
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Notes</label>
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Notes</label>
             <textarea value={form.notes} onChange={e => set('notes', e.target.value)} rows={2}
-              className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40 resize-none"
+              className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40 resize-none"
               placeholder="Description, location within property, what was tried…" />
           </div>
         </div>
@@ -170,7 +170,7 @@ export default function MaintenancePage() {
     if (!error && data) setTasks(prev => prev.map(t => t.id === task.id ? data as Task : t));
   }
 
-  if (loading) return <div className="p-6 text-[#617089] text-sm">Loading…</div>;
+  if (loading) return <div className="p-6 text-[#9BA7B8] text-sm">Loading…</div>;
 
   const displayed = filter === 'all' ? tasks : tasks.filter(t => t.status === filter);
   const open = tasks.filter(t => t.status !== 'completed').length;
@@ -202,15 +202,15 @@ export default function MaintenancePage() {
 
       <div className="grid grid-cols-3 gap-4">
         <div className="rounded-xl border border-white/10 bg-[#08111f] p-4">
-          <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Open Issues</div>
+          <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Open Issues</div>
           <div className="text-2xl font-mono font-semibold text-[#E6EDF5]">{open}</div>
         </div>
         <div className="rounded-xl border border-white/10 bg-[#08111f] p-4">
-          <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Urgent</div>
+          <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Urgent</div>
           <div className="text-2xl font-mono font-semibold text-[#D45D5D]">{urgent}</div>
         </div>
         <div className="rounded-xl border border-white/10 bg-[#08111f] p-4">
-          <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Resolved</div>
+          <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Resolved</div>
           <div className="text-2xl font-mono font-semibold text-[#2BB8A5]">{tasks.filter(t => t.status === 'completed').length}</div>
         </div>
       </div>
@@ -218,20 +218,20 @@ export default function MaintenancePage() {
       <div className="flex gap-2 flex-wrap">
         {['all', ...STATUSES].map(s => (
           <button key={s} onClick={() => setFilter(s)}
-            className={`px-3 py-1.5 text-xs rounded border transition-colors ${filter === s ? 'bg-[#C6A66B]/10 text-[#C6A66B] border-[#C6A66B]/30' : 'text-[#617089] border-white/10 hover:border-white/20'}`}>
+            className={`px-3 py-1.5 text-xs rounded border transition-colors ${filter === s ? 'bg-[#C6A66B]/10 text-[#C6A66B] border-[#C6A66B]/30' : 'text-[#9BA7B8] border-white/10 hover:border-white/20'}`}>
             {s === 'all' ? 'All' : s.replace('_', ' ')}
           </button>
         ))}
       </div>
 
-      {fetching && <div className="text-[#617089] text-sm">Loading…</div>}
+      {fetching && <div className="text-[#9BA7B8] text-sm">Loading…</div>}
 
       {!fetching && displayed.length === 0 && (
         <div className="flex flex-col items-center justify-center h-48 gap-3 rounded-xl border border-dashed border-white/10">
-          <Wrench className="w-8 h-8 text-[#374151]" />
+          <Wrench className="w-8 h-8 text-[#9BA7B8]" />
           <div className="text-center">
             <p className="text-sm text-[#9BA7B8]">{filter === 'all' ? 'No maintenance issues logged' : `No ${filter.replace('_', ' ')} issues`}</p>
-            <p className="text-xs text-[#617089] mt-1">Log issues to track defects, repairs and follow-ups across properties.</p>
+            <p className="text-xs text-[#9BA7B8] mt-1">Log issues to track defects, repairs and follow-ups across properties.</p>
           </div>
           <button onClick={() => setCreating(true)} className="text-xs text-[#C6A66B] border border-[#C6A66B]/30 rounded px-3 py-1.5 hover:bg-[#C6A66B]/10">
             Log first issue
@@ -253,13 +253,13 @@ export default function MaintenancePage() {
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className={`text-sm font-medium ${task.status === 'completed' ? 'text-[#617089] line-through' : 'text-[#E6EDF5]'}`}>
+                  <span className={`text-sm font-medium ${task.status === 'completed' ? 'text-[#9BA7B8] line-through' : 'text-[#E6EDF5]'}`}>
                     {task.title}
                   </span>
                   <PriorityChip p={task.priority} />
                   <StatusChip s={task.status} />
                 </div>
-                <div className="flex items-center gap-3 mt-1 text-[10px] text-[#617089]">
+                <div className="flex items-center gap-3 mt-1 text-[10px] text-[#9BA7B8]">
                   <span>{propName(task.property_id)}</span>
                   {task.due_at && <span>Target {new Date(task.due_at).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' })}</span>}
                   <span>Logged {new Date(task.created_at).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' })}</span>
@@ -281,7 +281,7 @@ export default function MaintenancePage() {
                 )}
                 {task.status === 'completed' && (
                   <button onClick={() => markStatus(task, 'pending')}
-                    className="text-[10px] px-2 py-1 rounded border border-white/10 text-[#617089] hover:text-[#9BA7B8]">
+                    className="text-[10px] px-2 py-1 rounded border border-white/10 text-[#9BA7B8] hover:text-[#9BA7B8]">
                     Reopen
                   </button>
                 )}

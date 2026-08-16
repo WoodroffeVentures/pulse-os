@@ -162,7 +162,7 @@ export default function TasksPage() {
               ))}
 
               {tasks.length === 0 && (
-                <div className="text-center py-6 text-xs text-[#374151]">No tasks</div>
+                <div className="text-center py-6 text-xs text-[#9BA7B8]">No tasks</div>
               )}
             </div>
           );

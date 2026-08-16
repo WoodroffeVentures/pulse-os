@@ -78,18 +78,18 @@ function CreateTaskModal({ orgId, properties, onClose, onSaved }: {
       <div className="w-full max-w-md bg-[#08111f] border border-white/10 rounded-xl shadow-2xl">
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
           <h2 className="text-sm font-semibold text-[#E6EDF5]">New Housekeeping Task</h2>
-          <button onClick={onClose} className="text-[#617089] hover:text-[#E6EDF5]"><X className="w-4 h-4" /></button>
+          <button onClick={onClose} className="text-[#9BA7B8] hover:text-[#E6EDF5]"><X className="w-4 h-4" /></button>
         </div>
         <div className="px-5 py-4 space-y-3">
           {error && <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded px-3 py-2">{error}</p>}
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Task Title *</label>
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Task Title *</label>
             <input value={form.title} onChange={e => set('title', e.target.value)}
-              className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+              className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
               placeholder="e.g. Clean and prepare cottage" />
           </div>
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Property</label>
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Property</label>
             <select value={form.property_id} onChange={e => set('property_id', e.target.value)}
               className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40">
               <option value="">All properties</option>
@@ -98,22 +98,22 @@ function CreateTaskModal({ orgId, properties, onClose, onSaved }: {
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Priority</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Priority</label>
               <select value={form.priority} onChange={e => set('priority', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40">
                 {PRIORITIES.map(p => <option key={p} value={p}>{p.charAt(0).toUpperCase() + p.slice(1)}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Due Date</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Due Date</label>
               <input type="date" value={form.due_at} onChange={e => set('due_at', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40" />
             </div>
           </div>
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Notes</label>
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Notes</label>
             <textarea value={form.notes} onChange={e => set('notes', e.target.value)} rows={2}
-              className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40 resize-none"
+              className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40 resize-none"
               placeholder="Optional instructions…" />
           </div>
         </div>
@@ -159,7 +159,7 @@ export default function HousekeepingPage() {
     if (!error && data) setTasks(prev => prev.map(t => t.id === task.id ? data as Task : t));
   }
 
-  if (loading) return <div className="p-6 text-[#617089] text-sm">Loading…</div>;
+  if (loading) return <div className="p-6 text-[#9BA7B8] text-sm">Loading…</div>;
 
   const displayed = filter === 'all' ? tasks : tasks.filter(t => t.status === filter);
   const open = tasks.filter(t => t.status !== 'completed').length;
@@ -191,15 +191,15 @@ export default function HousekeepingPage() {
 
       <div className="grid grid-cols-3 gap-4">
         <div className="rounded-xl border border-white/10 bg-[#08111f] p-4">
-          <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Open Tasks</div>
+          <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Open Tasks</div>
           <div className="text-2xl font-mono font-semibold text-[#E6EDF5]">{open}</div>
         </div>
         <div className="rounded-xl border border-white/10 bg-[#08111f] p-4">
-          <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Overdue</div>
+          <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Overdue</div>
           <div className="text-2xl font-mono font-semibold text-[#D45D5D]">{overdue}</div>
         </div>
         <div className="rounded-xl border border-white/10 bg-[#08111f] p-4">
-          <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Completed</div>
+          <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Completed</div>
           <div className="text-2xl font-mono font-semibold text-[#2BB8A5]">{tasks.filter(t => t.status === 'completed').length}</div>
         </div>
       </div>
@@ -207,20 +207,20 @@ export default function HousekeepingPage() {
       <div className="flex gap-2 flex-wrap">
         {['all', ...STATUSES].map(s => (
           <button key={s} onClick={() => setFilter(s)}
-            className={`px-3 py-1.5 text-xs rounded border transition-colors ${filter === s ? 'bg-[#C6A66B]/10 text-[#C6A66B] border-[#C6A66B]/30' : 'text-[#617089] border-white/10 hover:border-white/20'}`}>
+            className={`px-3 py-1.5 text-xs rounded border transition-colors ${filter === s ? 'bg-[#C6A66B]/10 text-[#C6A66B] border-[#C6A66B]/30' : 'text-[#9BA7B8] border-white/10 hover:border-white/20'}`}>
             {s === 'all' ? 'All' : s.replace('_', ' ')}
           </button>
         ))}
       </div>
 
-      {fetching && <div className="text-[#617089] text-sm">Loading…</div>}
+      {fetching && <div className="text-[#9BA7B8] text-sm">Loading…</div>}
 
       {!fetching && displayed.length === 0 && (
         <div className="flex flex-col items-center justify-center h-48 gap-3 rounded-xl border border-dashed border-white/10">
-          <Home className="w-8 h-8 text-[#374151]" />
+          <Home className="w-8 h-8 text-[#9BA7B8]" />
           <div className="text-center">
             <p className="text-sm text-[#9BA7B8]">{filter === 'all' ? 'No housekeeping tasks yet' : `No ${filter.replace('_', ' ')} tasks`}</p>
-            <p className="text-xs text-[#617089] mt-1">Tasks are linked to properties and tracked from creation to completion.</p>
+            <p className="text-xs text-[#9BA7B8] mt-1">Tasks are linked to properties and tracked from creation to completion.</p>
           </div>
           <button onClick={() => setCreating(true)} className="text-xs text-[#C6A66B] border border-[#C6A66B]/30 rounded px-3 py-1.5 hover:bg-[#C6A66B]/10">
             Create first task
@@ -237,18 +237,18 @@ export default function HousekeepingPage() {
                   ? <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                   : task.status === 'overdue'
                   ? <AlertCircle className="w-4 h-4 text-[#D45D5D]" />
-                  : <Clock className="w-4 h-4 text-[#617089]" />
+                  : <Clock className="w-4 h-4 text-[#9BA7B8]" />
                 }
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className={`text-sm font-medium ${task.status === 'completed' ? 'text-[#617089] line-through' : 'text-[#E6EDF5]'}`}>
+                  <span className={`text-sm font-medium ${task.status === 'completed' ? 'text-[#9BA7B8] line-through' : 'text-[#E6EDF5]'}`}>
                     {task.title}
                   </span>
                   <PriorityDot p={task.priority} />
                   <StatusChip s={task.status} />
                 </div>
-                <div className="flex items-center gap-3 mt-1 text-[10px] text-[#617089]">
+                <div className="flex items-center gap-3 mt-1 text-[10px] text-[#9BA7B8]">
                   <span>{propName(task.property_id)}</span>
                   {task.due_at && <span>Due {new Date(task.due_at).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' })}</span>}
                 </div>
@@ -269,7 +269,7 @@ export default function HousekeepingPage() {
                 )}
                 {task.status === 'completed' && (
                   <button onClick={() => markStatus(task, 'pending')}
-                    className="text-[10px] px-2 py-1 rounded border border-white/10 text-[#617089] hover:text-[#9BA7B8]">
+                    className="text-[10px] px-2 py-1 rounded border border-white/10 text-[#9BA7B8] hover:text-[#9BA7B8]">
                     Reopen
                   </button>
                 )}

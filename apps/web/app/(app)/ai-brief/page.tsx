@@ -82,12 +82,12 @@ export default function AiBriefPage() {
               <div className="flex items-center justify-between gap-3">
                 <div>
                   <div className="text-sm font-semibold text-[#E6EDF5]">{item.title}</div>
-                  <div className="mt-1 text-xs text-[#617089]">{item.property}</div>
+                  <div className="mt-1 text-xs text-[#9BA7B8]">{item.property}</div>
                 </div>
                 <StatusBadge status={item.risk} />
               </div>
               <p className="mt-2 text-xs leading-5 text-[#9BA7B8]">{item.action}</p>
-              <div className="mt-2 text-[10px] uppercase tracking-widest text-[#617089]">{item.confidence}% confidence · approval required</div>
+              <div className="mt-2 text-[10px] uppercase tracking-widest text-[#9BA7B8]">{item.confidence}% confidence · approval required</div>
             </div>
           ))}
         </div>

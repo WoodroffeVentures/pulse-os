@@ -48,7 +48,7 @@ export default function GuestsPage() {
             placeholder="Search guests..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="bg-transparent text-xs text-[#f1f5f9] placeholder:text-[#374151] outline-none w-48"
+            className="bg-transparent text-xs text-[#f1f5f9] placeholder:text-[#9BA7B8] outline-none w-48"
           />
         </div>
       </div>

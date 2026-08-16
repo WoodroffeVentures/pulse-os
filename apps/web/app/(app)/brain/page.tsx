@@ -40,12 +40,12 @@ export default function BrainPage() {
       </div>
 
       <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-[#08111f] px-3 py-2">
-        <Search className="h-4 w-4 text-[#617089]" />
+        <Search className="h-4 w-4 text-[#9BA7B8]" />
         <input
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search Farmstead knowledge..."
-          className="w-full bg-transparent text-sm text-[#E6EDF5] outline-none placeholder:text-[#617089]"
+          className="w-full bg-transparent text-sm text-[#E6EDF5] outline-none placeholder:text-[#9BA7B8]"
         />
       </div>
 
@@ -57,7 +57,7 @@ export default function BrainPage() {
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <h2 className="text-sm font-semibold text-[#E6EDF5]">{entry.title}</h2>
-                  <div className="mt-1 text-xs text-[#617089]">{property?.name ?? 'Portfolio-wide'}</div>
+                  <div className="mt-1 text-xs text-[#9BA7B8]">{property?.name ?? 'Portfolio-wide'}</div>
                 </div>
                 <StatusBadge status={entry.guest_visible ? 'active' : 'draft'} />
               </div>

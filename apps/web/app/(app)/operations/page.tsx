@@ -166,7 +166,7 @@ export default function OperationsPage() {
                 </div>
               </div>
               {catTasks.length === 0 ? (
-                <div className="px-4 py-4 text-xs text-[#374151] text-center">All clear</div>
+                <div className="px-4 py-4 text-xs text-[#9BA7B8] text-center">All clear</div>
               ) : (
                 <div className="divide-y divide-[#1e2028]">
                   {catTasks.map((task: any) => (

@@ -171,7 +171,7 @@ export default function ReservationCalendarPage() {
                         isToday ? 'bg-[#C6A66B]/10' : isWeekend ? 'bg-[#08111f]' : ''
                       }`}
                     >
-                      <div className={`text-[9px] font-medium ${isToday ? 'text-[#C6A66B]' : 'text-[#374151]'}`}>{dayName}</div>
+                      <div className={`text-[9px] font-medium ${isToday ? 'text-[#C6A66B]' : 'text-[#9BA7B8]'}`}>{dayName}</div>
                       <div className={`text-xs font-bold ${isToday ? 'text-[#C6A66B]' : isWeekend ? 'text-[#94a3b8]' : 'text-[#64748b]'}`}>{dayNum}</div>
                     </th>
                   );
@@ -570,12 +570,12 @@ function NewReservationModal({ properties, onClose, onCreated }: {
           <div className="grid grid-cols-2 gap-3">
             <Field label="Guest name">
               <input required value={form.guest_name} onChange={(e) => setForm(f => ({ ...f, guest_name: e.target.value }))}
-                className="w-full bg-[#111318] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-2 outline-none placeholder:text-[#374151]"
+                className="w-full bg-[#111318] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-2 outline-none placeholder:text-[#9BA7B8]"
                 placeholder="Full name" />
             </Field>
             <Field label="Email">
               <input type="email" value={form.guest_email} onChange={(e) => setForm(f => ({ ...f, guest_email: e.target.value }))}
-                className="w-full bg-[#111318] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-2 outline-none placeholder:text-[#374151]"
+                className="w-full bg-[#111318] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-2 outline-none placeholder:text-[#9BA7B8]"
                 placeholder="guest@email.com" />
             </Field>
           </div>
@@ -625,7 +625,7 @@ function NewReservationModal({ properties, onClose, onCreated }: {
           {/* Special requests */}
           <Field label="Special requests">
             <textarea value={form.special_requests} onChange={(e) => setForm(f => ({ ...f, special_requests: e.target.value }))}
-              className="w-full bg-[#111318] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-2 outline-none placeholder:text-[#374151] resize-none"
+              className="w-full bg-[#111318] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-2 outline-none placeholder:text-[#9BA7B8] resize-none"
               rows={2} placeholder="Any special requests or notes..." />
           </Field>
 

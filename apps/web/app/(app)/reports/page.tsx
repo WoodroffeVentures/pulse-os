@@ -276,13 +276,13 @@ ${parts.map((r: any) => {
       <div className="grid gap-3 sm:grid-cols-2">
         {REPORTS.map(r => (
           <div key={r.id} className="rounded-xl border border-white/10 bg-[#08111f] p-4 flex items-start gap-4">
-            <FileText className="w-5 h-5 text-[#617089] flex-shrink-0 mt-0.5" />
+            <FileText className="w-5 h-5 text-[#9BA7B8] flex-shrink-0 mt-0.5" />
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-2 mb-1">
                 <span className="text-sm font-semibold text-[#E6EDF5]">{r.title}</span>
                 {r.live
                   ? <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 uppercase tracking-widest">Live</span>
-                  : <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-[#617089] border border-white/10 uppercase tracking-widest">Later</span>
+                  : <span className="text-[10px] px-2 py-0.5 rounded bg-white/5 text-[#9BA7B8] border border-white/10 uppercase tracking-widest">Later</span>
                 }
               </div>
               <p className="text-xs text-[#9BA7B8] mb-3">{r.description}</p>
@@ -299,7 +299,7 @@ ${parts.map((r: any) => {
         ))}
       </div>
 
-      <div className="text-[10px] text-[#374151] text-center tracking-widest py-2">
+      <div className="text-[10px] text-[#9BA7B8] text-center tracking-widest py-2">
         ALL REPORTS FROM {orgName?.toUpperCase() ?? 'YOUR'} PRODUCTION DATABASE · NO EXTERNAL REPORT SERVICE · PRINT TO PDF VIA BROWSER
       </div>
     </div>

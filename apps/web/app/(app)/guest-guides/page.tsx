@@ -44,7 +44,7 @@ export default function GuestGuidesPage() {
                 {entries.map((entry: any) => (
                   <div key={entry.id} className="rounded border border-white/10 bg-[#020912] px-3 py-2">
                     <div className="text-xs font-medium text-[#E6EDF5]">{entry.title}</div>
-                    <div className="mt-1 text-[10px] uppercase tracking-widest text-[#617089]">{entry.category}</div>
+                    <div className="mt-1 text-[10px] uppercase tracking-widest text-[#9BA7B8]">{entry.category}</div>
                   </div>
                 ))}
               </div>

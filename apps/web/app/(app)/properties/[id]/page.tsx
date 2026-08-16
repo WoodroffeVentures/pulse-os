@@ -37,7 +37,7 @@ export default function PropertyDetailPage({
   }, [id]);
 
   if (!property) {
-    return <div className="p-6 text-[#617089] text-sm">Loading…</div>;
+    return <div className="p-6 text-[#9BA7B8] text-sm">Loading…</div>;
   }
 
   const revenue = bookings.reduce((sum: number, b: any) => sum + (b.total_amount ?? 0), 0);
@@ -64,7 +64,7 @@ export default function PropertyDetailPage({
         ].map(([label, value, Icon]) => (
           <div key={label as string} className="rounded-lg border border-white/10 bg-[#08111f] p-4">
             <Icon className="h-4 w-4 text-[#C6A66B]" />
-            <div className="mt-3 text-[10px] uppercase tracking-widest text-[#617089]">{label as string}</div>
+            <div className="mt-3 text-[10px] uppercase tracking-widest text-[#9BA7B8]">{label as string}</div>
             <div className="mt-1 font-mono text-lg text-[#E6EDF5]">{value as string}</div>
           </div>
         ))}
@@ -80,7 +80,7 @@ export default function PropertyDetailPage({
               <div key={task.id} className="flex items-center justify-between gap-3 px-4 py-3">
                 <div>
                   <div className="text-sm text-[#E6EDF5]">{task.title}</div>
-                  <div className="mt-1 text-xs text-[#617089]">{task.category.replace(/_/g, ' ')}</div>
+                  <div className="mt-1 text-xs text-[#9BA7B8]">{task.category.replace(/_/g, ' ')}</div>
                 </div>
                 <StatusBadge status={task.status} />
               </div>
@@ -102,7 +102,7 @@ export default function PropertyDetailPage({
                 <p className="mt-2 text-xs leading-5 text-[#9BA7B8]">{review.review_text}</p>
               </div>
             ))}
-            {reviews.length === 0 && <div className="px-4 py-6 text-sm text-[#617089]">No reviews loaded yet.</div>}
+            {reviews.length === 0 && <div className="px-4 py-6 text-sm text-[#9BA7B8]">No reviews loaded yet.</div>}
           </div>
         </section>
       </div>
@@ -126,7 +126,7 @@ export default function PropertyDetailPage({
               {entries.map((entry: any) => (
                 <div key={entry.id} className="rounded border border-white/10 bg-[#020912] px-3 py-2">
                   <div className="text-xs text-[#E6EDF5]">{entry.title}</div>
-                  <div className="mt-1 text-[10px] uppercase tracking-widest text-[#617089]">
+                  <div className="mt-1 text-[10px] uppercase tracking-widest text-[#9BA7B8]">
                     {entry.guest_visible ? 'Guest visible' : 'Internal only'}
                   </div>
                 </div>

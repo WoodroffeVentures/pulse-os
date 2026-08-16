@@ -69,18 +69,18 @@ function RecordOutcomeModal({ record, onClose, onSaved }: {
       <div className="w-full max-w-md bg-[#08111f] border border-white/10 rounded-xl shadow-2xl">
         <div className="flex items-center justify-between px-5 py-4 border-b border-white/10">
           <h2 className="text-sm font-semibold text-[#E6EDF5]">Record Outcome</h2>
-          <button onClick={onClose} className="text-[#617089] hover:text-[#E6EDF5]"><X className="w-4 h-4" /></button>
+          <button onClick={onClose} className="text-[#9BA7B8] hover:text-[#E6EDF5]"><X className="w-4 h-4" /></button>
         </div>
         <div className="px-5 py-4 space-y-4">
           {error && <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded px-3 py-2">{error}</p>}
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Outcome Description</label>
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Outcome Description</label>
             <textarea value={text} onChange={e => setText(e.target.value)} rows={3}
-              className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40 resize-none"
+              className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40 resize-none"
               placeholder="Describe what was achieved…" />
           </div>
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-2">Evidence Type</label>
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-2">Evidence Type</label>
             <div className="flex gap-3">
               <label className="flex items-center gap-2 text-xs text-[#9BA7B8] cursor-pointer">
                 <input type="radio" checked={selfReported} onChange={() => setSelfReported(true)} className="accent-[#C6A66B]" />
@@ -134,7 +134,7 @@ export default function OutcomesPage() {
 
   useEffect(() => { if (orgId) load(orgId); }, [orgId, load]);
 
-  if (loading) return <div className="p-6 text-[#617089] text-sm">Loading…</div>;
+  if (loading) return <div className="p-6 text-[#9BA7B8] text-sm">Loading…</div>;
 
   const completedMilestones = records.flatMap(r => (r.evidence?.milestones ?? []).filter(m => m.completed));
   const totalMilestones = records.flatMap(r => r.evidence?.milestones ?? []);
@@ -163,28 +163,28 @@ export default function OutcomesPage() {
       {records.length > 0 && (
         <div className="grid grid-cols-3 gap-4">
           <div className="rounded-xl border border-white/10 bg-[#08111f] p-4">
-            <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Milestones Complete</div>
-            <div className="text-2xl font-mono font-semibold text-emerald-400">{completedMilestones.length}<span className="text-sm text-[#617089] ml-1">/ {totalMilestones.length}</span></div>
+            <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Milestones Complete</div>
+            <div className="text-2xl font-mono font-semibold text-emerald-400">{completedMilestones.length}<span className="text-sm text-[#9BA7B8] ml-1">/ {totalMilestones.length}</span></div>
           </div>
           <div className="rounded-xl border border-white/10 bg-[#08111f] p-4">
-            <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Outcomes Recorded</div>
+            <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Outcomes Recorded</div>
             <div className="text-2xl font-mono font-semibold text-[#C6A66B]">{totalOutcomes.length}</div>
           </div>
           <div className="rounded-xl border border-white/10 bg-[#08111f] p-4">
-            <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Evidence-Confirmed</div>
+            <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Evidence-Confirmed</div>
             <div className="text-2xl font-mono font-semibold text-purple-400">{totalOutcomes.filter(o => !o.self_reported).length}</div>
           </div>
         </div>
       )}
 
-      {fetching && <div className="text-[#617089] text-sm">Loading…</div>}
+      {fetching && <div className="text-[#9BA7B8] text-sm">Loading…</div>}
 
       {!fetching && records.length === 0 && (
         <div className="flex flex-col items-center justify-center h-48 gap-3 rounded-xl border border-dashed border-white/10">
-          <TrendingUp className="w-8 h-8 text-[#374151]" />
+          <TrendingUp className="w-8 h-8 text-[#9BA7B8]" />
           <div className="text-center">
             <p className="text-sm text-[#9BA7B8]">No participation records yet</p>
-            <p className="text-xs text-[#617089] mt-1">Record participation decisions first, then capture outcomes here</p>
+            <p className="text-xs text-[#9BA7B8] mt-1">Record participation decisions first, then capture outcomes here</p>
           </div>
         </div>
       )}
@@ -212,19 +212,19 @@ export default function OutcomesPage() {
 
               {milestones.length > 0 && (
                 <div className="space-y-2">
-                  <div className="text-[10px] uppercase tracking-widest text-[#617089]">Milestones</div>
+                  <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8]">Milestones</div>
                   {milestones.map(m => (
                     <div key={m.id} className="flex items-center gap-2 text-xs">
                       {m.completed
                         ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 flex-shrink-0" />
-                        : <Clock className="w-3.5 h-3.5 text-[#374151] flex-shrink-0" />
+                        : <Clock className="w-3.5 h-3.5 text-[#9BA7B8] flex-shrink-0" />
                       }
-                      <span className={m.completed ? 'text-[#617089] line-through' : 'text-[#9BA7B8]'}>{m.title}</span>
+                      <span className={m.completed ? 'text-[#9BA7B8] line-through' : 'text-[#9BA7B8]'}>{m.title}</span>
                       {m.completed && m.completed_at && (
                         <span className="text-[10px] text-emerald-400 ml-auto">{new Date(m.completed_at).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' })}</span>
                       )}
                       {!m.completed && m.target_date && (
-                        <span className="text-[10px] text-[#374151] ml-auto">Target: {new Date(m.target_date).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' })}</span>
+                        <span className="text-[10px] text-[#9BA7B8] ml-auto">Target: {new Date(m.target_date).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short' })}</span>
                       )}
                     </div>
                   ))}
@@ -233,7 +233,7 @@ export default function OutcomesPage() {
 
               {outcomes.length > 0 && (
                 <div className="space-y-2">
-                  <div className="text-[10px] uppercase tracking-widest text-[#617089]">Recorded Outcomes</div>
+                  <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8]">Recorded Outcomes</div>
                   {outcomes.map((o, i) => (
                     <div key={i} className="flex items-start gap-2 text-xs p-2 rounded border border-white/5 bg-black/20">
                       {o.self_reported
@@ -242,7 +242,7 @@ export default function OutcomesPage() {
                       }
                       <div className="flex-1">
                         <p className="text-[#E6EDF5]">{o.text}</p>
-                        <p className="text-[10px] text-[#617089] mt-0.5">
+                        <p className="text-[10px] text-[#9BA7B8] mt-0.5">
                           {o.self_reported ? 'Self-reported' : 'Evidence-confirmed'} · {new Date(o.recorded_at).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })}
                         </p>
                       </div>
@@ -256,7 +256,7 @@ export default function OutcomesPage() {
       </div>
 
       {records.length > 0 && (
-        <div className="text-[10px] text-[#374151] text-center tracking-widest py-2">
+        <div className="text-[10px] text-[#9BA7B8] text-center tracking-widest py-2">
           VERIFIED OUTCOMES CREATE THE DATASET FOR FUTURE RECOMMENDATION IMPROVEMENTS · NO ECONOMIC VALUES FABRICATED
         </div>
       )}

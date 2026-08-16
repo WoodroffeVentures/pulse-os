@@ -245,12 +245,12 @@ function ICalPanel() {
           <input
             type="url"
             placeholder="https://www.airbnb.com/calendar/ical/XXXXXXXX.ics"
-            className="flex-1 bg-[#0d1117] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-1.5 outline-none placeholder:text-[#374151]"
+            className="flex-1 bg-[#0d1117] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-1.5 outline-none placeholder:text-[#9BA7B8]"
           />
           <input
             type="text"
             placeholder="Feed name"
-            className="w-40 bg-[#0d1117] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-1.5 outline-none placeholder:text-[#374151]"
+            className="w-40 bg-[#0d1117] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-1.5 outline-none placeholder:text-[#9BA7B8]"
           />
           <button className="px-3 py-1.5 bg-[#C6A66B] text-[#020912] text-xs font-semibold rounded hover:bg-[#D4B47A] transition-colors">
             Add Feed

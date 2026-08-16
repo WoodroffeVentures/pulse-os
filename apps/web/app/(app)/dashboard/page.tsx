@@ -271,7 +271,7 @@ export default function DashboardPage() {
                     {o.readiness_score !== null && (
                       <span className="text-xs font-bold text-[#C6A66B]">{Math.round(o.readiness_score)}</span>
                     )}
-                    <ArrowRight className="w-3 h-3 text-[#374151]" />
+                    <ArrowRight className="w-3 h-3 text-[#9BA7B8]" />
                   </div>
                 </a>
               );
@@ -336,7 +336,7 @@ export default function DashboardPage() {
                 className={`flex flex-col items-center gap-1.5 p-3 rounded-lg border text-center transition-colors ${step.done ? 'border-emerald-500/20 bg-emerald-500/5' : 'border-white/10 hover:border-[#C6A66B]/30'}`}>
                 {step.done
                   ? <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                  : <Circle className="w-4 h-4 text-[#374151]" />
+                  : <Circle className="w-4 h-4 text-[#9BA7B8]" />
                 }
                 <span className={`text-[10px] font-medium leading-tight ${step.done ? 'text-emerald-400' : 'text-[#9BA7B8]'}`}>{step.label}</span>
               </a>

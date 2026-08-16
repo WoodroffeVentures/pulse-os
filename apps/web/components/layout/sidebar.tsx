@@ -181,7 +181,7 @@ export function Sidebar() {
       >
         <button
           onClick={closeMobile}
-          className="absolute top-3 right-3 p-1.5 rounded text-[#617089] hover:text-[#f1f5f9] hover:bg-[#08111f]"
+          className="absolute top-3 right-3 p-1.5 rounded text-[#9BA7B8] hover:text-[#f1f5f9] hover:bg-[#08111f]"
           aria-label="Close menu"
         >
           <X className="w-4 h-4" />

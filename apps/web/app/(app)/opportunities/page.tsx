@@ -33,7 +33,7 @@ const OPP_TYPES = [
 const OPP_STATUSES = ['Draft', 'Under Review', 'Open', 'Active', 'Completed', 'Cancelled'];
 
 const STATUS_STYLES: Record<string, string> = {
-  draft:        'text-[#617089] bg-white/5 border-white/10',
+  draft:        'text-[#9BA7B8] bg-white/5 border-white/10',
   under_review: 'text-amber-400 bg-amber-400/10 border-amber-400/20',
   open:         'text-emerald-400 bg-emerald-400/10 border-emerald-400/20',
   active:       'text-[#9B6DFF] bg-[#9B6DFF]/10 border-[#9B6DFF]/20',
@@ -44,8 +44,8 @@ const STATUS_STYLES: Record<string, string> = {
 const URGENCY_COLORS: Record<string, string> = {
   critical: 'text-red-400',
   high:     'text-amber-400',
-  normal:   'text-[#617089]',
-  low:      'text-[#374151]',
+  normal:   'text-[#9BA7B8]',
+  low:      'text-[#9BA7B8]',
 };
 
 const FILTER_TABS = ['All', 'Draft', 'Under Review', 'Open', 'Active', 'Completed'] as const;
@@ -109,33 +109,33 @@ function CreateOpportunityModal({ orgId, onClose, onCreated }: {
       <div className="w-full max-w-2xl bg-[#08111f] border border-white/10 rounded-xl shadow-2xl mb-10">
         <div className="flex items-center justify-between px-6 py-4 border-b border-white/10">
           <h2 className="text-sm font-semibold text-[#E6EDF5]">Create Opportunity</h2>
-          <button onClick={onClose} className="text-[#617089] hover:text-[#E6EDF5]"><X className="w-4 h-4" /></button>
+          <button onClick={onClose} className="text-[#9BA7B8] hover:text-[#E6EDF5]"><X className="w-4 h-4" /></button>
         </div>
         <div className="px-6 py-4 space-y-4 max-h-[75vh] overflow-y-auto">
           {error && <p className="text-xs text-red-400 bg-red-400/10 border border-red-400/20 rounded px-3 py-2">{error}</p>}
           <div className="grid gap-4 md:grid-cols-2">
             <div className="md:col-span-2">
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Title *</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Title *</label>
               <input value={form.title} onChange={e => set('title', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="e.g. Southern Drakensberg Stay & Experience Partnership" />
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Type</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Type</label>
               <select value={form.opportunity_type} onChange={e => set('opportunity_type', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40">
                 {OPP_TYPES.map(t => <option key={t}>{t}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Status</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Status</label>
               <select value={form.status} onChange={e => set('status', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40">
                 {OPP_STATUSES.map(s => <option key={s}>{s}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Urgency</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Urgency</label>
               <select value={form.urgency} onChange={e => set('urgency', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40">
                 <option value="critical">Critical</option>
@@ -145,61 +145,61 @@ function CreateOpportunityModal({ orgId, onClose, onCreated }: {
               </select>
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Visibility</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Visibility</label>
               <select value={form.visibility} onChange={e => set('visibility', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40">
                 <option>Private</option><option>Internal</option><option>Public</option>
               </select>
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">District</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">District</label>
               <input value={form.district} onChange={e => set('district', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="e.g. Underberg" />
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Province</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Province</label>
               <input value={form.province} onChange={e => set('province', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40" />
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Start Date</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Start Date</label>
               <input type="date" value={form.start_date} onChange={e => set('start_date', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40" />
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">End Date</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">End Date</label>
               <input type="date" value={form.end_date} onChange={e => set('end_date', e.target.value)}
                 className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] focus:outline-none focus:border-[#C6A66B]/40" />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Description</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Description</label>
               <textarea value={form.description} onChange={e => set('description', e.target.value)} rows={3}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40 resize-none"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40 resize-none"
                 placeholder="Describe the opportunity…" />
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Target Audience</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Target Audience</label>
               <input value={form.target_audience} onChange={e => set('target_audience', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="e.g. Leisure travellers, families" />
             </div>
             <div>
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Business Categories</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Business Categories</label>
               <input value={form.business_categories} onChange={e => set('business_categories', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="e.g. Adventure, F&B, Wellness" />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Activation Goal</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Activation Goal</label>
               <input value={form.activation_goal} onChange={e => set('activation_goal', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="What does success look like?" />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Outcome Measures</label>
+              <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Outcome Measures</label>
               <input value={form.outcome_measures} onChange={e => set('outcome_measures', e.target.value)}
-                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#374151] focus:outline-none focus:border-[#C6A66B]/40"
+                className="w-full bg-[#020912] border border-white/10 rounded px-3 py-2 text-sm text-[#E6EDF5] placeholder:text-[#9BA7B8] focus:outline-none focus:border-[#C6A66B]/40"
                 placeholder="e.g. Guest satisfaction score, bookings generated" />
             </div>
           </div>
@@ -238,11 +238,11 @@ function RadarCard({ opp, onOpen }: { opp: Opportunity; onOpen: () => void }) {
                 ▲ {pill(opp.urgency)}
               </span>
             )}
-            <span className="text-[10px] text-[#617089] uppercase tracking-widest">{opp.opportunity_type}</span>
+            <span className="text-[10px] text-[#9BA7B8] uppercase tracking-widest">{opp.opportunity_type}</span>
           </div>
           <h3 className="text-sm font-semibold text-[#E6EDF5] leading-snug">{opp.title}</h3>
           {opp.description && <p className="text-xs text-[#9BA7B8] line-clamp-1">{opp.description}</p>}
-          <div className="flex flex-wrap items-center gap-3 text-[10px] text-[#617089]">
+          <div className="flex flex-wrap items-center gap-3 text-[10px] text-[#9BA7B8]">
             {opp.district && <span>📍 {opp.district}</span>}
             {opp.start_date && <span>📅 {new Date(opp.start_date).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })}</span>}
           </div>
@@ -253,21 +253,21 @@ function RadarCard({ opp, onOpen }: { opp: Opportunity; onOpen: () => void }) {
           {opp.readiness_score !== null ? (
             <>
               <div className="text-xl font-bold text-[#C6A66B]">{Math.round(opp.readiness_score)}</div>
-              <div className="text-[9px] text-[#374151] uppercase tracking-widest">readiness</div>
+              <div className="text-[9px] text-[#9BA7B8] uppercase tracking-widest">readiness</div>
             </>
           ) : (
-            <div className="text-[9px] text-[#374151] uppercase tracking-widest">unscored</div>
+            <div className="text-[9px] text-[#9BA7B8] uppercase tracking-widest">unscored</div>
           )}
         </div>
       </div>
 
       {/* Journey progress indicators */}
       <div className="flex items-center gap-4 pt-1 border-t border-white/5">
-        <div className={`flex items-center gap-1 text-[10px] ${hasViability ? 'text-emerald-400' : 'text-[#374151]'}`}>
+        <div className={`flex items-center gap-1 text-[10px] ${hasViability ? 'text-emerald-400' : 'text-[#9BA7B8]'}`}>
           {hasViability ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
           Viability{hasViability ? ` (${opp._viability_count})` : ''}
         </div>
-        <div className={`flex items-center gap-1 text-[10px] ${hasParticipation ? 'text-emerald-400' : 'text-[#374151]'}`}>
+        <div className={`flex items-center gap-1 text-[10px] ${hasParticipation ? 'text-emerald-400' : 'text-[#9BA7B8]'}`}>
           {hasParticipation ? <CheckCircle2 className="w-3 h-3" /> : <Clock className="w-3 h-3" />}
           Participation{hasParticipation ? ` (${opp._participation_count})` : ''}
         </div>
@@ -277,7 +277,7 @@ function RadarCard({ opp, onOpen }: { opp: Opportunity; onOpen: () => void }) {
             <span className="truncate max-w-[140px]">{opp.next_decision}</span>
           </div>
         )}
-        <ArrowRight className="w-3.5 h-3.5 text-[#374151] ml-auto flex-shrink-0" />
+        <ArrowRight className="w-3.5 h-3.5 text-[#9BA7B8] ml-auto flex-shrink-0" />
       </div>
     </button>
   );
@@ -337,7 +337,7 @@ export default function OpportunityRadarPage() {
     ? opps
     : opps.filter(o => pill(o.status) === filterTab);
 
-  if (loading) return <div className="p-6 text-[#617089] text-sm">Loading…</div>;
+  if (loading) return <div className="p-6 text-[#9BA7B8] text-sm">Loading…</div>;
 
   const criticalCount = opps.filter(o => o.urgency === 'critical').length;
   const needsDecision = opps.filter(o => !o.next_decision).length;
@@ -367,7 +367,7 @@ export default function OpportunityRadarPage() {
       </div>
 
       {/* Radar legend */}
-      <div className="flex items-center gap-4 text-[10px] text-[#617089] bg-[#08111f] border border-white/5 rounded-lg px-4 py-2.5">
+      <div className="flex items-center gap-4 text-[10px] text-[#9BA7B8] bg-[#08111f] border border-white/5 rounded-lg px-4 py-2.5">
         <Zap className="w-3 h-3 text-[#C6A66B] flex-shrink-0" />
         <span>Cards ranked by urgency · Click to open Workspace · Readiness score derives from viability assessments</span>
       </div>
@@ -377,8 +377,9 @@ export default function OpportunityRadarPage() {
         {FILTER_TABS.map(t => (
           <button key={t} onClick={() => setFilterTab(t)}
             className={`px-4 py-2.5 text-xs font-semibold whitespace-nowrap border-b-2 transition-colors ${
-              filterTab === t ? 'border-[#C6A66B] text-[#C6A66B]' : 'border-transparent text-[#617089] hover:text-[#9BA7B8]'
-            }`}>
+              filterTab === t ? 'border-[#C6A66B] text-[#C6A66B]' : 'border-transparent text-[#9BA7B8] hover:text-[#9BA7B8]'
+            }`}
+          >
             {t}
             {t !== 'All' && (
               <span className="ml-1.5 text-[9px] opacity-60">
@@ -389,14 +390,14 @@ export default function OpportunityRadarPage() {
         ))}
       </div>
 
-      {fetching && <div className="text-[#617089] text-sm">Loading radar…</div>}
+      {fetching && <div className="text-[#9BA7B8] text-sm">Loading radar…</div>}
 
       {!fetching && filtered.length === 0 && (
         <div className="flex flex-col items-center justify-center h-48 gap-4 rounded-xl border border-dashed border-white/10">
-          <Target className="w-8 h-8 text-[#374151]" />
+          <Target className="w-8 h-8 text-[#9BA7B8]" />
           <div className="text-center">
             <p className="text-sm text-[#9BA7B8]">{filterTab === 'All' ? 'No opportunities yet' : `No ${filterTab} opportunities`}</p>
-            <p className="text-xs text-[#617089] mt-1">
+            <p className="text-xs text-[#9BA7B8] mt-1">
               {filterTab === 'All' ? 'Create an opportunity to start the intelligence lifecycle' : 'Change the filter to see others'}
             </p>
           </div>

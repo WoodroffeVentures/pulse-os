@@ -16,7 +16,7 @@ function StarRating({ rating }: { rating: number }) {
         <Star
           key={i}
           className={`w-3 h-3 ${
-            i <= rating ? 'fill-amber-400 text-amber-400' : 'text-[#374151]'
+            i <= rating ? 'fill-amber-400 text-amber-400' : 'text-[#9BA7B8]'
           }`}
         />
       ))}

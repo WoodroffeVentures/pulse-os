@@ -98,7 +98,7 @@ export default function BookingsPage() {
                   <StatusBadge status={src.platform} />
                   <span className="text-[10px] text-[#64748b]">{src.property}</span>
                 </div>
-                <div className="text-[10px] text-[#374151] truncate">{src.url}</div>
+                <div className="text-[10px] text-[#9BA7B8] truncate">{src.url}</div>
               </div>
               <div className="flex flex-col items-end gap-1">
                 <div className="flex items-center gap-1">
@@ -111,7 +111,7 @@ export default function BookingsPage() {
                   )}
                   <StatusBadge status={src.status} />
                 </div>
-                <span className="text-[9px] text-[#374151]">{src.lastSync}</span>
+                <span className="text-[9px] text-[#9BA7B8]">{src.lastSync}</span>
               </div>
             </div>
           ))}

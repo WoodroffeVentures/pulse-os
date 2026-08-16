@@ -220,10 +220,10 @@ export default function RatesPage() {
                     <th key={fmt(d)} className={`border-b border-r border-[#1e2028] px-1 py-1 min-w-[64px] text-center ${
                       isToday ? 'bg-[#C6A66B]/10' : isWeekend ? 'bg-[#08111f]' : ''
                     }`}>
-                      <div className={`text-[9px] ${isWeekend ? 'text-[#94a3b8]' : 'text-[#374151]'}`}>
+                      <div className={`text-[9px] ${isWeekend ? 'text-[#94a3b8]' : 'text-[#9BA7B8]'}`}>
                         {WEEKDAY_NAMES[d.getDay()]}
                       </div>
-                      <div className={`text-[10px] font-bold ${isToday ? 'text-[#C6A66B]' : isWeekend ? 'text-[#64748b]' : 'text-[#374151]'}`}>
+                      <div className={`text-[10px] font-bold ${isToday ? 'text-[#C6A66B]' : isWeekend ? 'text-[#64748b]' : 'text-[#9BA7B8]'}`}>
                         {d.getDate()}
                       </div>
                     </th>
@@ -254,13 +254,13 @@ export default function RatesPage() {
                           value={cell?.rate ?? ''}
                           placeholder="—"
                           onChange={(e) => setRate(rt.id, dStr, 'rate', parseInt(e.target.value) || 0)}
-                          className="w-full bg-transparent text-[10px] font-mono text-[#f1f5f9] text-center outline-none focus:bg-[#1e2028] rounded px-1 py-0.5 placeholder:text-[#374151]"
+                          className="w-full bg-transparent text-[10px] font-mono text-[#f1f5f9] text-center outline-none focus:bg-[#1e2028] rounded px-1 py-0.5 placeholder:text-[#9BA7B8]"
                         />
                         {/* Stop-sell toggle */}
                         <button
                           onClick={() => setRate(rt.id, dStr, 'stop_sell', !cell?.stop_sell)}
                           className={`w-full text-[9px] text-center py-0.5 rounded transition-colors ${
-                            cell?.stop_sell ? 'text-red-400 bg-red-500/20' : 'text-[#374151] hover:text-[#64748b]'
+                            cell?.stop_sell ? 'text-red-400 bg-red-500/20' : 'text-[#9BA7B8] hover:text-[#64748b]'
                           }`}
                           title="Toggle stop-sell"
                         >
@@ -292,7 +292,7 @@ export default function RatesPage() {
         <div className="flex items-center gap-1.5"><div className="w-3 h-3 bg-red-500/10 border border-red-500/20 rounded" /> Stop-sell</div>
         <div className="flex items-center gap-1.5"><div className="w-3 h-3 bg-[#08111f] rounded" /> Weekend</div>
         <div className="flex items-center gap-1.5"><div className="w-3 h-3 ring-1 ring-amber-500/40 rounded" /> Unsaved</div>
-        <div className="ml-auto flex items-center gap-1.5 text-[#374151]">
+        <div className="ml-auto flex items-center gap-1.5 text-[#9BA7B8]">
           <TrendingUp className="w-3 h-3" /> Rates shown in ZAR per night
         </div>
       </div>
@@ -356,7 +356,7 @@ function BulkRatePanel({ roomTypes, onApply, viewDays, viewStart }: {
             <label className="text-[10px] text-[#64748b] uppercase tracking-widest">Rate (ZAR)</label>
             <input type="number" value={bulkRate} onChange={(e) => setBulkRate(e.target.value)}
               placeholder="e.g. 1850"
-              className="bg-[#0d1117] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-1.5 outline-none w-28 placeholder:text-[#374151]" />
+              className="bg-[#0d1117] border border-[#1e2028] text-xs text-[#f1f5f9] rounded px-3 py-1.5 outline-none w-28 placeholder:text-[#9BA7B8]" />
           </div>
           <div className="space-y-1">
             <label className="text-[10px] text-[#64748b] uppercase tracking-widest">Apply To Days</label>

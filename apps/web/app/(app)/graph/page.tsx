@@ -50,7 +50,7 @@ function NodeBadge({ label, value, color }: { label: string; value: string; colo
     <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-white/10 bg-[#020912]">
       <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: color ?? '#617089' }} />
       <div>
-        <div className="text-[9px] uppercase tracking-widest text-[#374151]">{label}</div>
+        <div className="text-[9px] uppercase tracking-widest text-[#9BA7B8]">{label}</div>
         <div className="text-xs text-[#E6EDF5] font-medium truncate max-w-[160px]">{value}</div>
       </div>
     </div>
@@ -61,8 +61,8 @@ function RelationshipRow({ label }: { label: string }) {
   return (
     <div className="flex items-center gap-2 py-1 px-2">
       <div className="flex-1 h-px bg-white/10" />
-      <span className="text-[9px] uppercase tracking-widest text-[#374151]">{label}</span>
-      <ArrowRight className="w-3 h-3 text-[#374151]" />
+      <span className="text-[9px] uppercase tracking-widest text-[#9BA7B8]">{label}</span>
+      <ArrowRight className="w-3 h-3 text-[#9BA7B8]" />
     </div>
   );
 }
@@ -95,21 +95,21 @@ function GraphNode({ record, business, opportunity, viability }: {
             >
               {decision ?? record.status}
             </span>
-            {viability && <span className="text-[10px] text-[#617089]">Score {viability.score}</span>}
+            {viability && <span className="text-[10px] text-[#9BA7B8]">Score {viability.score}</span>}
           </div>
           <p className="text-sm font-semibold text-[#E6EDF5] truncate">{opportunity?.title ?? `Opp ${record.opportunity_id.slice(0, 8)}…`}</p>
           <p className="text-xs text-[#9BA7B8]">{business?.business_name ?? `Biz ${record.business_profile_id.slice(0, 8)}…`}</p>
-          <div className="flex items-center gap-3 mt-1 text-[10px] text-[#617089]">
+          <div className="flex items-center gap-3 mt-1 text-[10px] text-[#9BA7B8]">
             {milestones.length > 0 && <span>{completedMs.length}/{milestones.length} milestones</span>}
             {outcomes.length > 0 && <span>{outcomes.length} outcome{outcomes.length !== 1 ? 's' : ''}</span>}
           </div>
         </div>
-        {expanded ? <ChevronUp className="w-4 h-4 text-[#617089] flex-shrink-0" /> : <ChevronDown className="w-4 h-4 text-[#617089] flex-shrink-0" />}
+        {expanded ? <ChevronUp className="w-4 h-4 text-[#9BA7B8] flex-shrink-0" /> : <ChevronDown className="w-4 h-4 text-[#9BA7B8] flex-shrink-0" />}
       </button>
 
       {expanded && (
         <div className="border-t border-white/10 px-4 py-4 space-y-4">
-          <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-2">Relationship Chain</div>
+          <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-2">Relationship Chain</div>
 
           <div className="space-y-1">
             {business && (
@@ -147,9 +147,9 @@ function GraphNode({ record, business, opportunity, viability }: {
                   <div key={m.id} className="flex items-center gap-2 text-xs">
                     {m.completed
                       ? <CheckCircle2 className="w-3 h-3 text-emerald-400 flex-shrink-0" />
-                      : <Clock className="w-3 h-3 text-[#374151] flex-shrink-0" />
+                      : <Clock className="w-3 h-3 text-[#9BA7B8] flex-shrink-0" />
                     }
-                    <span className={m.completed ? 'text-[#617089]' : 'text-[#9BA7B8]'}>{m.title}</span>
+                    <span className={m.completed ? 'text-[#9BA7B8]' : 'text-[#9BA7B8]'}>{m.title}</span>
                   </div>
                 ))}
               </div>
@@ -170,7 +170,7 @@ function GraphNode({ record, business, opportunity, viability }: {
             </div>
           )}
 
-          <div className="pt-2 border-t border-white/10 flex items-center gap-4 text-[10px] text-[#374151]">
+          <div className="pt-2 border-t border-white/10 flex items-center gap-4 text-[10px] text-[#9BA7B8]">
             <span>ID: {record.id.slice(0, 8)}…</span>
             <span>Created: {new Date(record.created_at).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
           </div>
@@ -179,7 +179,7 @@ function GraphNode({ record, business, opportunity, viability }: {
             <a href={`/participation`} className="text-xs text-[#C6A66B] hover:underline flex items-center gap-1">
               Participation record <ArrowRight className="w-3 h-3" />
             </a>
-            <a href={`/outcomes`} className="text-xs text-[#617089] hover:underline flex items-center gap-1">
+            <a href={`/outcomes`} className="text-xs text-[#9BA7B8] hover:underline flex items-center gap-1">
               Outcomes <ArrowRight className="w-3 h-3" />
             </a>
           </div>
@@ -215,7 +215,7 @@ export default function GraphPage() {
 
   useEffect(() => { if (orgId) load(orgId); }, [orgId, load]);
 
-  if (loading) return <div className="p-6 text-[#617089] text-sm">Loading…</div>;
+  if (loading) return <div className="p-6 text-[#9BA7B8] text-sm">Loading…</div>;
 
   const byDecision = records.reduce<Record<string, number>>((acc, r) => {
     const k = r.evidence?.decision ?? r.status;
@@ -237,26 +237,26 @@ export default function GraphPage() {
           {Object.entries(byDecision).map(([decision, count]) => (
             <div key={decision} className="flex items-center gap-2 rounded-lg border border-white/10 bg-[#08111f] px-3 py-2">
               <div className="w-2 h-2 rounded-full" style={{ background: DECISION_COLORS[decision] ?? STATUS_COLOR[decision] ?? '#617089' }} />
-              <span className="text-[10px] uppercase tracking-widest text-[#617089]">{decision.replace(/_/g, ' ')}</span>
+              <span className="text-[10px] uppercase tracking-widest text-[#9BA7B8]">{decision.replace(/_/g, ' ')}</span>
               <span className="text-sm font-mono font-semibold text-[#E6EDF5]">{count}</span>
             </div>
           ))}
           <div className="flex items-center gap-2 rounded-lg border border-white/10 bg-[#08111f] px-3 py-2">
-            <span className="text-[10px] uppercase tracking-widest text-[#617089]">Assessments</span>
+            <span className="text-[10px] uppercase tracking-widest text-[#9BA7B8]">Assessments</span>
             <span className="text-sm font-mono font-semibold text-[#E6EDF5]">{analyses.length}</span>
           </div>
         </div>
       )}
 
-      {fetching && <div className="text-[#617089] text-sm">Loading…</div>}
+      {fetching && <div className="text-[#9BA7B8] text-sm">Loading…</div>}
 
       {!fetching && records.length === 0 && (
         <div className="flex flex-col items-center justify-center h-64 gap-4 rounded-xl border border-dashed border-white/10">
-          <Map className="w-10 h-10 text-[#374151]" />
+          <Map className="w-10 h-10 text-[#9BA7B8]" />
           <div className="text-center space-y-1">
             <p className="text-sm text-[#9BA7B8]">No participation records yet</p>
-            <p className="text-xs text-[#617089]">The graph is generated from real database relationships.</p>
-            <p className="text-xs text-[#617089]">Start by creating a business profile, an opportunity, a viability assessment, and a participation decision.</p>
+            <p className="text-xs text-[#9BA7B8]">The graph is generated from real database relationships.</p>
+            <p className="text-xs text-[#9BA7B8]">Start by creating a business profile, an opportunity, a viability assessment, and a participation decision.</p>
           </div>
           <div className="flex gap-3 flex-wrap justify-center">
             <a href="/businesses" className="text-xs text-[#C6A66B] border border-[#C6A66B]/30 rounded px-3 py-1.5 hover:bg-[#C6A66B]/10">Add Business</a>
@@ -268,7 +268,7 @@ export default function GraphPage() {
 
       {records.length > 0 && (
         <div className="space-y-3">
-          <div className="text-[10px] uppercase tracking-widest text-[#617089] px-1">
+          <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] px-1">
             {records.length} participation record{records.length !== 1 ? 's' : ''} — click any row to expand the full relationship chain
           </div>
           {records.map(r => (
@@ -284,7 +284,7 @@ export default function GraphPage() {
       )}
 
       {records.length > 0 && (
-        <div className="text-[10px] text-[#374151] text-center tracking-widest py-2">
+        <div className="text-[10px] text-[#9BA7B8] text-center tracking-widest py-2">
           ALL NODES DERIVED FROM {orgName?.toUpperCase() ?? 'YOUR'} PRODUCTION DATABASE · VERIFIED OUTCOMES IMPROVE FUTURE RECOMMENDATIONS
         </div>
       )}

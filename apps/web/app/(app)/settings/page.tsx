@@ -11,12 +11,12 @@ function StatusRow({ label, status, detail }: { label: string; status: StatusLev
     connected:      { icon: CheckCircle2, color: 'text-emerald-400', badge: 'Connected' },
     manual:         { icon: MinusCircle,  color: 'text-[#C6A66B]',   badge: 'Manual / Partial' },
     error:          { icon: AlertCircle,  color: 'text-[#D45D5D]',   badge: 'Error' },
-    not_configured: { icon: MinusCircle,  color: 'text-[#617089]',   badge: 'Not Configured' },
+    not_configured: { icon: MinusCircle,  color: 'text-[#9BA7B8]',   badge: 'Not Configured' },
   };
   const { icon: Icon, color, badge } = cfg[status];
   return (
     <div className="grid gap-2 px-4 py-3 md:grid-cols-[220px_1fr_160px] items-center">
-      <div className="text-xs uppercase tracking-widest text-[#617089]">{label}</div>
+      <div className="text-xs uppercase tracking-widest text-[#9BA7B8]">{label}</div>
       <div className="text-sm text-[#9BA7B8]">{detail}</div>
       <div className={`flex items-center gap-1.5 text-xs font-semibold ${color}`}>
         <Icon className="w-3.5 h-3.5" />
@@ -66,23 +66,23 @@ export default function SettingsPage() {
         </div>
         <div className="divide-y divide-white/10">
           <div className="grid gap-2 px-4 py-3 md:grid-cols-[220px_1fr]">
-            <div className="text-xs uppercase tracking-widest text-[#617089]">Name</div>
+            <div className="text-xs uppercase tracking-widest text-[#9BA7B8]">Name</div>
             <div className="text-sm text-[#E6EDF5]">{loading ? '…' : (orgName ?? 'Not resolved')}</div>
           </div>
           <div className="grid gap-2 px-4 py-3 md:grid-cols-[220px_1fr]">
-            <div className="text-xs uppercase tracking-widest text-[#617089]">Plan</div>
+            <div className="text-xs uppercase tracking-widest text-[#9BA7B8]">Plan</div>
             <div className="text-sm text-[#E6EDF5]">{orgPlan ?? 'Pilot'}</div>
           </div>
           <div className="grid gap-2 px-4 py-3 md:grid-cols-[220px_1fr]">
-            <div className="text-xs uppercase tracking-widest text-[#617089]">User</div>
+            <div className="text-xs uppercase tracking-widest text-[#9BA7B8]">User</div>
             <div className="text-sm text-[#E6EDF5]">{user?.email ?? '—'}</div>
           </div>
           <div className="grid gap-2 px-4 py-3 md:grid-cols-[220px_1fr]">
-            <div className="text-xs uppercase tracking-widest text-[#617089]">Currency</div>
+            <div className="text-xs uppercase tracking-widest text-[#9BA7B8]">Currency</div>
             <div className="text-sm text-[#E6EDF5]">ZAR</div>
           </div>
           <div className="grid gap-2 px-4 py-3 md:grid-cols-[220px_1fr]">
-            <div className="text-xs uppercase tracking-widest text-[#617089]">Timezone</div>
+            <div className="text-xs uppercase tracking-widest text-[#9BA7B8]">Timezone</div>
             <div className="text-sm text-[#E6EDF5]">Africa/Johannesburg</div>
           </div>
         </div>
@@ -92,7 +92,7 @@ export default function SettingsPage() {
       <div className="rounded-lg border border-white/10 bg-[#08111f]">
         <div className="px-4 py-3 border-b border-white/10">
           <span className="text-xs font-semibold uppercase tracking-widest text-[#E6EDF5]">System Status</span>
-          <p className="text-[10px] text-[#617089] mt-0.5">Live checks against your production environment. No fabricated values.</p>
+          <p className="text-[10px] text-[#9BA7B8] mt-0.5">Live checks against your production environment. No fabricated values.</p>
         </div>
         <div className="divide-y divide-white/10">
           <StatusRow
@@ -140,12 +140,12 @@ export default function SettingsPage() {
 
       {/* Production version */}
       <div className="rounded-lg border border-white/10 bg-[#08111f] px-4 py-3 flex items-center justify-between">
-        <span className="text-xs uppercase tracking-widest text-[#617089]">Production Version</span>
+        <span className="text-xs uppercase tracking-widest text-[#9BA7B8]">Production Version</span>
         <span className="font-mono text-xs text-[#9BA7B8]">{buildSha}</span>
       </div>
 
       {/* Governance */}
-      <div className="text-[10px] text-[#374151] text-center tracking-widest py-2">
+      <div className="text-[10px] text-[#9BA7B8] text-center tracking-widest py-2">
         AI ASSISTS · HUMANS GOVERN · EVIDENCE DECIDES · NO ECONOMIC VALUES FABRICATED
       </div>
     </div>

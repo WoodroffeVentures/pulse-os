@@ -139,7 +139,7 @@ function computeViability(biz: BusinessProfile, opp: Opportunity): {
 const REC_STYLES: Record<string, string> = {
   'Join': 'text-emerald-400 bg-emerald-400/10 border-emerald-400/30',
   'Join with Conditions': 'text-amber-400 bg-amber-400/10 border-amber-400/30',
-  'Hold': 'text-[#617089] bg-white/5 border-white/10',
+  'Hold': 'text-[#9BA7B8] bg-white/5 border-white/10',
   'Not Suitable': 'text-red-400 bg-red-400/10 border-red-400/30',
 };
 
@@ -208,7 +208,7 @@ function ViabilityPageInner() {
     load(orgId);
   }
 
-  if (orgLoading) return <div className="p-6 text-[#617089] text-sm">Loading…</div>;
+  if (orgLoading) return <div className="p-6 text-[#9BA7B8] text-sm">Loading…</div>;
 
   return (
     <div className="space-y-6">
@@ -220,12 +220,12 @@ function ViabilityPageInner() {
       </div>
 
       <div className="rounded-xl border border-white/10 bg-[#08111f] p-5 space-y-4">
-        <div className="text-[10px] font-semibold uppercase tracking-widest text-[#617089]">Run New Assessment</div>
+        <div className="text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8]">Run New Assessment</div>
 
         <div className="grid gap-4 md:grid-cols-2">
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Business Profile</label>
-            {fetching ? <div className="text-xs text-[#617089]">Loading…</div> : businesses.length === 0 ? (
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Business Profile</label>
+            {fetching ? <div className="text-xs text-[#9BA7B8]">Loading…</div> : businesses.length === 0 ? (
               <p className="text-xs text-amber-400">No business profiles yet — <a href="/businesses" className="underline">add one</a></p>
             ) : (
               <select value={selectedBiz} onChange={e => { setSelectedBiz(e.target.value); setResult(null); }}
@@ -237,8 +237,8 @@ function ViabilityPageInner() {
           </div>
 
           <div>
-            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#617089] mb-1">Opportunity</label>
-            {fetching ? <div className="text-xs text-[#617089]">Loading…</div> : opportunities.length === 0 ? (
+            <label className="block text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8] mb-1">Opportunity</label>
+            {fetching ? <div className="text-xs text-[#9BA7B8]">Loading…</div> : opportunities.length === 0 ? (
               <p className="text-xs text-amber-400">No opportunities yet — <a href="/opportunities" className="underline">create one</a></p>
             ) : (
               <select value={selectedOpp} onChange={e => { setSelectedOpp(e.target.value); setResult(null); }}
@@ -263,24 +263,24 @@ function ViabilityPageInner() {
         <div className="space-y-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             <div className="rounded-xl border border-white/10 bg-[#08111f] p-4 text-center">
-              <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Viability Score</div>
+              <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Viability Score</div>
               <div className="text-3xl font-mono font-bold" style={{ color: result.score >= 75 ? '#2BB8A5' : result.score >= 55 ? '#C6A66B' : result.score >= 40 ? '#E8D9A8' : '#ef4444' }}>
                 {result.score}
               </div>
-              <div className="text-[10px] text-[#617089] mt-1">out of 100</div>
+              <div className="text-[10px] text-[#9BA7B8] mt-1">out of 100</div>
             </div>
             <div className="rounded-xl border border-white/10 bg-[#08111f] p-4 text-center">
-              <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Confidence</div>
+              <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Confidence</div>
               <div className="text-3xl font-mono font-bold text-[#9BA7B8]">{result.confidence}%</div>
-              <div className="text-[10px] text-[#617089] mt-1">evidence quality</div>
+              <div className="text-[10px] text-[#9BA7B8] mt-1">evidence quality</div>
             </div>
             <div className="rounded-xl border border-white/10 bg-[#08111f] p-4 text-center">
-              <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Readiness</div>
+              <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Readiness</div>
               <div className="text-3xl font-mono font-bold text-[#E6EDF5]">{result.readinessScore}%</div>
-              <div className="text-[10px] text-[#617089] mt-1">{result.operationalReadiness}</div>
+              <div className="text-[10px] text-[#9BA7B8] mt-1">{result.operationalReadiness}</div>
             </div>
             <div className="rounded-xl border border-white/10 bg-[#08111f] p-4 text-center">
-              <div className="text-[10px] uppercase tracking-widest text-[#617089] mb-1">Recommendation</div>
+              <div className="text-[10px] uppercase tracking-widest text-[#9BA7B8] mb-1">Recommendation</div>
               <div className={`mt-1 text-xs font-bold px-2 py-1 rounded border inline-block ${REC_STYLES[result.recommendation]}`}>
                 {result.recommendation}
               </div>
@@ -289,7 +289,7 @@ function ViabilityPageInner() {
 
           <div className="grid gap-4 md:grid-cols-2">
             <div className="rounded-xl border border-white/10 bg-[#08111f] p-4 space-y-3">
-              <div className="text-[10px] font-semibold uppercase tracking-widest text-[#617089]">Evidence Used</div>
+              <div className="text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8]">Evidence Used</div>
               {result.evidence.map((e, i) => (
                 <div key={i} className="flex items-start gap-2 text-xs">
                   {e.met
@@ -297,8 +297,8 @@ function ViabilityPageInner() {
                     : <AlertCircle className="w-3.5 h-3.5 text-red-400 flex-shrink-0 mt-0.5" />
                   }
                   <div>
-                    <span className={e.met ? 'text-[#E6EDF5]' : 'text-[#617089]'}>{e.label}</span>
-                    <div className="text-[10px] text-[#374151] mt-0.5">{e.note} ({e.weight}pts)</div>
+                    <span className={e.met ? 'text-[#E6EDF5]' : 'text-[#9BA7B8]'}>{e.label}</span>
+                    <div className="text-[10px] text-[#9BA7B8] mt-0.5">{e.note} ({e.weight}pts)</div>
                   </div>
                 </div>
               ))}
@@ -307,10 +307,10 @@ function ViabilityPageInner() {
             <div className="space-y-4">
               {result.risks.length > 0 && (
                 <div className="rounded-xl border border-white/10 bg-[#08111f] p-4 space-y-2">
-                  <div className="text-[10px] font-semibold uppercase tracking-widest text-[#617089]">Risk Flags</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8]">Risk Flags</div>
                   {result.risks.map((r, i) => (
                     <div key={i} className="flex items-start gap-2 text-xs">
-                      <AlertTriangle className={`w-3.5 h-3.5 flex-shrink-0 mt-0.5 ${r.severity === 'high' ? 'text-red-400' : r.severity === 'medium' ? 'text-amber-400' : 'text-[#617089]'}`} />
+                      <AlertTriangle className={`w-3.5 h-3.5 flex-shrink-0 mt-0.5 ${r.severity === 'high' ? 'text-red-400' : r.severity === 'medium' ? 'text-amber-400' : 'text-[#9BA7B8]'}`} />
                       <span className="text-[#9BA7B8]">{r.flag}</span>
                     </div>
                   ))}
@@ -319,9 +319,9 @@ function ViabilityPageInner() {
 
               {result.missingEvidence.length > 0 && (
                 <div className="rounded-xl border border-white/10 bg-[#08111f] p-4 space-y-2">
-                  <div className="text-[10px] font-semibold uppercase tracking-widest text-[#617089]">Missing Evidence</div>
+                  <div className="text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8]">Missing Evidence</div>
                   {result.missingEvidence.map((m, i) => (
-                    <div key={i} className="text-xs text-[#617089] flex items-center gap-1.5">
+                    <div key={i} className="text-xs text-[#9BA7B8] flex items-center gap-1.5">
                       <Clock className="w-3 h-3 text-amber-400" /> {m}
                     </div>
                   ))}
@@ -329,7 +329,7 @@ function ViabilityPageInner() {
               )}
 
               <div className="rounded-xl border border-white/10 bg-[#08111f] p-4 space-y-2">
-                <div className="text-[10px] font-semibold uppercase tracking-widest text-[#617089]">Next Best Actions</div>
+                <div className="text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8]">Next Best Actions</div>
                 {result.actions.length === 0
                   ? <p className="text-xs text-emerald-400">All key evidence indicators are met.</p>
                   : result.actions.map((a, i) => (
@@ -345,7 +345,7 @@ function ViabilityPageInner() {
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 p-3 rounded-lg bg-[#08111f] border border-white/10 flex-1">
               <div className={`text-xs font-bold px-2 py-0.5 rounded border ${REC_STYLES[result.recommendation]}`}>{result.recommendation}</div>
-              <div className="flex gap-3 text-[10px] text-[#617089]">
+              <div className="flex gap-3 text-[10px] text-[#9BA7B8]">
                 <span>District fit: {result.districtFit ? '✓' : '✗'}</span>
                 <span>Audience fit: {result.audienceFit ? '✓' : '✗'}</span>
                 <span>Confidence: {result.confidence}%</span>
@@ -364,7 +364,7 @@ function ViabilityPageInner() {
             {saveError && <p className="text-xs text-red-400">{saveError}</p>}
           </div>
 
-          <div className="text-[10px] text-[#374151] text-center py-2 tracking-widest">
+          <div className="text-[10px] text-[#9BA7B8] text-center py-2 tracking-widest">
             RULES-BASED ASSESSMENT · NO FABRICATED DATA · CONFIDENCE REFLECTS EVIDENCE QUALITY ONLY · AI ASSISTS · HUMANS GOVERN
           </div>
         </div>
@@ -372,7 +372,7 @@ function ViabilityPageInner() {
 
       {analyses.length > 0 && (
         <div className="space-y-3">
-          <div className="text-[10px] font-semibold uppercase tracking-widest text-[#617089]">Previous Assessments</div>
+          <div className="text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8]">Previous Assessments</div>
           {analyses.map(a => (
             <div key={a.id} className="rounded-lg border border-white/10 bg-[#08111f] px-4 py-3 flex items-center gap-4">
               <div className={`text-[10px] font-bold px-2 py-0.5 rounded border ${REC_STYLES[a.recommendation] ?? REC_STYLES['Hold']}`}>
@@ -381,7 +381,7 @@ function ViabilityPageInner() {
               <div className="flex-1 text-xs text-[#9BA7B8] font-mono truncate">
                 Score {a.score} · Confidence {Math.round(a.confidence * 100)}%
               </div>
-              <div className="text-[10px] text-[#617089]">
+              <div className="text-[10px] text-[#9BA7B8]">
                 {new Date(a.created_at).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })}
               </div>
               <a href={`/participation?opportunity_id=${a.opportunity_id}&business_id=${a.business_profile_id}&score=${a.score}&recommendation=${encodeURIComponent(a.recommendation)}`}
@@ -398,7 +398,7 @@ function ViabilityPageInner() {
 
 export default function ViabilityPage() {
   return (
-    <Suspense fallback={<div className="p-6 text-[#617089] text-sm">Loading…</div>}>
+    <Suspense fallback={<div className="p-6 text-[#9BA7B8] text-sm">Loading…</div>}>
       <ViabilityPageInner />
     </Suspense>
   );

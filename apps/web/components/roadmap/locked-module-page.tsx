@@ -39,7 +39,7 @@ export function LockedModulePage({ slug }: LockedModulePageProps) {
           ['Production Rule', 'Do not enable workflows until this phase is explicitly activated.'],
         ].map(([label, value]) => (
           <div key={label} className="rounded-lg border border-white/10 bg-[#08111f] p-4">
-            <div className="text-[10px] font-semibold uppercase tracking-widest text-[#617089]">
+            <div className="text-[10px] font-semibold uppercase tracking-widest text-[#9BA7B8]">
               {label}
             </div>
             <div className="mt-3 text-sm leading-6 text-[#E6EDF5]">{value}</div>
