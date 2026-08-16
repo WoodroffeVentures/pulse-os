@@ -14,8 +14,8 @@ test.describe('Hospitality regression', () => {
   test('properties page loads', async ({ page }) => {
     await page.goto('/properties');
     await page.waitForLoadState('networkidle');
-    // No crash — page renders
-    await expect(page.locator('main, [role="main"], body')).toBeVisible();
+    // No crash — main content renders
+    await expect(page.locator('main')).toBeVisible();
     // No 500 error shown
     const text = await page.textContent('body');
     expect(text).not.toMatch(/500|Internal Server Error/i);
